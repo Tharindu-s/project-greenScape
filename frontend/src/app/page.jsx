@@ -1,7 +1,8 @@
+"use client";
 import { useEffect, useState } from "react";
-import Form from "../components/Form";
+import Form from "../components/Common/Form";
 
-const Home = () => {
+export default function Home() {
   const [workouts, setWorkouts] = useState(null);
 
   useEffect(() => {
@@ -16,7 +17,6 @@ const Home = () => {
 
     fetchWorkouts();
   }, []);
-
   return (
     <div className="home">
       <div className="workouts">
@@ -32,6 +32,4 @@ const Home = () => {
       <Form />
     </div>
   );
-};
-
-export default Home;
+}
