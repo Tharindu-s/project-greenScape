@@ -1,9 +1,10 @@
+"use client";
 import React from "react";
 import Link from "next/link";
-
+import { useLogout } from "@/hooks/useLogout";
 import { cn } from "../../lib/utils";
 import logo from "../../assets/logo.png";
-
+import { useAuthContext } from "@/hooks/useAuthContext";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,15 +12,21 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "../../components/ui/navigation-menu";
+} from "../ui/navigation-menu";
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
-
 import { services } from "./Navbar-data";
 import { materials } from "./Navbar-data";
 import { plants } from "./Navbar-data";
+import { Button } from "../ui/button";
 
 function Navbar() {
+  const { user } = useAuthContext();
+  const { logout } = useLogout();
+
+  const handleClick = () => {
+    logout();
+  };
   return (
     <div className="flex justify-between px-4 py-4 bg-mint md:px-10 lg:px-12 xl:px-24 2xl:px-48">
       <div>
@@ -123,18 +130,26 @@ function Navbar() {
           </button>
         </div>
       </div>
-      <div className="flex">
-        <Link href="/signup">
-          <p className="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md group w-max hover:bg-accent hover:text-white">
-            Sign up
-          </p>
-        </Link>
-        <Link href="/login">
-          <p className="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md bg-slate-100 hover:bg-white group w-max">
-            Log in
-          </p>
-        </Link>
-      </div>
+      {user && (
+        <div>
+          <p className="text-accent">{user.email}</p>
+          <button onClick={handleClick}>Log out</button>
+        </div>
+      )}
+      {!user && (
+        <div className="flex">
+          <Link href="/signup">
+            <p className="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md group w-max hover:bg-accent hover:text-white">
+              Sign up
+            </p>
+          </Link>
+          <Link href="/login">
+            <p className="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md bg-slate-100 hover:bg-white group w-max">
+              Log in
+            </p>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

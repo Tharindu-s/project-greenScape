@@ -1,7 +1,12 @@
 "use client";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { useWorkoutsContext } from "@/hooks/useWorkoutsContext";
 import { useState } from "react";
 
 const Form = () => {
+  const { dispatch } = useWorkoutsContext();
+  const { user } = useAuthContext();
+
   const [title, setTitle] = useState("");
   const [load, setLoad] = useState("");
   const [reps, setReps] = useState("");
@@ -10,6 +15,11 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!user) {
+      setError("You must be logged in to add a workout");
+      return;
+    }
+
     const workout = { title, load, reps };
 
     const response = await fetch("/api/workouts", {
@@ -17,6 +27,7 @@ const Form = () => {
       body: JSON.stringify(workout),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
     const json = await response.json();
@@ -30,12 +41,13 @@ const Form = () => {
       setLoad("");
       setReps("");
       console.log("new workout added:", json);
+      dispatch({ type: "CREATE_WORKOUT", payload: json });
     }
   };
 
   return (
     <form className="create" onSubmit={handleSubmit}>
-      <h3>Add a New Workout</h3>
+      <h3>Add a Product</h3>
 
       <label>Excersize Title:</label>
       <input

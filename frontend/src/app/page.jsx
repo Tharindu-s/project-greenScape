@@ -1,22 +1,30 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Form from "../components/Common/Form";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { useWorkoutsContext } from "@/hooks/useWorkoutsContext";
+import Products from "@/components/home/Products";
 
 export default function Home() {
-  const [workouts, setWorkouts] = useState(null);
+  const { workouts, dispatch } = useWorkoutsContext();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const fetchWorkouts = async () => {
-      const response = await fetch("/api/workouts");
+      const response = await fetch("/api/workouts", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
       const json = await response.json();
 
       if (response.ok) {
-        setWorkouts(json);
+        dispatch({ type: "SET_WORKOUTS", payload: json });
       }
     };
 
-    fetchWorkouts();
-  }, []);
+    if (user) {
+      fetchWorkouts();
+    }
+  }, [dispatch, user]);
   return (
     <div className="home">
       <div className="workouts">
@@ -30,6 +38,7 @@ export default function Home() {
           ))}
       </div>
       <Form />
+      <Products />
     </div>
   );
 }
