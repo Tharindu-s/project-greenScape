@@ -4,6 +4,7 @@ import Navbar from "@/components/Common/Navbar";
 import Footer from "@/components/Common/Footer";
 import { AuthContextProvider } from "@/context/authContext";
 import { WorkoutsContextProvider } from "@/context/workoutContext";
+import { ProductsContextProvider } from "@/context/productContex";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +19,11 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <AuthContextProvider>
           <WorkoutsContextProvider>
-            <Navbar />
-            {children}
-            <Footer />
+            <ProductsContextProvider>
+              <Navbar />
+              {children}
+              <Footer />
+            </ProductsContextProvider>
           </WorkoutsContextProvider>
         </AuthContextProvider>
       </body>

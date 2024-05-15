@@ -19,6 +19,7 @@ const Products = () => {
           <Image
             src={product}
             className="object-cover w-full h-full transition-all duration-500 hover:scale-105 ease rounded-xl"
+            alt="product image"
           ></Image>
         </div>
         <div>

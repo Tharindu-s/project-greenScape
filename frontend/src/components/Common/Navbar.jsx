@@ -15,9 +15,9 @@ import {
 } from "../ui/navigation-menu";
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
-import { services } from "./Navbar-data";
-import { materials } from "./Navbar-data";
-import { plants } from "./Navbar-data";
+import { services } from "../Constants/Navbar-data";
+import { materials } from "../Constants/Navbar-data";
+import { plants } from "../Constants/Navbar-data";
 import { Button } from "../ui/button";
 
 function Navbar() {

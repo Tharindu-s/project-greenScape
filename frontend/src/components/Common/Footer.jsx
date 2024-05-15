@@ -8,9 +8,9 @@ import { IoCall } from "react-icons/io5";
 import Link from "next/link";
 import logo from "../../assets/logo.png";
 import Image from "next/image";
-import { services } from "./Navbar-data";
-import { materials } from "./Navbar-data";
-import { plants } from "./Navbar-data";
+import { services } from "../Constants/Navbar-data";
+import { materials } from "../Constants/Navbar-data";
+import { plants } from "../Constants/Navbar-data";
 
 const Footer = () => {
   return (
