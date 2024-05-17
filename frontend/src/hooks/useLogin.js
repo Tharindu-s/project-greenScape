@@ -12,7 +12,7 @@ export const useLogin = () => {
 
     const response = await fetch("/api/user/login", {
       method: "POST",
-      headers: { "content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
     const json = await response.json();
@@ -20,12 +20,18 @@ export const useLogin = () => {
     if (!response.ok) {
       setError(json.error);
       setIsLoading(false);
-    }
-    if (response.ok) {
-      //   save the user to local storage
-      localStorage.setItem("user", JSON.stringify(json));
+    } else {
+      // Save the user to local storage
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          email: json.email,
+          token: json.token,
+          userId: json.userId,
+        })
+      );
 
-      //   update the auth context
+      // Update the auth context
       dispatch({ type: "LOGIN", payload: json });
       setIsLoading(false);
     }

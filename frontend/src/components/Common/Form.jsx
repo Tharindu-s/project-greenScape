@@ -35,6 +35,8 @@ const Form = () => {
   const [quantity, setQuantity] = useState("");
   const [image, setImage] = useState("");
   const [error, setError] = useState(null);
+  const userEmail = user && user.email;
+  console.log(userEmail);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -174,7 +176,11 @@ const Form = () => {
         </div>
         <div className="my-4">
           <label>Insert images</label>
-          <Input id="picture" type="file"  onChange={(e) => setImage(e.target.value)}/>
+          <Input
+            id="picture"
+            type="file"
+            onChange={(e) => setImage(e.target.value)}
+          />
         </div>
 
         <button>Add product</button>

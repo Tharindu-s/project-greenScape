@@ -13,12 +13,19 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "../ui/navigation-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
 import { services } from "../Constants/Navbar-data";
 import { materials } from "../Constants/Navbar-data";
 import { plants } from "../Constants/Navbar-data";
-import { Button } from "../ui/button";
 
 function Navbar() {
   const { user } = useAuthContext();
@@ -132,8 +139,17 @@ function Navbar() {
       </div>
       {user && (
         <div>
-          <p className="text-accent">{user.email}</p>
-          <button onClick={handleClick}>Log out</button>
+          <DropdownMenu>
+            <DropdownMenuTrigger>My profile</DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+
+              <DropdownMenuItem>
+                <button onClick={handleClick}>Log out</button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       )}
       {!user && (

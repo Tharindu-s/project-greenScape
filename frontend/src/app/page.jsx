@@ -5,6 +5,8 @@ import { useAuthContext } from "@/hooks/useAuthContext";
 // import { useWorkoutsContext } from "@/hooks/useWorkoutsContext";
 import { useProductsContext } from "@/hooks/useProductsContex";
 import Products from "@/components/home/Products";
+import Categories from "@/components/home/Categories";
+import Hero from "@/components/home/Hero";
 
 export default function Home() {
   // const { workouts, dispatch } = useWorkoutsContext();
@@ -29,18 +31,10 @@ export default function Home() {
   }, [dispatch, user]);
   return (
     <div className="home">
-      <div className="workouts">
-        {products &&
-          products.map((product) => (
-            <div key={product._id}>
-              <h2>{product.name}</h2>
-              <h2>{product.description}</h2>
-              <h2>{product.price}</h2>
-            </div>
-          ))}
-      </div>
+      <Hero />
+      <Categories />
       <Form />
-      <Products />
+      <Products products={products} />
     </div>
   );
 }
