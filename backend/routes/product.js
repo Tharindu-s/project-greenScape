@@ -12,7 +12,7 @@ const router = express.Router();
 
 // require auth for all routes
 
-router.use(requireAuth);
+// router.use(requireAuth);
 
 // GET all products
 router.get("/", getProducts);

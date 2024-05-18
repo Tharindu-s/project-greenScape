@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <div className="flex items-center justify-center mt-16 mb-32 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
       <div className="relative">
-        <Image src={heroImg} className="rounded-3xl" />
+        <Image src={heroImg} className="rounded-3xl" alt="hero-image" />
         <div className="absolute left-0 pt-12 pl-12 transform -translate-y-1/2 top-1/3">
           <p className="font-poppins font-bold 2xl:text-[70px] text-white w-[900px] uppercase">
             Browse diverse listings for all your gardening essentials

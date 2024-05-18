@@ -35,8 +35,6 @@ const Form = () => {
   const [quantity, setQuantity] = useState("");
   const [image, setImage] = useState("");
   const [error, setError] = useState(null);
-  const userEmail = user && user.email;
-  console.log(userEmail);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

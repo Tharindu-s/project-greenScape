@@ -7,6 +7,8 @@ import { useProductsContext } from "@/hooks/useProductsContex";
 import Products from "@/components/home/Products";
 import Categories from "@/components/home/Categories";
 import Hero from "@/components/home/Hero";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
   // const { workouts, dispatch } = useWorkoutsContext();
@@ -32,6 +34,9 @@ export default function Home() {
   return (
     <div className="home">
       <Hero />
+      <Link href="/add">
+        <Button>Post a product</Button>
+      </Link>
       <Categories />
       <Form />
       <Products products={products} />
