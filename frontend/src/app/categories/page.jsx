@@ -1,7 +1,12 @@
 import React from "react";
+import Categories from "../../components/home/Categories";
 
-const Categories = () => {
-  return <div>Categories</div>;
+const CategoriesPage = () => {
+  return (
+    <div>
+      <Categories />
+    </div>
+  );
 };
 
-export default Categories;
+export default CategoriesPage;

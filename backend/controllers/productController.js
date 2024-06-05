@@ -26,6 +26,18 @@ const getProduct = async (req, res) => {
   res.status(200).json(product);
 };
 
+// get products by category
+const getProductsByCategory = async (req, res) => {
+  const { category } = req.params;
+
+  try {
+    const products = await Product.find({ category }).sort({ createdAt: -1 });
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 // create new product
 const createProduct = async (req, res) => {
   const { name, category, description, price, quantity } = req.body;
@@ -118,4 +130,5 @@ module.exports = {
   createProduct,
   deleteProduct,
   updateProduct,
+  getProductsByCategory, // Export the new function
 };
