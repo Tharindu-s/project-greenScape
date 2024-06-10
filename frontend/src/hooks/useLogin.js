@@ -28,6 +28,7 @@ export const useLogin = () => {
           email: json.email,
           token: json.token,
           userId: json.userId,
+          userName: json.name,
         })
       );
 

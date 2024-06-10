@@ -38,7 +38,7 @@ export default function Home() {
         <Button>Post a product</Button>
       </Link>
       <Categories />
-      <Form />
+      {/* <Form /> */}
       <Products products={products} />
     </div>
   );

@@ -1,9 +1,7 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthContext } from "@/hooks/useAuthContext";
-import { useState } from "react";
 import { Input } from "../ui/input";
-import { Select } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -22,6 +20,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { categoryList } from "../Constants/Category-data";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Form = () => {
   const [open, setOpen] = React.useState(false);
@@ -33,8 +38,23 @@ const Form = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [username, setUsername] = useState("");
   const [image, setImage] = useState("");
+  const [condition, setCondition] = useState({ sell: false, exchange: false });
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      setUsername(user.userName); // Pre-fill username from context
+    }
+  }, [user]);
+
+  const handleCheckboxChange = (e, type) => {
+    setCondition((prevCondition) => ({
+      ...prevCondition,
+      [type]: e.target.checked,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,7 +64,15 @@ const Form = () => {
       return;
     }
 
-    const product = { name, category, description, price, quantity };
+    const product = {
+      name,
+      category,
+      description,
+      price,
+      quantity,
+      username,
+      condition, // Include the checkbox values
+    };
 
     const response = await fetch("/api/products", {
       method: "POST",
@@ -60,14 +88,14 @@ const Form = () => {
       setError(json.error);
     }
 
-    // Inside handleSubmit after successful submission
     if (response.ok) {
       setError(null);
-      document.getElementById("name").value = "";
-      document.getElementById("description").value = "";
-      document.getElementById("price").value = "";
-      document.getElementById("quantity").value = "";
-      document.getElementById("picture").value = "";
+      setName("");
+      setDescription("");
+      setPrice("");
+      setQuantity("");
+      setImage("");
+      setCondition({ sell: false, exchange: false });
       console.log("new product added:", json);
     }
   };
@@ -82,7 +110,7 @@ const Form = () => {
             type="text"
             placeholder="Barrel Cactus"
             name="name"
-            id="name"
+            value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
@@ -139,17 +167,12 @@ const Form = () => {
           </Popover>
         </div>
         <div className="my-4">
-          <label>Category</label>
-          <br />
-          <Select onChange={(e) => setCategory(e.target.value)}></Select>
-        </div>
-        <div className="my-4">
           <label>Description</label>
           <Textarea
             placeholder="Product description"
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
             name="description"
-            id="description"
           />
         </div>
         <div className="my-4">
@@ -157,9 +180,9 @@ const Form = () => {
           <Input
             type="text"
             placeholder="6000"
+            value={price}
             onChange={(e) => setPrice(e.target.value)}
             name="price"
-            id="price"
           />
         </div>
         <div className="my-4">
@@ -167,21 +190,50 @@ const Form = () => {
           <Input
             type="text"
             placeholder="20"
+            value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
             name="quantity"
-            id="quantity"
           />
+        </div>
+        <div className="my-4">
+          <label>Available for</label>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                checked={condition.sell}
+                onChange={(e) => handleCheckboxChange(e, "sell")}
+              />
+              Sell
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={condition.exchange}
+                onChange={(e) => handleCheckboxChange(e, "exchange")}
+              />
+              Exchange
+            </label>
+          </div>
         </div>
         <div className="my-4">
           <label>Insert images</label>
           <Input
             id="picture"
             type="file"
+            value={image}
             onChange={(e) => setImage(e.target.value)}
           />
         </div>
-
-        <button>Add product</button>
+        <Input
+          className="hidden"
+          id="username"
+          type="text"
+          value={username}
+          disabled
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <button type="submit">Add product</button>
         {error && <div className="error">{error}</div>}
       </form>
     </div>

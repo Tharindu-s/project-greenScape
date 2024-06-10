@@ -7,6 +7,7 @@ import {
 } from "../../../components/ui/tooltip";
 import productImg from "../../../assets/product.png";
 import Image from "next/image";
+import Link from "next/link";
 
 async function getCategoryInfo(id) {
   if (!id) {
@@ -38,54 +39,56 @@ export default async function CategoryInfo({ params }) {
   }
 
   try {
-    const categories = await getCategoryInfo(id);
+    const products = await getCategoryInfo(id);
     return (
       <div className="home">
         <h1 className="text-2xl font-bold text-center">{id}</h1>
         <div>
-          {categories.map((category) => (
-            <div>
-              <div
-                key={category._id}
-                className="p-3 mx-auto mb-8 border-[1px] rounded-xl card"
-              >
-                <div className="overflow-hidden items-center w-[200px] h-[200px]">
-                  <Image
-                    src={productImg}
-                    className="object-cover w-full h-full transition-all duration-500 hover:scale-105 ease rounded-xl"
-                    alt="product image"
-                  ></Image>
-                </div>
-                <div>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger className="text-left">
-                        <h2 className="font-inter text-[16px] font-medium text-textmain py-4">
-                          {category.name}
-                        </h2>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p> {category.category}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+          {products.map((product) => (
+            <Link key={product._id} href={`/products/${product._id}`}>
+              <div>
+                <div
+                  key={product._id}
+                  className="p-3 mx-auto mb-8 border-[1px] rounded-xl card"
+                >
+                  <div className="overflow-hidden items-center w-[200px] h-[200px]">
+                    <Image
+                      src={productImg}
+                      className="object-cover w-full h-full transition-all duration-500 hover:scale-105 ease rounded-xl"
+                      alt="product image"
+                    ></Image>
+                  </div>
+                  <div>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger className="text-left">
+                          <h2 className="font-inter text-[16px] font-medium text-textmain py-4">
+                            {product.name}
+                          </h2>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p> {product.product}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
 
-                  <p className="font-inter text-[16px] font-normal text-textmain pb-1">
-                    {category.price} LKR
-                    <span className="text-[12px] font-normal text-textmain">
-                      per item
-                    </span>
-                  </p>
-                  <p className="font-inter text-[16px] font-normal text-textmuted">
-                    {category.createdAt}
-                  </p>
+                    <p className="font-inter text-[16px] font-normal text-textmain pb-1">
+                      {product.price}LKR
+                      <span className="text-[12px] font-normal text-textmain">
+                        per item
+                      </span>
+                    </p>
+                    <p className="font-inter text-[16px] font-normal text-textmuted">
+                      {product.createdAt}
+                    </p>
 
-                  <div className="flex sm:block xl:flex  font-opensans font-bold text-[14px] md:text-[16px] text-textmainlow gap-2">
-                    <p className="tracking-wide uppercase"></p>
+                    <div className="flex sm:block xl:flex  font-opensans font-bold text-[14px] md:text-[16px] text-textmainlow gap-2">
+                      <p className="tracking-wide uppercase"></p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

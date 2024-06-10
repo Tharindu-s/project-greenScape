@@ -38,9 +38,10 @@ const getProductsByCategory = async (req, res) => {
   }
 };
 
-// create new product
+// Create new product
 const createProduct = async (req, res) => {
-  const { name, category, description, price, quantity } = req.body;
+  const { name, category, description, price, quantity, username, condition } =
+    req.body;
 
   let emptyFields = [];
 
@@ -64,13 +65,17 @@ const createProduct = async (req, res) => {
     emptyFields.push("quantity");
     return res.json({ error: "Please fill the quantity" });
   }
+  if (!username) {
+    emptyFields.push("username");
+    return res.json({ error: "Please fill the username" });
+  }
   if (emptyFields.length > 0) {
     return res
       .status(400)
       .json({ error: "Please fill in all the fields", emptyFields });
   }
 
-  // add doc to db
+  // Add doc to db
   try {
     const product = await Product.create({
       name,
@@ -78,6 +83,8 @@ const createProduct = async (req, res) => {
       description,
       price,
       quantity,
+      username,
+      condition, // Include checkbox values
     });
     res.status(200).json(product);
   } catch (error) {

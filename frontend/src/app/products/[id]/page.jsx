@@ -1,5 +1,9 @@
 import Image from "next/image";
 import productImg from "../../../assets/product.png";
+import { FaUserCircle } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+import WriteReview from "@/components/Products/WriteReview";
+import ReviewsList from "@/components/Products/ReviewsList";
 
 async function getproductInfo(id) {
   if (!id) {
@@ -56,7 +60,32 @@ export default async function ProductInfo({ params }) {
               </p>
             </div>
             <p className="font-inter text-[16px]">{product.description}</p>
+            <div className="flex gap-2 mt-12">
+              <FaUserCircle size={24} />
+              <p className="font-inter text-[16px]">{product.username}</p>
+            </div>
+            <div className="flex gap-4">
+              {product.condition.sell && (
+                <Button className="px-4 py-2 rounded-md font-inter text-accent bg-background hover:bg-[#DADBDA]">
+                  Buy
+                </Button>
+              )}
+              {/* Conditional rendering for exchange button */}
+              {product.condition.exchange && (
+                <Button className="px-4 py-2 text-black rounded-md font-inter bg-background hover:bg-[#DADBDA]">
+                  Exchange
+                </Button>
+              )}
+            </div>
           </div>
+        </div>
+        {/* show reviews */}
+        <div>
+          <ReviewsList productId={id} />
+        </div>
+        {/* add a review */}
+        <div>
+          <WriteReview productId={id} />
         </div>
       </div>
     );

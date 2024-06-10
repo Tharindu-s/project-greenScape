@@ -24,8 +24,22 @@ const productSchema = new Schema(
       type: Number,
       required: true,
     },
+    username: {
+      type: String,
+      required: true,
+    },
+    condition: {
+      sell: {
+        type: Boolean,
+        default: false,
+      },
+      exchange: {
+        type: Boolean,
+        default: false,
+      },
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("product", productSchema);
+module.exports = mongoose.model("Product", productSchema);
