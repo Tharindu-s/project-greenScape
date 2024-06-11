@@ -20,6 +20,19 @@ import { Label } from "@/components/ui/label";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
+
+export function SkeletonDemo() {
+  return (
+    <div className="flex items-center space-x-4">
+      <Skeleton className="w-12 h-12 rounded-full" />
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-[250px]" />
+        <Skeleton className="h-4 w-[200px]" />
+      </div>
+    </div>
+  );
+}
 
 const Profile = () => {
   const { toast } = useToast();
@@ -105,7 +118,17 @@ const Profile = () => {
       });
   };
 
-  if (isLoading) return <p>Loading profile data...</p>;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center w-full px-4 mx-auto mt-16 space-x-4 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
+        <div className="w-full">
+          <Skeleton className="w-full mb-12 h-80" />
+          <Skeleton className="h-8 mb-2 w-96" />
+          <Skeleton className="w-48 h-8 mb-2" />
+          <Skeleton className="w-full h-64 mt-24" />
+        </div>
+      </div>
+    );
   if (!user) return <p>No profile data</p>;
 
   return (
