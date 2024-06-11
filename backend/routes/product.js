@@ -6,6 +6,7 @@ const {
   deleteProduct,
   updateProduct,
   getProductsByCategory,
+  getProductsByUser,
 } = require("../controllers/productController");
 const requireAuth = require("../middleware/requireAuth");
 
@@ -32,5 +33,8 @@ router.patch("/:id", updateProduct);
 
 // GET products by category
 router.get("/category/:category", getProductsByCategory);
+
+// GET products by user
+router.get("/user/:userId", getProductsByUser);
 
 module.exports = router;

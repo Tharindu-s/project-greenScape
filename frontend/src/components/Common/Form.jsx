@@ -39,6 +39,7 @@ const Form = () => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [username, setUsername] = useState("");
+  const [userId, setUserId] = useState("");
   const [image, setImage] = useState("");
   const [condition, setCondition] = useState({ sell: false, exchange: false });
   const [error, setError] = useState(null);
@@ -46,6 +47,7 @@ const Form = () => {
   useEffect(() => {
     if (user) {
       setUsername(user.userName); // Pre-fill username from context
+      setUserId(user.userId);
     }
   }, [user]);
 
@@ -71,6 +73,7 @@ const Form = () => {
       price,
       quantity,
       username,
+      userId,
       condition, // Include the checkbox values
     };
 
@@ -232,6 +235,14 @@ const Form = () => {
           value={username}
           disabled
           onChange={(e) => setUsername(e.target.value)}
+        />
+        <Input
+          className="hidden"
+          id="userId"
+          type="text"
+          value={username}
+          disabled
+          onChange={(e) => setUserId(e.target.value)}
         />
         <button type="submit">Add product</button>
         {error && <div className="error">{error}</div>}

@@ -142,7 +142,9 @@ function Navbar() {
           <DropdownMenu>
             <DropdownMenuTrigger>My profile</DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
+              <Link href="/profile">
+                <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
+              </Link>
               <DropdownMenuSeparator />
 
               <DropdownMenuItem>

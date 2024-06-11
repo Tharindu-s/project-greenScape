@@ -38,10 +38,33 @@ const getProductsByCategory = async (req, res) => {
   }
 };
 
+// get products by user
+const getProductsByUser = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const products = await Product.find({ userId }).sort({ createdAt: -1 });
+    if (products.length === 0) {
+      return res.status(404).json({ error: "No products found for this user" });
+    }
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 // Create new product
 const createProduct = async (req, res) => {
-  const { name, category, description, price, quantity, username, condition } =
-    req.body;
+  const {
+    name,
+    category,
+    description,
+    price,
+    quantity,
+    username,
+    condition,
+    userId,
+  } = req.body;
 
   let emptyFields = [];
 
@@ -69,6 +92,10 @@ const createProduct = async (req, res) => {
     emptyFields.push("username");
     return res.json({ error: "Please fill the username" });
   }
+  if (!userId) {
+    emptyFields.push("username");
+    return res.json({ error: "Please fill the userId" });
+  }
   if (emptyFields.length > 0) {
     return res
       .status(400)
@@ -84,7 +111,8 @@ const createProduct = async (req, res) => {
       price,
       quantity,
       username,
-      condition, // Include checkbox values
+      userId,
+      condition,
     });
     res.status(200).json(product);
   } catch (error) {
@@ -137,5 +165,6 @@ module.exports = {
   createProduct,
   deleteProduct,
   updateProduct,
-  getProductsByCategory, // Export the new function
+  getProductsByCategory,
+  getProductsByUser,
 };

@@ -4,8 +4,10 @@ import { useAuthContext } from "@/hooks/useAuthContext";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 const WriteReview = ({ productId }) => {
+  const { toast } = useToast();
   const { user } = useAuthContext();
 
   const [title, setTitle] = useState("");
@@ -105,6 +107,12 @@ const WriteReview = ({ productId }) => {
         <Button
           type="submit"
           className="py-6 px-7 rounded-3xl bg-accent hover:bg-accentdark"
+          onClick={() => {
+            toast({
+              title: "Review posted succesfully",
+              description: `Thank you for your review!`,
+            });
+          }}
         >
           Submit review
         </Button>

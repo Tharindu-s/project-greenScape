@@ -28,6 +28,10 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
+    userId: {
+      type: String,
+      required: true,
+    },
     condition: {
       sell: {
         type: Boolean,

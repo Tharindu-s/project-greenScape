@@ -38,7 +38,6 @@ export default function Home() {
         <Button>Post a product</Button>
       </Link>
       <Categories />
-      {/* <Form /> */}
       <Products products={products} />
     </div>
   );
