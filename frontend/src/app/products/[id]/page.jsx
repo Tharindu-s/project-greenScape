@@ -4,6 +4,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import WriteReview from "@/components/Products/WriteReview";
 import ReviewsList from "@/components/Products/ReviewsList";
+import Link from "next/link";
 
 async function getproductInfo(id) {
   if (!id) {
@@ -59,10 +60,16 @@ export default async function ProductInfo({ params }) {
                 {product.quantity} Reviews
               </p>
             </div>
+            <p className="font-inter text-[16px]">{product.userId}</p>
+
             <p className="font-inter text-[16px]">{product.description}</p>
             <div className="flex gap-2 mt-12">
               <FaUserCircle size={24} />
-              <p className="font-inter text-[16px]">{product.username}</p>
+              <p className="font-inter text-[16px]">
+                <Link href={`/profile/${product.userId}`}>
+                  {product.username}
+                </Link>
+              </p>
             </div>
             <div className="flex gap-4">
               {product.condition.sell && (

@@ -4,7 +4,6 @@ import { useAuthContext } from "@/hooks/useAuthContext";
 import { FaLocationDot } from "react-icons/fa6";
 import userIcon from "../../assets/Profile/userIcon.png";
 import Image from "next/image";
-import Products from "@/components/home/Products";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,10 +16,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
+import ProductsProfile from "@/components/profile/Products-profile";
+import ProfileSkeleton from "@/components/skeletons/skeleton-profile-hero";
 
 export function SkeletonDemo() {
   return (
@@ -105,7 +105,7 @@ const Profile = () => {
         setUserdata(updatedUser);
         toast({
           title: "Changes saved",
-          description: "Your user data has been successfully updated.",
+          description: "Your profile has been successfully updated.",
         });
       })
       .catch((error) => {
@@ -118,17 +118,7 @@ const Profile = () => {
       });
   };
 
-  if (isLoading)
-    return (
-      <div className="flex items-center justify-center w-full px-4 mx-auto mt-16 space-x-4 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
-        <div className="w-full">
-          <Skeleton className="w-full mb-12 h-80" />
-          <Skeleton className="h-8 mb-2 w-96" />
-          <Skeleton className="w-48 h-8 mb-2" />
-          <Skeleton className="w-full h-64 mt-24" />
-        </div>
-      </div>
-    );
+  if (isLoading) return <ProfileSkeleton />;
   if (!user) return <p>No profile data</p>;
 
   return (
@@ -157,7 +147,7 @@ const Profile = () => {
                   <DialogTrigger asChild>
                     <Button variant="outline">Edit Profile</Button>
                   </DialogTrigger>
-                  <DialogContent className="sm:max-w-[425px]">
+                  <DialogContent className="max-w-[600px] ">
                     <DialogHeader>
                       <DialogTitle>Edit profile</DialogTitle>
                       <DialogDescription>
@@ -194,14 +184,18 @@ const Profile = () => {
                         </Label>
                         <Textarea
                           id="bio"
-                          className="col-span-3"
+                          className="col-span-3 min-h-[300px]"
                           value={editUserdata.bio}
                           onChange={handleInputChange}
                         />
                       </div>
                     </div>
                     <DialogFooter>
-                      <Button type="button" onClick={handleSaveChanges}>
+                      <Button
+                        type="button"
+                        className="bg-accent hover:bg-accentdark"
+                        onClick={handleSaveChanges}
+                      >
                         Save changes
                       </Button>
                     </DialogFooter>
@@ -230,7 +224,10 @@ const Profile = () => {
           </div>
 
           <div>
-            <Products products={products} />
+            <h1 className="font-poppins text-[24px] font-semibold text-textmain mt-16 mb-10 px-4 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
+              Your listings
+            </h1>
+            <ProductsProfile products={products} />
           </div>
         </div>
       ) : (

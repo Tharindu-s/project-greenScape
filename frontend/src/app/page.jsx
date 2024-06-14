@@ -4,11 +4,12 @@ import Form from "../components/Common/Form";
 import { useAuthContext } from "@/hooks/useAuthContext";
 // import { useWorkoutsContext } from "@/hooks/useWorkoutsContext";
 import { useProductsContext } from "@/hooks/useProductsContex";
-import Products from "@/components/home/Products";
 import Categories from "@/components/home/Categories";
 import Hero from "@/components/home/Hero";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { IoMdAdd } from "react-icons/io";
+import Products from "@/components/home/Products-common";
 
 export default function Home() {
   // const { workouts, dispatch } = useWorkoutsContext();
@@ -32,12 +33,17 @@ export default function Home() {
     }
   }, [dispatch, user]);
   return (
-    <div className="home">
+    <div className="relative home">
       <Hero />
       <Link href="/add">
-        <Button>Post a product</Button>
+        <Button className="fixed w-20 h-20 rounded-full bg-accent hover:bg-accentdark bottom-4 right-4">
+          <IoMdAdd size={48} />
+        </Button>
       </Link>
       <Categories />
+      <h1 className="font-poppins text-center text-[24px] font-semibold text-textmain mt-16 mb-10">
+        Latest listings
+      </h1>
       <Products products={products} />
     </div>
   );

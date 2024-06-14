@@ -1,2 +1,3 @@
 see more buton to reviews
 create seperate logins for buyer seller and companies
+link profiles
