@@ -24,7 +24,9 @@ const Products = ({ products }) => {
               >
                 <div className="overflow-hidden items-center w-[200px] h-[200px] mx-auto">
                   <Image
-                    src={productImg}
+                    src={product.image}
+                    width={200}
+                    height={200}
                     className="object-cover w-full h-full transition-all duration-500 hover:scale-105 ease rounded-xl"
                     alt="product image"
                   ></Image>

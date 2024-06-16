@@ -64,6 +64,7 @@ const createProduct = async (req, res) => {
     username,
     condition,
     userId,
+    image,
   } = req.body;
 
   let emptyFields = [];
@@ -96,6 +97,10 @@ const createProduct = async (req, res) => {
     emptyFields.push("username");
     return res.json({ error: "Please fill the userId" });
   }
+  if (!image) {
+    emptyFields.push("image");
+    return res.json({ error: "Please fill the image" });
+  }
   if (emptyFields.length > 0) {
     return res
       .status(400)
@@ -113,6 +118,7 @@ const createProduct = async (req, res) => {
       username,
       userId,
       condition,
+      image,
     });
     res.status(200).json(product);
   } catch (error) {

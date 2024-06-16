@@ -27,10 +27,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { app } from "@/lib/firebase";
+const storage = getStorage(app);
 
 const Form = () => {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
   const { user } = useAuthContext();
 
   const [name, setName] = useState("");
@@ -40,9 +48,48 @@ const Form = () => {
   const [quantity, setQuantity] = useState("");
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
+  const [media, setMedia] = useState("");
   const [condition, setCondition] = useState({ sell: false, exchange: false });
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const upload = () => {
+      const imageName = new Date().getTime() + image.name;
+      const storageRef = ref(storage, imageName);
+
+      const uploadTask = uploadBytesResumable(storageRef, image);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          console.error(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setMedia(downloadURL);
+          });
+        }
+      );
+    };
+
+    if (image) {
+      upload();
+    }
+  }, [image]);
 
   useEffect(() => {
     if (user) {
@@ -74,7 +121,8 @@ const Form = () => {
       quantity,
       username,
       userId,
-      condition, // Include the checkbox values
+      condition,
+      image: media,
     };
 
     const response = await fetch("/api/products", {
@@ -97,7 +145,7 @@ const Form = () => {
       setDescription("");
       setPrice("");
       setQuantity("");
-      setImage("");
+      setImage(null);
       setCondition({ sell: false, exchange: false });
       console.log("new product added:", json);
     }
@@ -221,11 +269,10 @@ const Form = () => {
         </div>
         <div className="my-4">
           <label>Insert images</label>
-          <Input
+          <input
             id="picture"
             type="file"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
+            onChange={(e) => setImage(e.target.files[0])}
           />
         </div>
         <Input
@@ -240,7 +287,7 @@ const Form = () => {
           className="hidden"
           id="userId"
           type="text"
-          value={username}
+          value={userId}
           disabled
           onChange={(e) => setUserId(e.target.value)}
         />
