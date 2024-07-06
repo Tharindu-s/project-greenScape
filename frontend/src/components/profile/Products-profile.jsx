@@ -137,17 +137,18 @@ const ProductsProfile = ({ products }) => {
                       {product.name}
                     </Link>
                   </TableCell>
-
                   <TableCell>{product.category}</TableCell>
                   <TableCell>{product.quantity}</TableCell>
-                  <TableCell> {product.price}</TableCell>
+                  <TableCell>{product.price}</TableCell>
                   <TableCell className="text-right">
                     {/* #############################  delete product  ############################# */}
                     <AlertDialog>
-                      <AlertDialogTrigger>
-                        <Button className="my-1 mr-3 bg-red-400 hover:bg-red-500">
-                          <MdDeleteForever size={20} />
-                        </Button>
+                      <AlertDialogTrigger asChild>
+                        <span>
+                          <Button className="my-1 mr-3 bg-red-400 hover:bg-red-500">
+                            <MdDeleteForever size={20} />
+                          </Button>
+                        </span>
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
@@ -174,14 +175,16 @@ const ProductsProfile = ({ products }) => {
                     {/* #############################  edit product  ############################# */}
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button
-                          className="my-1 mr-3 bg-accent hover:bg-accentdark"
-                          onClick={() => handleEdit(product)}
-                        >
-                          <MdModeEdit size={20} />
-                        </Button>
+                        <span>
+                          <Button
+                            className="my-1 mr-3 bg-accent hover:bg-accentdark"
+                            onClick={() => handleEdit(product)}
+                          >
+                            <MdModeEdit size={20} />
+                          </Button>
+                        </span>
                       </DialogTrigger>
-                      <DialogContent className="max-w-[600px] ">
+                      <DialogContent className="max-w-[600px]">
                         <DialogHeader>
                           <DialogTitle>Edit product</DialogTitle>
                           <DialogDescription>

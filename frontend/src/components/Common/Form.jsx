@@ -20,6 +20,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { categoryList } from "../Constants/Category-data";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -248,12 +249,14 @@ const Form = () => {
         </div>
         <div className="my-4">
           <label>Available for</label>
+
           <div>
             <label>
               <input
                 type="checkbox"
                 checked={condition.sell}
                 onChange={(e) => handleCheckboxChange(e, "sell")}
+                className="w-5 h-5 mr-2 border border-gray-300 rounded-md appearance-none cursor-pointer hover:border-accent hover:bg-accent checked:bg-no-repeat checked:bg-center checked:border-accent checked:bg-accentdark"
               />
               Sell
             </label>
@@ -262,6 +265,7 @@ const Form = () => {
                 type="checkbox"
                 checked={condition.exchange}
                 onChange={(e) => handleCheckboxChange(e, "exchange")}
+                className="w-5 h-5 mr-2 border border-gray-300 rounded-md appearance-none cursor-pointer hover:border-accent hover:bg-accent checked:bg-no-repeat checked:bg-center checked:border-accent checked:bg-accentdark"
               />
               Exchange
             </label>
@@ -269,7 +273,7 @@ const Form = () => {
         </div>
         <div className="my-4">
           <label>Insert images</label>
-          <input
+          <Input
             id="picture"
             type="file"
             onChange={(e) => setImage(e.target.files[0])}

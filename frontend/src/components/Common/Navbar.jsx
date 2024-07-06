@@ -26,6 +26,7 @@ import { FaSearch } from "react-icons/fa";
 import { services } from "../Constants/Navbar-data";
 import { materials } from "../Constants/Navbar-data";
 import { plants } from "../Constants/Navbar-data";
+import { MdArrowDropDown } from "react-icons/md";
 
 function Navbar() {
   const { user } = useAuthContext();
@@ -142,7 +143,11 @@ function Navbar() {
       {user && (
         <div>
           <DropdownMenu>
-            <DropdownMenuTrigger>My profile</DropdownMenuTrigger>
+            <DropdownMenuTrigger>
+              <div className="flex items-center gap-1">
+                <p>My profile</p> <MdArrowDropDown size={18} />
+              </div>
+            </DropdownMenuTrigger>
             <DropdownMenuContent>
               <Link href="/my-profile">
                 <DropdownMenuLabel>{user.email}</DropdownMenuLabel>

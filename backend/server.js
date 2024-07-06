@@ -7,6 +7,9 @@ const workoutRoutes = require("./routes/workouts");
 const userRoutes = require("./routes/user");
 const productRoutes = require("./routes/product");
 const reviewRoutes = require("./routes/reviews");
+const professionalRoutes = require("./routes/professional");
+const projectRoutes = require("./routes/project");
+const testRoutes = require("./routes/test");
 mongoose.set("strictQuery", false);
 
 // express app
@@ -26,6 +29,9 @@ app.use("/api/workouts", workoutRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/professional", professionalRoutes);
+app.use("/api/projects", projectRoutes);
+app.use("/api/test", testRoutes);
 
 // connect to db
 mongoose

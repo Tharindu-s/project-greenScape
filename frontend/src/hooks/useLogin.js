@@ -20,6 +20,7 @@ export const useLogin = () => {
     if (!response.ok) {
       setError(json.error);
       setIsLoading(false);
+      return false; // Return false on failure
     } else {
       // Save the user to local storage
       localStorage.setItem(
@@ -35,6 +36,7 @@ export const useLogin = () => {
       // Update the auth context
       dispatch({ type: "LOGIN", payload: json });
       setIsLoading(false);
+      return true; // Return true on success
     }
   };
 

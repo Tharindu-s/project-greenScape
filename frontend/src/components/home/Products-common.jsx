@@ -5,9 +5,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import productImg from "../../assets/product.png";
 import Image from "next/image";
 import Link from "next/link";
+
+// components
 import ProductsSkeleton from "../skeletons/skeleton-products";
 
 const Products = ({ products }) => {
@@ -27,7 +28,7 @@ const Products = ({ products }) => {
                     src={product.image}
                     width={200}
                     height={200}
-                    className="object-cover w-full h-full transition-all duration-500 hover:scale-105 ease rounded-xl"
+                    className="object-cover w-full h-full rounded-xl"
                     alt="product image"
                   ></Image>
                 </div>

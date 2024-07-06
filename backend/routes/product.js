@@ -7,6 +7,7 @@ const {
   updateProduct,
   getProductsByCategory,
   getProductsByUser,
+  getProductsByProfessional,
 } = require("../controllers/productController");
 const requireAuth = require("../middleware/requireAuth");
 
@@ -14,7 +15,7 @@ const router = express.Router();
 
 // require auth for all routes
 
-// router.use(requireAuth);
+router.use(requireAuth);
 
 // GET all products
 router.get("/", getProducts);
@@ -36,5 +37,8 @@ router.get("/category/:category", getProductsByCategory);
 
 // GET products by user
 router.get("/user/:userId", getProductsByUser);
+
+// GET products by professional
+router.get("/professional/:userId", getProductsByProfessional);
 
 module.exports = router;

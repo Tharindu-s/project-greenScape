@@ -9,7 +9,7 @@ const getProducts = async (req, res) => {
   res.status(200).json(products);
 };
 
-// get a single products
+// get a single product
 const getProduct = async (req, res) => {
   const { id } = req.params;
 
@@ -44,6 +44,23 @@ const getProductsByUser = async (req, res) => {
 
   try {
     const products = await Product.find({ userId }).sort({ createdAt: -1 });
+    if (products.length === 0) {
+      return res.status(404).json({ error: "No products found for this user" });
+    }
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// get products by professsional
+const getProductsByProfessional = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const products = await Product.find({ userId }).sort({
+      createdAt: -1,
+    });
     if (products.length === 0) {
       return res.status(404).json({ error: "No products found for this user" });
     }
@@ -173,4 +190,5 @@ module.exports = {
   updateProduct,
   getProductsByCategory,
   getProductsByUser,
+  getProductsByProfessional,
 };
