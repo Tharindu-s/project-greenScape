@@ -13,6 +13,19 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import BuyExchangeButtons from "@/components/Products/Buy-ExchangeButton";
 
 async function getproductInfo(id) {
   if (!id) {
@@ -107,9 +120,12 @@ export default async function ProductInfo({ params }) {
               )}
               {/* Conditional rendering for exchange button */}
               {product.condition.exchange && (
-                <Button className="px-4 py-2 text-black rounded-md font-inter bg-background hover:bg-[#DADBDA]">
-                  Exchange
-                </Button>
+                <div>
+                  <BuyExchangeButtons
+                    productID={product._id}
+                    userId={product.userId}
+                  />
+                </div>
               )}
             </div>
           </div>

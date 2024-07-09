@@ -10,6 +10,7 @@ const reviewRoutes = require("./routes/reviews");
 const professionalRoutes = require("./routes/professional");
 const projectRoutes = require("./routes/project");
 const testRoutes = require("./routes/test");
+const exchangeRoutes = require("./routes/exchange");
 mongoose.set("strictQuery", false);
 
 // express app
@@ -32,6 +33,7 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/professional", professionalRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/test", testRoutes);
+app.use("/api/exchange", exchangeRoutes);
 
 // connect to db
 mongoose

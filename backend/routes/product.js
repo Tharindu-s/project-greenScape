@@ -15,7 +15,7 @@ const router = express.Router();
 
 // require auth for all routes
 
-router.use(requireAuth);
+// router.use(requireAuth);
 
 // GET all products
 router.get("/", getProducts);
@@ -27,10 +27,10 @@ router.get("/:id", getProduct);
 router.post("/", createProduct);
 
 // DELETE a product
-router.delete("/:id", deleteProduct);
+router.delete("/:id", deleteProduct, requireAuth);
 
 // UPDATE a product
-router.patch("/:id", updateProduct);
+router.patch("/:id", updateProduct, requireAuth);
 
 // GET products by category
 router.get("/category/:category", getProductsByCategory);

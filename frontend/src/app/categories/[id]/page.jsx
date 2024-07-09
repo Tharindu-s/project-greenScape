@@ -10,7 +10,7 @@ async function getCategoryInfo(id) {
 
   const res = await fetch(`http://localhost:4000/api/products/category/${id}`, {
     next: {
-      revalidate: 2,
+      revalidate: 0,
     },
   });
 

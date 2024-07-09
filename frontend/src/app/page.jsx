@@ -40,6 +40,9 @@ export default function Home() {
           <IoMdAdd size={48} />
         </Button>
       </Link>
+      <Link href="/dashboard">
+        <Button>Dashboard</Button>
+      </Link>
       <Categories />
       <h1 className="font-poppins text-center text-[24px] font-semibold text-textmain mt-16 mb-10">
         Latest listings
