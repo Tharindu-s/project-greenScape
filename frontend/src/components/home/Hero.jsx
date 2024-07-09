@@ -1,19 +1,33 @@
-import Image from "next/image";
 import React from "react";
-import heroImg from "../../assets/home/home-hero.png";
+import Image from "next/image";
+import HeroImg from "../../assets/home/hero.jpg";
+import { Input } from "../ui/input";
 
 const Hero = () => {
   return (
-    <div className="flex items-center justify-center mt-16 mb-32 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
-      <div className="relative">
-        <Image src={heroImg} className="rounded-3xl" alt="hero-image" />
-        <div className="absolute left-0 pt-12 pl-12 transform -translate-y-1/2 top-1/3">
-          <p className="font-poppins font-bold 2xl:text-[70px] text-white w-[900px] uppercase">
-            Browse diverse listings for all your gardening essentials
-          </p>
-          <p className="font-inter font-normal 2xl:text-[20px] text-white">
-            Your one-stop destination for all gardening materials
-          </p>
+    <div className="relative h-screen">
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg- opacity-10"></div>
+
+      {/* Image */}
+      <Image
+        src={HeroImg}
+        layout="fill"
+        objectFit="cover"
+        objectPosition="center"
+        alt="hero-img"
+      />
+
+      {/* Centered text */}
+      <div className="absolute inset-0 flex items-center justify-center text-white">
+        <div>
+          <h1 className="text-4xl font-bold text-center md:text-6xl lg:text-7xl">
+            Welcome to My Website
+          </h1>
+          <Input
+            className="p-8 mx-auto rounded-full w-96 text-textmain"
+            placeholder="Search for anything..."
+          />
         </div>
       </div>
     </div>

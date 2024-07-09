@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Common/Navbar";
+import Navbar from "@/components/Common/Navbar/Navbar";
 import Footer from "@/components/Common/Footer";
 import { AuthContextProvider } from "@/context/authContext";
 import { WorkoutsContextProvider } from "@/context/workoutContext";

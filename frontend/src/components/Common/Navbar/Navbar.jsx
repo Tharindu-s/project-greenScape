@@ -2,8 +2,8 @@
 import React from "react";
 import Link from "next/link";
 import { useLogout } from "@/hooks/useLogout";
-import { cn } from "../../lib/utils";
-import logo from "../../assets/logo.png";
+import { cn } from "../../../lib/utils";
+import logo from "../../../assets/logo.png";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import {
   NavigationMenu,
@@ -12,31 +12,21 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "../ui/navigation-menu";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "../../ui/navigation-menu";
+
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
-import { services } from "../Constants/Navbar-data";
-import { materials } from "../Constants/Navbar-data";
-import { plants } from "../Constants/Navbar-data";
-import { MdArrowDropDown } from "react-icons/md";
+import { services } from "../../Constants/Navbar-data";
+import { materials } from "../../Constants/Navbar-data";
+import { plants } from "../../Constants/Navbar-data";
+import NavbarIcons from "./NavbarIcons";
+import UserProfileMenu from "./UserProfileMenu";
 
 function Navbar() {
   const { user } = useAuthContext();
-  const { logout } = useLogout();
 
-  const handleClick = () => {
-    logout();
-  };
   return (
-    <div className="flex justify-between px-4 py-4 bg-mint md:px-10 lg:px-12 xl:px-24 2xl:px-48">
+    <div className="fixed z-50 flex items-center justify-between w-full px-4 py-4 bg-white border-b border-gray-300 md:px-10 lg:px-12 xl:px-24 2xl:px-48">
       <div>
         <NavigationMenu>
           <NavigationMenuList>
@@ -140,41 +130,26 @@ function Navbar() {
           </button>
         </div>
       </div>
-      {user && (
-        <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <div className="flex items-center gap-1">
-                <p>My profile</p> <MdArrowDropDown size={18} />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <Link href="/my-profile">
-                <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
-              </Link>
-              <DropdownMenuSeparator />
-
-              <DropdownMenuItem>
-                <button onClick={handleClick}>Log out</button>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      )}
-      {!user && (
-        <div className="flex">
-          <Link href="/signup">
-            <p className="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md group w-max hover:bg-accent hover:text-white">
-              Sign up
-            </p>
-          </Link>
-          <Link href="/login">
-            <p className="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md bg-slate-100 hover:bg-white group w-max">
-              Log in
-            </p>
-          </Link>
-        </div>
-      )}
+      {/* messages, notifications and cart icons */}
+      <NavbarIcons />
+      <div className="flex items-center">
+        {user ? (
+          <UserProfileMenu />
+        ) : (
+          <>
+            <Link href="/signup">
+              <p className="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md group w-max hover:bg-accent hover:text-white">
+                Sign up
+              </p>
+            </Link>
+            <Link href="/login">
+              <p className="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md bg-slate-100 hover:bg-white group w-max">
+                Log in
+              </p>
+            </Link>
+          </>
+        )}
+      </div>
     </div>
   );
 }

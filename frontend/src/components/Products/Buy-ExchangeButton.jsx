@@ -90,7 +90,7 @@ const BuyExchangeButtons = ({ productID, userId }) => {
                 placeholder="Describe the product you want to exchange"
                 onChange={(e) => setDescription(e.target.value)}
               />
-              <div className="my-3 ">
+              <div className="hidden my-3 ">
                 <p>sender id</p>
                 <input
                   type="text"

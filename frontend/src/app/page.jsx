@@ -34,7 +34,7 @@ export default function Home() {
   }, [dispatch, user]);
   return (
     <div className="relative home">
-      {/* <Hero /> */}
+      <Hero />
       <Link href="/add">
         <Button className="fixed w-20 h-20 rounded-full bg-accent hover:bg-accentdark bottom-4 right-4">
           <IoMdAdd size={48} />
