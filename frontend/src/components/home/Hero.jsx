@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import HeroImg from "../../assets/home/hero.jpg";
 import { Input } from "../ui/input";
+import PlaceholdersAndVanishInputDemo from "./VanishInput";
 
 const Hero = () => {
   return (
@@ -30,6 +31,7 @@ const Hero = () => {
           />
         </div>
       </div>
+      <PlaceholdersAndVanishInputDemo />
     </div>
   );
 };
