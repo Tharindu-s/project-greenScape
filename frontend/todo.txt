@@ -1,0 +1,7 @@
+see more buton to reviews
+create seperate logins for buyer seller and companies
+link profiles
+
+use firebase as image storage and the chat feature
+https://www.youtube.com/watch?v=DpYE5zPDRVQ&t=870s
+this video also includes how to host the website on a vps server
