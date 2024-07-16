@@ -2,11 +2,11 @@ import { PlaceholdersAndVanishInput } from "../ui/placeholders-and-vanish-input"
 
 function PlaceholdersAndVanishInputDemo() {
   const placeholders = [
-    "What's the first rule of Fight Club?",
-    "Who is Tyler Durden?",
-    "Where is Andrew Laeddis Hiding?",
-    "Write a Javascript method to reverse a string",
-    "How to assemble your own PC?",
+    "Plants",
+    "Seeds",
+    "Services",
+    "Fertilizers",
+    "Materials",
   ];
 
   const handleChange = (e) => {
@@ -19,10 +19,11 @@ function PlaceholdersAndVanishInputDemo() {
   };
 
   return (
-    <div className="h-[40rem] flex flex-col justify-center items-center px-4">
-      <h2 className="mb-10 text-xl text-center text-black sm:mb-20 sm:text-5xl dark:text-white">
-        Ask Aceternity UI Anything
-      </h2>
+    <div className="">
+      <h1 className="mb-10 text-xl font-medium text-center text-white font-poppins sm:mb-8 sm:text-5xl lg:w-[700px] leading-6">
+        Everything You Need for Your Garden in One Place
+      </h1>
+
       <PlaceholdersAndVanishInput
         placeholders={placeholders}
         onChange={handleChange}

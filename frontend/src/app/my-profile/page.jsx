@@ -126,7 +126,7 @@ const Profile = () => {
       {userdata ? (
         <div>
           {/* hero */}
-          <div className="px-4 md:px-10 lg:px-12 xl:px-24 2xl:px-64 ">
+          <div className="px-4 mt-32 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
             <div className="relative w-full mt-16 mb-10 h-80 rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-500">
               <div className="absolute -bottom-20 left-4">
                 <Image

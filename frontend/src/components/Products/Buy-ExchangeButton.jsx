@@ -14,19 +14,24 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuthContext } from "@/hooks/useAuthContext";
 
-const BuyExchangeButtons = ({ productID, userId }) => {
+const BuyExchangeButtons = ({
+  productId,
+  productName,
+  recieverName,
+  recieverId,
+}) => {
   const { toast } = useToast();
   const { user } = useAuthContext();
 
   const [description, setDescription] = useState("");
   const [senderId, setSenderId] = useState("");
+  const [senderName, setSendername] = useState("");
   const [error, setError] = useState(null);
-  const recieverId = userId; // Pre-fill recieverID from prop
-  const productId = productID; // Pre-fill productID from prop
 
   useEffect(() => {
     if (user) {
       setSenderId(user.userId); // Pre-fill userID from context
+      setSendername(user.userName); // Pre-fill userName from context
     }
   }, [user]);
 
@@ -41,8 +46,11 @@ const BuyExchangeButtons = ({ productID, userId }) => {
     const exchangeRequest = {
       description,
       senderId,
+      senderName,
       recieverId,
+      recieverName,
       productId,
+      productName,
     };
 
     const response = await fetch("/api/exchange", {

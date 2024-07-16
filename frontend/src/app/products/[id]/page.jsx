@@ -122,8 +122,10 @@ export default async function ProductInfo({ params }) {
               {product.condition.exchange && (
                 <div>
                   <BuyExchangeButtons
-                    productID={product._id}
-                    userId={product.userId}
+                    productId={product._id}
+                    productName={product.name}
+                    recieverName={product.username}
+                    recieverId={product.userId}
                   />
                 </div>
               )}

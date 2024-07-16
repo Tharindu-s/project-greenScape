@@ -26,7 +26,7 @@ function Navbar() {
   const { user } = useAuthContext();
 
   return (
-    <div className="fixed z-50 flex items-center justify-between w-full px-4 py-4 bg-white border-b border-gray-300 md:px-10 lg:px-12 xl:px-24 2xl:px-48">
+    <div className="fixed top-0 z-50 flex items-center justify-between w-full px-4 py-4 bg-white border-b border-gray-300 md:px-10 lg:px-12 xl:px-24 2xl:px-48">
       <div>
         <NavigationMenu>
           <NavigationMenuList>

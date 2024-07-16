@@ -17,11 +17,23 @@ const exchangeSchema = new Schema(
       type: String,
       required: true,
     },
+    senderName: {
+      type: String,
+      required: true,
+    },
     recieverId: {
       type: String,
       required: true,
     },
+    recieverName: {
+      type: String,
+      required: true,
+    },
     productId: {
+      type: String,
+      required: true,
+    },
+    productName: {
       type: String,
       required: true,
     },
