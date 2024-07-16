@@ -37,7 +37,12 @@ const exchangeSchema = new Schema(
       type: String,
       required: true,
     },
-    state: {
+    recieverState: {
+      type: String,
+      default: "pending",
+      required: true,
+    },
+    senderState: {
       type: String,
       default: "pending",
       required: true,

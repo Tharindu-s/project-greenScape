@@ -26,7 +26,7 @@ import { exchangeState } from "../Constants/Exchange-state-data";
 import ProductsSkeleton from "../skeletons/skeleton-products";
 import { Button } from "../ui/button";
 
-const RequestList = () => {
+const RecievedRequestsList = () => {
   const { user } = useAuthContext();
   const recieverId = user?.userId;
   const [loading, setLoading] = useState(true);
@@ -37,7 +37,7 @@ const RequestList = () => {
   // Fetch exchange requests
   useEffect(() => {
     if (recieverId) {
-      fetch(`/api/exchange/user/${recieverId}`)
+      fetch(`/api/exchange/user/recieved/${recieverId}`)
         .then((res) => res.json())
         .then((exchange) => {
           setExchange(exchange);
@@ -65,7 +65,7 @@ const RequestList = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ state: selectedState }),
+        body: JSON.stringify({ recieverState: selectedState }),
       })
         .then((res) => {
           // Handle response as needed
@@ -87,7 +87,8 @@ const RequestList = () => {
                 <TableHead className="w-[100px]">Product Name</TableHead>
                 <TableHead>From</TableHead>
                 <TableHead>Request Description</TableHead>
-                <TableHead>Exchange state</TableHead>
+                <TableHead>Your state</TableHead>
+                <TableHead>Their state</TableHead>
                 <TableHead className="text-right">Date</TableHead>
               </TableRow>
             </TableHeader>
@@ -99,7 +100,12 @@ const RequestList = () => {
                   <TableCell>{request.description}</TableCell>
                   <TableCell>
                     <AlertDialog>
-                      <AlertDialogTrigger>{request.state}</AlertDialogTrigger>
+                      <AlertDialogTrigger>
+                        <p className="p-3 text-white bg-green-400 rounded-xl">
+                          {" "}
+                          {request.recieverState}
+                        </p>
+                      </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
                           <AlertDialogTitle>
@@ -130,6 +136,7 @@ const RequestList = () => {
                       </AlertDialogContent>
                     </AlertDialog>
                   </TableCell>
+                  <TableCell>{request.senderState}</TableCell>
                   <TableCell className="text-right">
                     {request.createdAt.slice(0, 10)}
                   </TableCell>
@@ -139,10 +146,11 @@ const RequestList = () => {
           </Table>
         </div>
       ) : (
-        <ProductsSkeleton />
+        // <ProductsSkeleton />
+        <p>empty</p>
       )}
     </div>
   );
 };
 
-export default RequestList;
+export default RecievedRequestsList;

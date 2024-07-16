@@ -12,7 +12,8 @@ const createExchange = async (req, res) => {
     recieverName,
     productId,
     productName,
-    state,
+    senderState,
+    recieverState,
   } = req.body;
 
   let emptyFields = [];
@@ -51,7 +52,8 @@ const createExchange = async (req, res) => {
       recieverName,
       productId,
       productName,
-      state,
+      senderState,
+      recieverState,
     });
     res.status(200).json(exchange);
   } catch (error) {
@@ -59,8 +61,8 @@ const createExchange = async (req, res) => {
   }
 };
 
-// get requests by user
-const getExchangesByUser = async (req, res) => {
+// get recieved requests by user
+const getRecievedExchangesByUser = async (req, res) => {
   const { recieverId } = req.params;
 
   try {
@@ -71,6 +73,25 @@ const getExchangesByUser = async (req, res) => {
       return res
         .status(404)
         .json({ error: "No exchange requests found for this user" });
+    }
+    res.status(200).json(exchanges);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// get sent requests by user
+const getSentExchangesByUser = async (req, res) => {
+  const { senderId } = req.params;
+
+  try {
+    const exchanges = await Exchange.find({ senderId }).sort({
+      createdAt: -1,
+    });
+    if (exchanges.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "You haven't sent any exchange requests" });
     }
     res.status(200).json(exchanges);
   } catch (error) {
@@ -102,6 +123,7 @@ const updateRequest = async (req, res) => {
 
 module.exports = {
   createExchange,
-  getExchangesByUser,
+  getRecievedExchangesByUser,
+  getSentExchangesByUser,
   updateRequest,
 };
