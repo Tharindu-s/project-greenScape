@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLogout } from "@/hooks/useLogout";
 import { cn } from "../../../lib/utils";
@@ -21,8 +21,13 @@ import { materials } from "../../Constants/Navbar-data";
 import { plants } from "../../Constants/Navbar-data";
 import NavbarIcons from "./NavbarIcons";
 import UserProfileMenu from "./UserProfileMenu";
+import { BASE_URL } from "@/components/Constants/server";
+import { set } from "react-hook-form";
+import SearchBar from "../SearchBar";
+import { useSearch } from "@/context/searchContext";
 
 function Navbar() {
+  const { setSearch } = useSearch();
   const { user } = useAuthContext();
 
   return (
@@ -119,12 +124,7 @@ function Navbar() {
       </div>
       <div>
         <div className="relative">
-          <input
-            type="text"
-            placeholder="Search for products and services..."
-            name="input"
-            className="block w-96 px-3 py-2 bg-white border rounded-md shadow-sm input fmt-1 border-slate-300 placeholder-slate-400 focus:outline-none focus:border-accent focus:ring-accent sm:text-sm focus:ring-1 placeholder:text-[14px] mx-2"
-          />
+          <SearchBar setSearch={setSearch} />
           <button className="absolute inset-y-0 right-0 flex items-center pr-4 ">
             <FaSearch className="text-gray-400" />
           </button>

@@ -182,6 +182,39 @@ const updateProduct = async (req, res) => {
   res.status(200).json(product);
 };
 
+// search products
+
+const searchProducts = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) - 1 || 0;
+    const limit = parseInt(req.query.limit) || 2;
+    const search = req.query.search || "";
+
+    const products = await Product.find({
+      name: { $regex: search, $options: "i" },
+    })
+      .limit(limit)
+      .skip(limit * page);
+
+    const total = await Product.countDocuments({
+      name: { $regex: search, $options: "i" },
+    });
+
+    // include all below things on the reposnse not only the products object
+
+    const response = {
+      total,
+      page: page + 1,
+      limit,
+      products,
+    };
+
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getProduct,
   getProducts,
@@ -191,4 +224,5 @@ module.exports = {
   getProductsByCategory,
   getProductsByUser,
   getProductsByProfessional,
+  searchProducts,
 };

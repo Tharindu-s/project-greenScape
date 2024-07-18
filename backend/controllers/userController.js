@@ -81,4 +81,17 @@ const updateUser = async (req, res) => {
   res.status(200).json(user);
 };
 
+//forgot password
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  const user = User.findOne({ email: email });
+
+  if (!user) {
+    return res.status(400).json({ error: "Email does not exist" });
+  }
+
+  //create token
+  const token = jwt.sign({ id: user._id }, "jwtSecret", { expiresIn: "1d" });
+};
+
 module.exports = { signupUser, loginUser, getUser, updateUser };
