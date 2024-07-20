@@ -35,6 +35,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { app } from "@/lib/firebase";
+import { Progress } from "../ui/progress";
 const storage = getStorage(app);
 
 const Form = () => {
@@ -49,49 +50,65 @@ const Form = () => {
   const [quantity, setQuantity] = useState("");
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState("");
-  const [image, setImage] = useState(null);
-  const [media, setMedia] = useState("");
+  // const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
   const [condition, setCondition] = useState({ sell: false, exchange: false });
+  const [media, setMedia] = useState([]);
   const [error, setError] = useState(null);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const upload = () => {
-      const imageName = new Date().getTime() + image.name;
-      const storageRef = ref(storage, imageName);
+    const upload = async () => {
+      const uploadTasks = images.map((image) => {
+        const imageName = new Date().getTime() + image.name;
+        const storageRef = ref(storage, imageName);
+        const uploadTask = uploadBytesResumable(storageRef, image);
 
-      const uploadTask = uploadBytesResumable(storageRef, image);
+        return new Promise((resolve, reject) => {
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              const progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              setProgress(progress);
+              console.log("Upload is " + progress + "% done");
+              switch (snapshot.state) {
+                case "paused":
+                  console.log("Upload is paused");
+                  break;
+                case "running":
+                  console.log("Upload is running");
+                  break;
+              }
+            },
+            (error) => {
+              console.error(error);
+              reject(error);
+            },
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref)
+                .then((downloadURL) => {
+                  resolve(downloadURL);
+                })
+                .catch((error) => reject(error));
+            }
+          );
+        });
+      });
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          console.error(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setMedia(downloadURL);
-          });
-        }
-      );
+      try {
+        const urls = await Promise.all(uploadTasks);
+        setMedia(urls); // Assuming you want to store all URLs
+        console.log(urls);
+      } catch (error) {
+        console.error("Error uploading images:", error);
+      }
     };
 
-    if (image) {
+    if (images.length > 0) {
       upload();
     }
-  }, [image]);
-
+  }, [images]);
   useEffect(() => {
     if (user) {
       setUsername(user.userName); // Pre-fill username from context
@@ -146,7 +163,7 @@ const Form = () => {
       setDescription("");
       setPrice("");
       setQuantity("");
-      setImage(null);
+      setImages([]);
       setCondition({ sell: false, exchange: false });
       console.log("new product added:", json);
     }
@@ -271,13 +288,61 @@ const Form = () => {
             </label>
           </div>
         </div>
-        <div className="my-4">
+        {/* <div className="my-4">
           <label>Insert images</label>
           <Input
             id="picture"
             type="file"
             onChange={(e) => setImage(e.target.files[0])}
           />
+        </div> */}
+
+        <div className="w-full flex-col justify-start items-start gap-2.5 flex my-4">
+          <label className="text-[14px] pl-1">Insert images</label>
+          <label
+            for="dropzone-file"
+            className="flex flex-col items-center justify-center w-full px-6 border border-gray-300 border-dashed cursor-pointer py-9 rounded-2xl bg-gray-50"
+          >
+            <div className="flex items-center justify-center mb-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+              >
+                <g id="Upload 02">
+                  <path
+                    id="icon"
+                    d="M16.296 25.3935L19.9997 21.6667L23.7034 25.3935M19.9997 35V21.759M10.7404 27.3611H9.855C6.253 27.3611 3.33301 24.4411 3.33301 20.8391C3.33301 17.2371 6.253 14.3171 9.855 14.3171V14.3171C10.344 14.3171 10.736 13.9195 10.7816 13.4326C11.2243 8.70174 15.1824 5 19.9997 5C25.1134 5 29.2589 9.1714 29.2589 14.3171H30.1444C33.7463 14.3171 36.6663 17.2371 36.6663 20.8391C36.6663 24.4411 33.7463 27.3611 30.1444 27.3611H29.2589"
+                    stroke="green"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                  />
+                </g>
+              </svg>
+            </div>
+            <span className="mb-1 text-xs font-normal leading-4 text-center text-gray-400">
+              Upload upto 4 images
+            </span>
+            <h6 className="text-sm font-medium leading-5 text-center text-gray-900">
+              Click here to upload
+            </h6>
+            <input
+              id="dropzone-file"
+              type="file"
+              className="hidden"
+              onChange={(e) => {
+                const files = Array.from(e.target.files);
+                setImages([...images, ...files]);
+              }}
+              multiple
+            />
+            <Progress
+              value={progress}
+              className="h-1 w-64 my-3 [&>*]:bg-greenscape"
+            />
+          </label>
         </div>
         <Input
           className="hidden"

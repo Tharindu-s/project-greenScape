@@ -30,7 +30,8 @@ const Products = ({ products }) => {
                 >
                   <div className="overflow-hidden items-center w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] mx-auto">
                     <Image
-                      src={product.image}
+                      // old objects are using strings so remove all the old products and add new products to map through them
+                      src={product.image[0]}
                       width={200}
                       height={200}
                       className="object-cover w-full h-full rounded-xl"

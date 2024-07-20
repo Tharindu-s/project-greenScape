@@ -13,6 +13,14 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import {
   Dialog,
   DialogContent,
@@ -25,7 +33,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import BuyExchangeButtons from "@/components/Products/Buy-ExchangeButton";
+import BuyExchangeButtons from "@/components/Products/ExchangeButton";
+import { FiUser } from "react-icons/fi";
 
 async function getproductInfo(id) {
   if (!id) {
@@ -79,11 +88,26 @@ export default async function ProductInfo({ params }) {
             <div className="grid grid-cols-1 gap-16 mx-auto lg:grid-cols-2 max-md:px-2 ">
               <div className="img">
                 <div className="h-full img-box max-lg:mx-auto ">
-                  <img
-                    src={product.image}
+                  <Carousel className="w-full ">
+                    <CarouselContent>
+                      {product.image.map((img, index) => (
+                        <CarouselItem key={index}>
+                          <img
+                            src={img}
+                            alt="Yellow Tropical Printed Shirt image"
+                            className="w-full h-[300px] md:h-[600px] object-cover max-lg:mx-auto lg:ml-auto rounded-xl"
+                          />
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                  </Carousel>
+                  {/* <img
+                    src={product.image[0]}
                     alt="Yellow Tropical Printed Shirt image"
                     className="h-full max-lg:mx-auto lg:ml-auto rounded-xl"
-                  />
+                  /> */}
                 </div>
               </div>
               <div className="flex w-full pr-0 my-0 data lg:pr-8 xl:justify-start max-lg:pb-10 xl:my-2 lg:my-5">
@@ -97,27 +121,7 @@ export default async function ProductInfo({ params }) {
                       ${product.price}
                     </h6>
                     <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-1">
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <g clip-path="url(#clip0_12029_1640)">
-                            <path
-                              d="M9.10326 2.31699C9.47008 1.57374 10.5299 1.57374 10.8967 2.31699L12.7063 5.98347C12.8519 6.27862 13.1335 6.48319 13.4592 6.53051L17.5054 7.11846C18.3256 7.23765 18.6531 8.24562 18.0596 8.82416L15.1318 11.6781C14.8961 11.9079 14.7885 12.2389 14.8442 12.5632L15.5353 16.5931C15.6754 17.41 14.818 18.033 14.0844 17.6473L10.4653 15.7446C10.174 15.5915 9.82598 15.5915 9.53466 15.7446L5.91562 17.6473C5.18199 18.033 4.32456 17.41 4.46467 16.5931L5.15585 12.5632C5.21148 12.2389 5.10393 11.9079 4.86825 11.6781L1.94038 8.82416C1.34687 8.24562 1.67438 7.23765 2.4946 7.11846L6.54081 6.53051C6.86652 6.48319 7.14808 6.27862 7.29374 5.98347L9.10326 2.31699Z"
-                              fill="#FBBF24"
-                            />
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_12029_1640">
-                              <rect width="20" height="20" fill="white" />
-                            </clipPath>
-                          </defs>
-                        </svg>
-                      </div>
+                      <div className="flex items-center gap-1"></div>
                       <span className="pl-2 text-sm font-normal leading-7 text-gray-500 ">
                         1624 review
                       </span>
@@ -132,15 +136,15 @@ export default async function ProductInfo({ params }) {
                       More....
                     </a>
                   </p>
-                  <div className="flex gap-2 mt-12">
-                    <FaUserCircle size={24} />
-                    <p className="font-inter text-[16px]">
+                  <div className="flex items-center gap-2 mt-12 text-accent">
+                    <FiUser size={20} />
+                    <p className="font-inter text-[16px] font-medium">
                       <Link href={`/profile/${product.userId}`}>
                         {product.username}
                       </Link>
                     </p>
                   </div>
-                  <div className="flex gap-4">
+                  <div className="flex gap-4 my-8">
                     {product.condition.sell && (
                       <Button className="px-4 py-2 rounded-md font-inter text-accent bg-background hover:bg-[#DADBDA]">
                         Buy

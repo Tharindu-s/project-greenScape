@@ -23,7 +23,7 @@ import NavbarIcons from "./NavbarIcons";
 import UserProfileMenu from "./UserProfileMenu";
 import { BASE_URL } from "@/components/Constants/server";
 import { set } from "react-hook-form";
-import SearchBar from "../SearchBar";
+import SearchBar from "./SearchBar";
 import { useSearch } from "@/context/searchContext";
 
 function Navbar() {
@@ -125,9 +125,6 @@ function Navbar() {
       <div>
         <div className="relative">
           <SearchBar setSearch={setSearch} />
-          <button className="absolute inset-y-0 right-0 flex items-center pr-4 ">
-            <FaSearch className="text-gray-400" />
-          </button>
         </div>
       </div>
       {/* messages, notifications and cart icons */}

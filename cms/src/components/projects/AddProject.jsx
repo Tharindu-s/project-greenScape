@@ -109,6 +109,7 @@ const AddProject = () => {
       upload();
     }
   }, [images]);
+
   useEffect(() => {
     if (professional) {
       setProfessionalname(professional.professionalName); // Pre-fill username from context

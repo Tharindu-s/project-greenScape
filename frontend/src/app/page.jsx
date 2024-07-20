@@ -50,9 +50,10 @@ export default function Home() {
     <div className="relative ">
       {/* <Hero /> */}
       <HeroNew />
+      <Categories />
       <Link href="/add">
-        <Button className="fixed w-20 h-20 rounded-full bg-accent hover:bg-accentdark bottom-4 right-4">
-          <IoMdAdd size={48} />
+        <Button className="fixed p-6 shadow-lg animate-bounce rounded-2xl bg-accent hover:bg-accentdark bottom-4 right-4">
+          Add a product
         </Button>
       </Link>
       <Products products={products.products ? products.products : []} />
@@ -63,7 +64,6 @@ export default function Home() {
         limit={products.limit ? products.limit : 0}
         setPage={setPage}
       />
-      <Categories />
     </div>
   );
 }
