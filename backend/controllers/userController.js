@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const nodemailer = require("nodemailer");
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
@@ -84,14 +85,51 @@ const updateUser = async (req, res) => {
 //forgot password
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
-  const user = User.findOne({ email: email });
 
-  if (!user) {
-    return res.status(400).json({ error: "Email does not exist" });
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ error: "Email does not exist" });
+    }
+
+    // Create token
+    const token = jwt.sign({ id: user._id }, process.env.SECRET, {
+      expiresIn: "1d",
+    });
+
+    // Nodemailer configuration
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+      host: "smtp.ethereal.email",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: "jamil71@ethereal.email",
+        pass: "xyCeDFT27nFGfFFzVz",
+      },
+    });
+
+    const mailOptions = {
+      from: "jamil71@ethereal.email", // sender address
+      to: email, // user email
+      subject: "Reset your password",
+      text: `http://localhost:3000/reset-password/${user._id}/${token}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Failed to send email" });
+      } else {
+        console.log("Email sent");
+        return res.json({ status: "success", message: "Email sent" });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
   }
-
-  //create token
-  const token = jwt.sign({ id: user._id }, "jwtSecret", { expiresIn: "1d" });
 };
 
-module.exports = { signupUser, loginUser, getUser, updateUser };
+module.exports = { signupUser, loginUser, getUser, updateUser, forgotPassword };

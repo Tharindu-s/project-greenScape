@@ -11,6 +11,8 @@ import SearchData from "@/components/Common/SearchData";
 import { BASE_URL } from "@/components/Constants/server";
 import Pagination from "@/components/Common/Pagination";
 import { useSearch } from "@/context/searchContext";
+import HeroNew from "@/components/Common/HeroNew";
+import Products from "@/components/home/Products-common";
 
 export default function Home() {
   const { user } = useAuthContext();
@@ -42,15 +44,18 @@ export default function Home() {
     getAllProducts();
   }, [page, search]);
 
+  // bg-red-100 home sm:bg-green-100 md:bg-gray-100 lg:bg-yellow-100 xl:bg-purple-100 2xl:bg-red-100
+
   return (
-    <div className="relative home">
-      <Hero />
+    <div className="relative ">
+      {/* <Hero /> */}
+      <HeroNew />
       <Link href="/add">
         <Button className="fixed w-20 h-20 rounded-full bg-accent hover:bg-accentdark bottom-4 right-4">
           <IoMdAdd size={48} />
         </Button>
       </Link>
-      <SearchData products={products.products ? products.products : []} />
+      <Products products={products.products ? products.products : []} />
       {console.log(products)}
       <Pagination
         page={page}
@@ -59,10 +64,6 @@ export default function Home() {
         setPage={setPage}
       />
       <Categories />
-      <h1 className="font-poppins text-center text-[24px] font-semibold text-textmain mt-16 mb-10">
-        Latest listings
-      </h1>
-      {/* <Products products={products} /> */}
     </div>
   );
 }

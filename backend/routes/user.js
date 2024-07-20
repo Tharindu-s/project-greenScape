@@ -6,6 +6,7 @@ const {
   signupUser,
   getUser,
   updateUser,
+  forgotPassword,
 } = require("../controllers/userController");
 
 const router = express.Router();
@@ -21,5 +22,8 @@ router.get("/:id", getUser);
 
 // UPDATE a user
 router.patch("/:id", updateUser);
+
+//Forgot password
+router.post("/forgotPassword", forgotPassword);
 
 module.exports = router;

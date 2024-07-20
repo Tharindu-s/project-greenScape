@@ -5,19 +5,28 @@ import logo from "../../assets/logo.png";
 import Image from "next/image";
 import { Button } from "../../components/ui/button";
 import Link from "next/link";
-import { useLogin } from "@/hooks/useLogin";
 
 // components
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const { login, error, isLoading } = useLogin();
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await login(email, password);
-    if (success) {
-      window.location.href = "/";
+    const response = await fetch("/api/user/forgotPassword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (response.ok) {
+      setError("Email sent successfully");
+    } else {
+      setError("Email not found");
     }
   };
 
