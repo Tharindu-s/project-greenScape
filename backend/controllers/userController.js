@@ -2,6 +2,9 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
+const bcrypt = require("bcrypt");
+const fs = require("fs");
+const path = require("path");
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
@@ -98,23 +101,32 @@ const forgotPassword = async (req, res) => {
       expiresIn: "1d",
     });
 
+    // Read the HTML template
+    const templatePath = path.join(
+      __dirname,
+      "Forgot password",
+      "reset_password_template.html"
+    );
+    let htmlTemplate = fs.readFileSync(templatePath, "utf8");
+
+    // Replace placeholders in the template
+    const resetLink = `http://localhost:3000/reset-password/${user._id}/${token}`;
+    htmlTemplate = htmlTemplate.replace("{{resetLink}}", resetLink);
+
     // Nodemailer configuration
-    // create reusable transporter object using the default SMTP transport
-    let transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      secure: false, // true for 465, false for other ports
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
       auth: {
-        user: "jamil71@ethereal.email",
-        pass: "xyCeDFT27nFGfFFzVz",
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
       },
     });
 
     const mailOptions = {
-      from: "jamil71@ethereal.email", // sender address
-      to: email, // user email
+      from: process.env.EMAIL, // sender address
+      to: user.email, // user email
       subject: "Reset your password",
-      text: `http://localhost:3000/reset-password/${user._id}/${token}`,
+      html: htmlTemplate,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -132,4 +144,32 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, loginUser, getUser, updateUser, forgotPassword };
+// reset password
+
+const resetPasword = async (req, res) => {
+  const user = User;
+  const { id, token } = req.params;
+  const { password } = req.body;
+
+  jwt.verify(token, process.env.SECRET, (err, decoded) => {
+    if (err) {
+      return res.json({ error: "Expired or invalid token" });
+    } else {
+      bcrypt.hash(password, 10).then((hash) => {
+        user
+          .findByIdAndUpdate({ _id: id }, { password: hash })
+          .then((u) => res.send({ Status: "Password reset successful" }))
+          .catch((err) => res.send({ Status: err }));
+      });
+    }
+  });
+};
+
+module.exports = {
+  signupUser,
+  loginUser,
+  getUser,
+  updateUser,
+  forgotPassword,
+  resetPasword,
+};
