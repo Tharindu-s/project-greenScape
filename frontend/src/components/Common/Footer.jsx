@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { ImLinkedin } from "react-icons/im";
 import { IoLogoWhatsapp } from "react-icons/io";
