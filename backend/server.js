@@ -11,6 +11,8 @@ const professionalRoutes = require("./routes/professional");
 const projectRoutes = require("./routes/project");
 const testRoutes = require("./routes/test");
 const exchangeRoutes = require("./routes/exchange");
+const conversationRoutes = require("./routes/conversation");
+const messageRoutes = require("./routes/message");
 mongoose.set("strictQuery", false);
 
 // express app
@@ -34,6 +36,8 @@ app.use("/api/professional", professionalRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/test", testRoutes);
 app.use("/api/exchange", exchangeRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/conversation", conversationRoutes);
 
 // connect to db
 mongoose

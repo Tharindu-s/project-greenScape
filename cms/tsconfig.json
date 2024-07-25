@@ -28,7 +28,8 @@
     ".next/types/**/*.ts",
     "src/app/projects/page.jsx",
     "src/components/projects/EditProject.jsx",
-    "src/app/portfolio/page.jsx"
+    "src/app/portfolio/page.jsx",
+    "src/app/products/page.jsx"
   ],
   "exclude": ["node_modules"]
 }

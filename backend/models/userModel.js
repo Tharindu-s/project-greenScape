@@ -30,6 +30,24 @@ const userSchema = new Schema({
     type: String,
     required: false,
   },
+  posts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
+  savedPosts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "SavedPost",
+    },
+  ],
+  chats: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Chat",
+    },
+  ],
 });
 
 // static signup method
