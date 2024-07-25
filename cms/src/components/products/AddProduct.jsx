@@ -54,7 +54,7 @@ const AddProduct = () => {
   const [userId, setUserId] = useState("");
   // const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);
-  const [condition, setCondition] = useState({ sell: false, exchange: false });
+  const [condition, setCondition] = useState({ sell: true, exchange: false });
   const [media, setMedia] = useState([]);
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
