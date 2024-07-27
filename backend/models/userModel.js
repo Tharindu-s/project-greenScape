@@ -80,6 +80,8 @@ userSchema.statics.signup = async function (
     throw Error("Email already in use");
   }
 
+  // password encyption using bcrypt
+
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
@@ -105,6 +107,8 @@ userSchema.statics.login = async function (email, password) {
   if (!user) {
     throw Error("Invalid login credentials");
   }
+
+  // encrypted password comparison
 
   const match = await bcrypt.compare(password, user.password);
 

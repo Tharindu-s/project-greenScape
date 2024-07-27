@@ -151,6 +151,8 @@ const resetPasword = async (req, res) => {
   const { id, token } = req.params;
   const { password } = req.body;
 
+  // token verification
+
   jwt.verify(token, process.env.SECRET, (err, decoded) => {
     if (err) {
       return res.json({ error: "Expired or invalid token" });
