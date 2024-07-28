@@ -58,6 +58,7 @@ const AddProduct = () => {
   const [media, setMedia] = useState([]);
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
+  const isprofessional = true;
 
   useEffect(() => {
     const upload = async () => {
@@ -136,6 +137,7 @@ const AddProduct = () => {
       username,
       userId,
       condition,
+      isProfessional: isprofessional,
       image: media,
     };
 

@@ -81,6 +81,7 @@ const createProduct = async (req, res) => {
     username,
     condition,
     userId,
+    isProfessional,
     image,
   } = req.body;
 
@@ -135,6 +136,7 @@ const createProduct = async (req, res) => {
       username,
       userId,
       condition,
+      isProfessional,
       image,
     });
     res.status(200).json(product);

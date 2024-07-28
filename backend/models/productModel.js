@@ -32,7 +32,6 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-
     image: {
       type: [String],
       required: true,
@@ -46,6 +45,10 @@ const productSchema = new Schema(
         type: Boolean,
         default: false,
       },
+    },
+    isProfessional: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

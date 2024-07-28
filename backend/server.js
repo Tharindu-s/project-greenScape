@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
 // routes
-const workoutRoutes = require("./routes/workouts");
 const userRoutes = require("./routes/user");
 const productRoutes = require("./routes/product");
 const reviewRoutes = require("./routes/reviews");
@@ -15,6 +14,7 @@ const testRoutes = require("./routes/test");
 const exchangeRoutes = require("./routes/exchange");
 const conversationRoutes = require("./routes/conversation");
 const messageRoutes = require("./routes/message");
+const inquiryRoutes = require("./routes/inquiry");
 
 // express app
 const app = express();
@@ -38,6 +38,7 @@ app.use("/api/test", testRoutes);
 app.use("/api/exchange", exchangeRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/conversation", conversationRoutes);
+app.use("/api/inquiry", inquiryRoutes);
 
 // connect to db
 mongoose

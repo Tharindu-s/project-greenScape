@@ -11,8 +11,12 @@ const NavbarIcons = () => {
       <Link href="/exchange">
         <TbArrowsExchange size={24} />
       </Link>
-      <BiMessageSquare size={24} />
-      <FiShoppingCart size={24} />
+      <Link href="/chat">
+        <BiMessageSquare size={24} />
+      </Link>
+      <Link href="/cart">
+        <FiShoppingCart size={24} />
+      </Link>
       <Notifications size={24} />
     </div>
   );
