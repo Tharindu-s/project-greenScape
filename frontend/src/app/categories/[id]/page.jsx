@@ -36,7 +36,7 @@ export default async function CategoryInfo({ params }) {
     const products = await getCategoryInfo(id);
     return (
       <div className="home">
-        <h1 className="font-poppins text-center text-[24px] font-semibold text-textmain mt-16 mb-10">
+        <h1 className="font-poppins text-center text-[24px] font-semibold text-textmain mb-10 mt-32">
           Explore {id}
         </h1>
         <Products products={products} />

@@ -35,18 +35,36 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import BuyExchangeButtons from "@/components/Products/ExchangeButton";
 import { FiUser } from "react-icons/fi";
+import { BASE_URL } from "@/components/Constants/server";
 
 async function getproductInfo(id) {
   if (!id) {
     throw new Error("Product ID is undefined");
   }
 
-  const res = await fetch(`http://localhost:4000/api/products/${id}`, {
+  const res = await fetch(`${BASE_URL}/api/products/${id}`, {
     next: {
       revalidate: 2,
     },
   });
 
+  if (!res.ok) {
+    throw new Error("Failed to fetch product");
+  }
+
+  return res.json();
+}
+
+async function getReviewCount(id) {
+  if (!id) {
+    throw new Error("Product ID is undefined");
+  }
+
+  const res = await fetch(`${BASE_URL}/api/reviews/count/${id}`, {
+    next: {
+      revalidate: 2,
+    },
+  });
   if (!res.ok) {
     throw new Error("Failed to fetch product");
   }
@@ -64,6 +82,7 @@ export default async function ProductInfo({ params }) {
 
   try {
     const product = await getproductInfo(id);
+    const reviewsCount = await getReviewCount(id);
     return (
       <div className="mt-32 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
         <div className="my-12">
@@ -118,23 +137,18 @@ export default async function ProductInfo({ params }) {
                   </h2>
                   <div className="flex flex-col mb-6 sm:flex-row sm:items-center">
                     <h6 className="pr-5 mr-5 text-2xl font-semibold leading-9 text-gray-900 border-gray-200 font-manrope sm:border-r">
-                      ${product.price}
+                      {product.price} LKR
                     </h6>
                     <div className="flex items-center gap-2">
                       <div className="flex items-center gap-1"></div>
                       <span className="pl-2 text-sm font-normal leading-7 text-gray-500 ">
-                        1624 review
+                        {reviewsCount.reviewCount}{" "}
+                        {reviewsCount.reviewCount > 1 ? "Reviews" : "Review"}
                       </span>
                     </div>
                   </div>
                   <p className="mb-5 text-base font-normal text-gray-500">
-                    Introducing our vibrant Basic Yellow Tropical Printed Shirt
-                    - a celebration of style and sunshine! Embrace the essence
-                    of summer wherever you go with this eye-catching piece that
-                    effortlessly blends comfort and tropical flair.{" "}
-                    <a href="#" className="text-indigo-600">
-                      More....
-                    </a>
+                    {product.description}
                   </p>
                   <div className="flex items-center gap-2 mt-12 text-accent">
                     <FiUser size={20} />

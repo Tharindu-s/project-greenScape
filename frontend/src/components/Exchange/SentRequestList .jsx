@@ -83,7 +83,7 @@ const SentRequestList = () => {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[100px]">Product Name</TableHead>
-                <TableHead>From</TableHead>
+                <TableHead>To</TableHead>
                 <TableHead>Request Description</TableHead>
                 <TableHead>Your state</TableHead>
                 <TableHead>Their state</TableHead>
@@ -94,13 +94,13 @@ const SentRequestList = () => {
               <TableBody key={request._id}>
                 <TableRow>
                   <TableCell>{request.productName}</TableCell>
-                  <TableCell>{request.senderName}</TableCell>
+                  <TableCell>{request.recieverName}</TableCell>
                   <TableCell>{request.description}</TableCell>
                   <TableCell>
                     {" "}
                     <AlertDialog>
                       <AlertDialogTrigger>
-                        <p className="p-3 text-white bg-green-400 rounded-xl">
+                        <p className="p-3 text-white bg-accent rounded-xl">
                           {" "}
                           {request.senderState}
                         </p>

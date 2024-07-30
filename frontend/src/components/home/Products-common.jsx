@@ -17,9 +17,6 @@ const Products = ({ products }) => {
       {products && products.length > 0 ? (
         // <div className="grid justify-between w-full grid-cols-1 px-4 mx-auto mb-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-5 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
         <div className="px-4 mx-auto max-w-[1500px] sm:px-6 lg:px-8">
-          <h1 className="font-poppins text-center text-[24px] font-semibold text-textmain mt-16 mb-10">
-            Latest listings
-          </h1>
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {/* Card container */}
             {products.map((product) => (

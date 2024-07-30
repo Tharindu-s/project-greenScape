@@ -101,7 +101,7 @@ const RecievedRequestsList = () => {
                   <TableCell>
                     <AlertDialog>
                       <AlertDialogTrigger>
-                        <p className="p-3 text-white bg-green-400 rounded-xl">
+                        <p className="p-3 text-white bg-accent rounded-xl">
                           {" "}
                           {request.recieverState}
                         </p>

@@ -2,6 +2,7 @@ const express = require("express");
 const {
   createReview,
   getReviewsByProductId,
+  getReviewCountByProductId,
 } = require("../controllers/reviewController");
 const requireAuth = require("../middleware/requireAuth");
 
@@ -19,5 +20,8 @@ router.post("/", createReview);
 
 // GET reviews by productId
 router.get("/:productId", getReviewsByProductId);
+
+// GET review count by productId
+router.get("/count/:productId", getReviewCountByProductId);
 
 module.exports = router;

@@ -55,7 +55,24 @@ const getReviewsByProductId = async (req, res) => {
   }
 };
 
+// Count the number of reviews for a specific product
+const getReviewCountByProductId = async (req, res) => {
+  const { productId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    return res.status(400).json({ error: "Invalid product ID" });
+  }
+
+  try {
+    const reviewCount = await Review.countDocuments({ productId });
+    res.status(200).json({ productId, reviewCount });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   createReview,
   getReviewsByProductId,
+  getReviewCountByProductId,
 };
