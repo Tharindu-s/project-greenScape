@@ -98,7 +98,7 @@ const Form = () => {
 
       try {
         const urls = await Promise.all(uploadTasks);
-        setMedia(urls); // Assuming you want to store all URLs
+        setMedia(urls); // stores URLs to the state as an array
         console.log(urls);
       } catch (error) {
         console.error("Error uploading images:", error);
