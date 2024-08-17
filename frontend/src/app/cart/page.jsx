@@ -1,4 +1,6 @@
 import React from "react";
+import product from "../../assets/product.png";
+import Image from "next/image";
 
 const page = () => {
   return (
@@ -38,23 +40,25 @@ const page = () => {
               </div>
               <div className="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6  border-b border-gray-200 group">
                 <div className="w-full md:max-w-[126px]">
-                  <img
-                    src="https://pagedone.io/asset/uploads/1701162880.png"
-                    alt="perfume bottle image"
+                  <Image
+                    src={product}
+                    width={126}
+                    height={126}
                     className="mx-auto rounded-xl"
-                  />
+                    alt="cart image"
+                  ></Image>
                 </div>
                 <div className="grid w-full grid-cols-1 md:grid-cols-4">
                   <div className="md:col-span-2">
                     <div className="flex flex-col max-[500px]:items-center gap-3">
                       <h6 className="text-base font-semibold leading-7 text-black">
-                        Dusk Dark Hue
+                        Golden Barrel Cactus
                       </h6>
                       <h6 className="text-base font-normal leading-7 text-gray-500">
-                        Perfumes
+                        Cacti
                       </h6>
                       <h6 className="text-base font-medium leading-7 text-gray-600 transition-all duration-300 font-inter group-hover:text-accent">
-                        $120.00
+                        3000 LKR
                       </h6>
                     </div>
                   </div>
@@ -125,7 +129,7 @@ const page = () => {
                   </div>
                   <div className="flex items-center max-[500px]:justify-center md:justify-end max-md:mt-3 h-full">
                     <p className="text-lg font-bold leading-8 text-center text-gray-600 transition-all duration-300 group-hover:text-accent">
-                      $120.00
+                      3000 LKR
                     </p>
                   </div>
                 </div>
@@ -138,10 +142,10 @@ const page = () => {
               <div className="mt-8">
                 <div className="flex items-center justify-between pb-6">
                   <p className="text-sm font-normal leading-8 text-black">
-                    3 Items
+                    1 Items
                   </p>
                   <p className="text-sm font-medium leading-8 text-black">
-                    $480.00
+                    3000 LKR
                   </p>
                 </div>
                 <form>
@@ -151,10 +155,10 @@ const page = () => {
 
                   <div className="flex items-center justify-between py-8">
                     <p className="text-lg font-medium leading-8 text-black">
-                      3 Items
+                      1 Items
                     </p>
                     <p className="text-lg font-semibold leading-8 text-accent">
-                      $485.00
+                      3000 LKR
                     </p>
                   </div>
                   <button className="w-full px-6 py-3 font-semibold text-center text-white transition-all duration-500 font-inter text-md bg-accent rounded-xl hover:bg-accentdark">

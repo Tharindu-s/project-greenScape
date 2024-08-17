@@ -56,6 +56,9 @@ export default function Home() {
           Add a product
         </Button>
       </Link>
+      <h1 className="font-poppins text-center text-[24px] font-semibold text-textmain mt-16 mb-10">
+        Latest listings
+      </h1>
       <Products products={products.products ? products.products : []} />
       {console.log(products)}
       <Pagination

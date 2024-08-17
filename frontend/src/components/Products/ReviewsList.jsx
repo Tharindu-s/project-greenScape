@@ -60,7 +60,10 @@ export default async function ReviewsList({ productId }) {
   try {
     const reviews = await getReviewsList(productId);
     return (
-      <div className="py-24">
+      <div>
+        <h1 className="font-poppins text-[24px] font-semibold text-textmain mt-16 mb-10">
+          Reviews
+        </h1>
         {reviews.length === 0 ? (
           <div className="text-center text-gray-500">No reviews yet</div>
         ) : (

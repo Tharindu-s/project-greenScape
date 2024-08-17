@@ -92,19 +92,17 @@ const page = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-4 justify-center md:justify-start">
-                <Button variant="outline">Message </Button>
-              </div>
+              <div className="flex gap-4 justify-center md:justify-start"></div>
             </div>
             <div className="w-full rounded-[30px] overflow-hidden border border-solid border-[#e6e6e6] p-9 mt-20">
               <h1 className="font-poppins text-[24px] font-semibold text-textmain mb-6">
-                Who are we?
+                Bio?
               </h1>
               <p>{userdata.bio}</p>
             </div>
             <div className="w-full rounded-[30px] overflow-hidden border border-solid border-[#e6e6e6] p-9 mt-20">
               <h1 className="font-poppins text-[24px] font-semibold text-textmain mb-6">
-                Our projects
+                Your projects
               </h1>
               <ProjectsList projectsList={projects} />
             </div>

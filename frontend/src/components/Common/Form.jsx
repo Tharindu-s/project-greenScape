@@ -171,9 +171,11 @@ const Form = () => {
   };
 
   return (
-    <div className="w-1/2 mx-auto my-8">
+    <div className="w-1/2 mx-auto my-24">
       <form className="create" onSubmit={handleSubmit}>
-        <h3>Add a Product</h3>
+        <h1 className="font-poppins text-center text-[24px] font-semibold text-textmain mt-32 mb-6 ">
+          Add a new product
+        </h1>
         <div className="my-4">
           <label>Product name</label>
           <Input
@@ -361,7 +363,12 @@ const Form = () => {
           disabled
           onChange={(e) => setUserId(e.target.value)}
         />
-        <button type="submit">Add product</button>
+        <Button
+          className="py-6 px-7 rounded-3xl bg-accent hover:bg-accentdark"
+          type="submit"
+        >
+          Add product
+        </Button>
         {error && <div className="error">{error}</div>}
       </form>
     </div>

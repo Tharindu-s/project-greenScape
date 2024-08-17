@@ -25,8 +25,8 @@ const UserProfileMenu = () => {
       <DropdownMenuTrigger>
         <div className="flex items-center gap-1">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src="#" alt="@shadcn" />
+            <AvatarFallback>TS</AvatarFallback>
           </Avatar>
         </div>
       </DropdownMenuTrigger>
