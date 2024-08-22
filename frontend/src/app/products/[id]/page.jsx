@@ -160,9 +160,15 @@ export default async function ProductInfo({ params }) {
                   </div>
                   <div className="flex gap-4 my-8">
                     {product.condition.sell && (
-                      <Button className="px-4 py-2 rounded-md font-inter text-accent bg-background hover:bg-[#DADBDA]">
-                        Buy
-                      </Button>
+                      <div className="flex gap-2">
+                        {" "}
+                        <Button className="px-4 py-2 rounded-md font-inter text-accent bg-background hover:bg-[#DADBDA]">
+                          Buy
+                        </Button>
+                        <Button className="px-4 py-2 bg-white border-2 rounded-md font-inter text-accent border-accent hover:bg-accent hover:text-white">
+                          Add to cart
+                        </Button>
+                      </div>
                     )}
                     {/* Conditional rendering for exchange button */}
                     {product.condition.exchange && (

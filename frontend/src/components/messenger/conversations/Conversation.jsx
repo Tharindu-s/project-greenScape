@@ -4,36 +4,32 @@ import "./conversation.css";
 import { BASE_URL } from "@/components/Constants/server";
 
 export default function Conversation({ conversation, currentUser }) {
-  const [user, setUser] = useState(null);
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
-    const otherPartyId = conversation.members.find(
-      (m) => m !== currentUser._id
-    );
-
-    const getUser = async () => {
+    const fetchUserName = async () => {
       try {
+        // Get the member at index 1
+        const otherPartyId = conversation.members[1];
         const res = await fetch(`${BASE_URL}/api/user/${otherPartyId}`);
-        setUser(res.data);
+        const data = await res.json();
+        setUserName(data.name); // Assuming the API returns an object with the name field
       } catch (err) {
         console.log(err);
       }
     };
-    getUser();
-  }, [currentUser, conversation]);
+
+    fetchUserName();
+  }, [conversation]);
 
   return (
     <div className="conversation">
-      {/* <img
-        className="conversationImg"
-        src={
-          user?.profilePicture
-            ? PF + user.profilePicture
-            : PF + "person/noAvatar.png"
-        }
-        alt=""
-      /> */}
-      <span className="conversationName">{user?.name}</span>
+      <div>
+        {/* Display the name of the member at index 1 */}
+        <p>{userName}</p>
+      </div>
+
+      {/* <span className="conversationName">{userName}</span> */}
     </div>
   );
 }

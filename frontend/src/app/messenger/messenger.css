@@ -1,6 +1,7 @@
 .messenger {
-  height: calc(100vh - 70px);
+  height: 75vh;
   display: flex;
+  width: 75%;
 }
 
 .chatMenu {
@@ -40,28 +41,22 @@
 
 .chatMessageInput {
   width: 80%;
-  height: 90px;
+  height: 50px;
   padding: 10px;
-}
-
-.chatSubmitButton {
-  width: 70px;
-  height: 40px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: teal;
-  color: white;
 }
 
 .chatOnline {
   flex: 3;
 }
 
-.chatMenuWrapper,
 .chatBoxWrapper,
 .chatOnlineWrapper {
   padding: 10px;
+  height: 100%;
+}
+
+.chatMenuWrapper {
+  border-right: 1px solid #e0e0e0;
   height: 100%;
 }
 

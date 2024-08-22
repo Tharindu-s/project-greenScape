@@ -2,7 +2,6 @@
 import "./messenger.css";
 import { useContext, useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
-import Topbar from "@/components/messenger/topbar/TopBar";
 import Conversation from "@/components/messenger/conversations/Conversation";
 import Message from "@/components/messenger/message/Message";
 import { useAuthContext } from "@/hooks/useAuthContext";
@@ -122,10 +121,10 @@ export default function Messenger() {
 
   return (
     <>
-      <Topbar />
-      <div className="messenger">
+      <div className="justify-center mx-auto my-32 border border-gray-300 messenger rounded-xl">
         <div className="chatMenu">
-          <div className="chatMenuWrapper">
+          <div className="p-8 chatMenuWrapper">
+            <h1 className="text-2xl font-bold">Chats</h1>
             {conversations.map((conversation) => (
               <div
                 onClick={() => setCurrentChat(conversation)}
@@ -136,7 +135,7 @@ export default function Messenger() {
             ))}
           </div>
         </div>
-        <div className="chatBox">
+        <div className="p-8 chatBox ">
           <div className="chatBoxWrapper">
             {currentChat ? (
               <>
@@ -148,13 +147,16 @@ export default function Messenger() {
                   ))}
                 </div>
                 <div className="chatBoxBottom">
-                  <textarea
-                    className="chatMessageInput"
-                    placeholder="write something..."
+                  <input
+                    className="border border-gray-200 rounded-xl chatMessageInput focus:outline-gray-300"
+                    placeholder="Send a message..."
                     onChange={(e) => setNewMessage(e.target.value)}
                     value={newMessage}
-                  ></textarea>
-                  <button className="chatSubmitButton" onClick={handleSubmit}>
+                  ></input>
+                  <button
+                    className="px-6 py-3 text-white bg-accent rounded-xl"
+                    onClick={handleSubmit}
+                  >
                     Send
                   </button>
                 </div>
@@ -164,15 +166,6 @@ export default function Messenger() {
                 Open a conversation to start a chat.
               </span>
             )}
-          </div>
-        </div>
-        <div className="chatOnline">
-          <div className="chatOnlineWrapper">
-            {/* <ChatOnline
-              onlineUsers={onlineUsers}
-              currentId={user?.userId}
-              setCurrentChat={setCurrentChat}
-            /> */}
           </div>
         </div>
       </div>
