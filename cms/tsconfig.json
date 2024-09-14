@@ -29,7 +29,8 @@
     "src/app/projects/page.jsx",
     "src/components/projects/EditProject.jsx",
     "src/app/portfolio/page.jsx",
-    "src/app/products/page.jsx"
+    "src/app/products/page.jsx",
+    "src/app/login/layout.tsx"
   ],
   "exclude": ["node_modules"]
 }

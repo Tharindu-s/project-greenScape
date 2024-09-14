@@ -1,6 +1,3 @@
-import Image from "next/image";
-import productImg from "../../../assets/product.png";
-import { FaUserCircle } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import WriteReview from "@/components/Products/WriteReview";
 import ReviewsList from "@/components/Products/ReviewsList";
@@ -13,7 +10,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -21,21 +17,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import BuyExchangeButtons from "@/components/Products/ExchangeButton";
 import { FiUser } from "react-icons/fi";
 import { BASE_URL } from "@/components/Constants/server";
+import InitializeConvo from "@/components/messenger/InitializeConvo";
+import AddtoCartButton from "@/components/Products/AddtoCartButton";
 
 async function getproductInfo(id) {
   if (!id) {
@@ -165,9 +151,13 @@ export default async function ProductInfo({ params }) {
                         <Button className="px-4 py-2 rounded-md font-inter text-accent bg-background hover:bg-[#DADBDA]">
                           Buy
                         </Button>
-                        <Button className="px-4 py-2 bg-white border-2 rounded-md font-inter text-accent border-accent hover:bg-accent hover:text-white">
-                          Add to cart
-                        </Button>
+                        <AddtoCartButton
+                          productId={product._id}
+                          productName={product.name}
+                          available={product.quantity}
+                          price={product.price}
+                          imgurl={product.image[0]}
+                        />
                       </div>
                     )}
                     {/* Conditional rendering for exchange button */}
@@ -181,6 +171,9 @@ export default async function ProductInfo({ params }) {
                         />
                       </div>
                     )}
+
+                    {/* send a message */}
+                    <InitializeConvo product={product} />
                   </div>
                 </div>
               </div>

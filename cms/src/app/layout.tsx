@@ -15,9 +15,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -25,11 +25,11 @@ export default function RootLayout({
           <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
             <Sidebar />
             <div className="flex flex-col">
-              <Header />
+              {/* <Header /> */}
               {children}
             </div>
             <Toaster />
-          </div>{" "}
+          </div>
         </AuthContextProvider>
       </body>
     </html>

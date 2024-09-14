@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 
 // Create new items
 const createCartItem = async (req, res) => {
-  const { userId, productId, quantity } = req.body;
+  const { userId, productId, quantity, unitPrice, productName, imgurl } =
+    req.body;
 
   let emptyFields = [];
 
@@ -31,7 +32,10 @@ const createCartItem = async (req, res) => {
     const cartItem = await Cart.create({
       userId,
       productId,
+      productName,
       quantity,
+      unitPrice,
+      imgurl,
     });
     res.status(200).json(cartItem);
   } catch (error) {

@@ -16,6 +16,7 @@ const conversationRoutes = require("./routes/conversation");
 const messageRoutes = require("./routes/message");
 const inquiryRoutes = require("./routes/inquiry");
 const cartRoutes = require("./routes/cart");
+const serviceRoutes = require("./routes/service");
 
 // express app
 const app = express();
@@ -41,6 +42,7 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/conversation", conversationRoutes);
 app.use("/api/inquiry", inquiryRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/service", serviceRoutes);
 
 // connect to db
 mongoose
