@@ -56,15 +56,17 @@ export default function ProductsPage() {
   };
 
   return (
-    <div>
-      <div className="filter-container">
+    <div className="mt-28">
+      <div className="relative flex flex-col items-center justify-center w-[400px] pr-2 mx-auto  transition-all duration-500 border border-gray-200 rounded-xl parent sm:flex-row gap-y-4 sm:justify-between sm:pr-1 sm:bg-white group ">
         <input
           type="text"
-          placeholder="Search by name"
-          value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          className="block w-full px-6 py-3.5 text-base max-sm:text-center font-normal  max-sm:bg-white text-gray-900 bg-transparent rounded-full placeholder-gray-400 leading-normal focus:ring-0 focus:outline-none"
+          placeholder="Search for seeds, plants, tools, etc."
+          required=""
         />
-
+      </div>
+      <div className="filter-container">
         <input
           type="number"
           placeholder="Min price"

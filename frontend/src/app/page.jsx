@@ -13,6 +13,7 @@ import Pagination from "@/components/Common/Pagination";
 import { useSearch } from "@/context/searchContext";
 import HeroNew from "@/components/Common/HeroNew";
 import Products from "@/components/home/Products-common";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { user } = useAuthContext();
@@ -20,6 +21,16 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      // Redirect to the search results page with the search query
+      router.push(`/search?query=${searchTerm}`);
+    }
+  };
 
   useEffect(() => {
     const getAllProducts = async () => {
@@ -49,6 +60,7 @@ export default function Home() {
   return (
     <div className="relative ">
       {/* <Hero /> */}
+
       <HeroNew />
       <Categories />
       <Link href="/add">
@@ -59,6 +71,15 @@ export default function Home() {
       <h1 className="font-poppins text-center text-[24px] font-semibold text-textmain mt-16 mb-10">
         Latest listings
       </h1>
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
       <Products products={products.products ? products.products : []} />
       {console.log(products)}
       <Pagination

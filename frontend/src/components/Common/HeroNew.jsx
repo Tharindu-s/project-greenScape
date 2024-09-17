@@ -26,7 +26,7 @@ const HeroNew = () => {
               plants to tools and accessories, our diverse listings have
               everything you need to help your garden thrive.
             </p>
-            <SearchBarHero setSearch={setSearch} />
+            <SearchBarHero />
           </div>
         </div>
       </section>

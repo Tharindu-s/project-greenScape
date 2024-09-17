@@ -36,38 +36,14 @@ function Navbar() {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>About GreenScape</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                  <li className="row-span-3">
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="flex flex-col justify-end w-full h-full p-6 no-underline rounded-md outline-none select-none bg-gradient-to-b from-muted/50 to-muted focus:shadow-md"
-                        href="/"
-                      >
-                        <Image src={logo} height={150} width={150} alt="logo" />
-                        <div className="mt-4 mb-2 text-lg font-medium">
-                          GreenScape
-                        </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
-                          At GreenScape, we've created a vibrant community where
-                          gardening enthusiasts of all levels come together to
-                          share their passion, knowledge, and experiences.
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                  <ListItem href="/" title="Introduction">
-                    Re-usable components built using Radix UI and Tailwind CSS.
-                  </ListItem>
-                  <ListItem href="/" title="Installation">
-                    How to install dependencies and structure your app.
-                  </ListItem>
-                  <ListItem href="/" title="Typography">
-                    Styles for headings, paragraphs, lists...etc
-                  </ListItem>
-                </ul>
-              </NavigationMenuContent>
+              <Link href="/">
+                <Image
+                  src={logo}
+                  width={80}
+                  heigh={80}
+                  className="px-3"
+                ></Image>
+              </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuTrigger>
@@ -124,7 +100,7 @@ function Navbar() {
       </div>
       <div>
         <div className="relative">
-          <SearchBar setSearch={setSearch} />
+          <SearchBar />
         </div>
       </div>
       {/* messages, notifications and cart icons */}

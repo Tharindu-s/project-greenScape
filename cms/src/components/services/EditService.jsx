@@ -1,5 +1,5 @@
-"use client";
 import React, { useState } from "react";
+
 import {
   Dialog,
   DialogContent,
@@ -15,91 +15,87 @@ import { useAuthContext } from "@/hooks/useAuthContext";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { revalidatePath } from "next/cache";
 
-const EditProduct = ({ product }) => {
+const EditService = ({ service }) => {
   const { professional } = useAuthContext();
   const { toast } = useToast();
 
-  const [editProductData, setEditProductData] = useState({
+  const [editServiceData, setEditServiceData] = useState({
     name: "",
     category: "",
-    description: "",
     price: "",
-    quantity: "",
+    description: "",
   });
 
-  // handle product changes
+  // handle project changes
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    setEditProductData({
-      ...editProductData,
+    setEditServiceData({
+      ...editServiceData,
       [id]: value,
     });
   };
 
-  const handleEdit = (product) => {
-    setEditProductData({
-      name: product.name,
-      category: product.category,
-      price: product.price,
-      quantity: product.quantity,
-      description: product.description,
-      _id: product._id, // make sure to include the _id for patch request
+  const handleEdit = (service) => {
+    setEditServiceData({
+      name: service.name,
+      category: service.category,
+      price: service.price,
+      description: service.description,
+      _id: service._id, // make sure to include the _id for patch request
     });
   };
 
-  // save edited product data
+  // save edited project data
 
   const handleSaveChanges = async () => {
     try {
-      const response = await fetch(`/api/products/${editProductData._id}`, {
-        next: {
-          revalidate: true,
-        },
+      const response = await fetch(`/api/service/${editServiceData._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${professional.token}`,
         },
-        body: JSON.stringify(editProductData),
+        body: JSON.stringify(editServiceData),
       });
       if (response.ok) {
-        console.log("Succesfully updated update product");
-        toast({ description: "product updated successfully" });
+        console.log("Succesfully updated update Service");
+        toast({ description: "Service updated successfully" });
       } else {
-        console.error("Failed to update product");
-        toast({ description: "Failed to update product", status: "error" });
+        console.error("Failed to update Service");
+        toast({ description: "Failed to update Service", status: "error" });
       }
     } catch (error) {
-      console.error("Error updating product:", error);
-      toast({ description: "Error updating product", status: "error" });
+      console.error("Error updating Service:", error);
+      toast({ description: "Error updating Service", status: "error" });
     }
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" onClick={() => handleEdit(product)}>
-          Edit product
+        <Button variant="outline" onClick={() => handleEdit(service)}>
+          Edit Service
         </Button>
       </DialogTrigger>
       <DialogContent className="w-[600px] bg-white rounded-md">
         <DialogHeader>
-          <DialogTitle>Edit product</DialogTitle>
+          <DialogTitle>Edit Service</DialogTitle>
           <DialogDescription>
-            Make changes to your product here. Click save when you're done.
+            Make changes to your Service here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid items-center grid-cols-4 gap-4">
-            <Label htmlFor="productName" className="text-right">
-              product Name
+            <Label htmlFor="projectName" className="text-right">
+              Service Name
             </Label>
             <Input
               id="name"
               className="col-span-3"
-              value={editProductData.name}
+              value={editServiceData.name}
               onChange={handleInputChange}
             />
           </div>
@@ -110,7 +106,7 @@ const EditProduct = ({ product }) => {
             <Input
               id="category"
               className="col-span-3"
-              value={editProductData.category}
+              value={editServiceData.category}
               onChange={handleInputChange}
             />
           </div>
@@ -121,7 +117,7 @@ const EditProduct = ({ product }) => {
             <Input
               id="price"
               className="col-span-3"
-              value={editProductData.price}
+              value={editServiceData.price}
               onChange={handleInputChange}
             />
           </div>
@@ -132,18 +128,7 @@ const EditProduct = ({ product }) => {
             <Textarea
               id="description"
               className="col-span-3 min-h-[300px]"
-              value={editProductData.description}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="grid items-center grid-cols-4 gap-4">
-            <Label htmlFor="location" className="text-right">
-              Quantity
-            </Label>
-            <Input
-              id="quantity"
-              className="col-span-3"
-              value={editProductData.quantity}
+              value={editServiceData.description}
               onChange={handleInputChange}
             />
           </div>
@@ -162,4 +147,4 @@ const EditProduct = ({ product }) => {
   );
 };
 
-export default EditProduct;
+export default EditService;

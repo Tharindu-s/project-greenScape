@@ -1,15 +1,6 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { FiBell, FiPackage } from "react-icons/fi";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { usePathname } from "next/navigation";
 import { NavbarItems } from "../constants/navbar";
 import { useAuthContext } from "@/hooks/useAuthContext";
