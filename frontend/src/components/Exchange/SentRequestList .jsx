@@ -120,8 +120,8 @@ const SentRequestList = () => {
                             handleStateChange(event, request._id)
                           }
                         >
-                          {exchangeState.map((state) => (
-                            <option key={state.id} value={state.value}>
+                          {exchangeState.map((state, index) => (
+                            <option key={index} value={state.value}>
                               {state.value}
                             </option>
                           ))}

@@ -11,27 +11,27 @@ import Link from "next/link";
 // components
 import ProductsSkeleton from "../skeletons/skeleton-products";
 
-const Products = ({ products }) => {
+const Services = ({ services }) => {
   return (
     <div>
       <h1 className="font-poppins text-center text-[24px] font-semibold text-textmain mt-16 mb-10">
-        Latest listings
+        Latest Services
       </h1>
 
-      {products && products.length > 0 ? (
+      {services && services.length > 0 ? (
         // <div className="grid justify-between w-full grid-cols-1 px-4 mx-auto mb-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-5 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
         <div className="px-4 mx-auto max-w-[1500px] sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {/* Card container */}
-            {products.map((product) => (
-              <Link key={product._id} href={`/products/${product._id}`}>
+            {services.map((product) => (
+              <Link key={product._id} href={`/services/${product._id}`}>
                 <div
                   key={product._id}
                   className="p-1 sm:p-3 mb-0 sm:mb-8 border-[1px] rounded-xl w-[165px] sm:w-[230px] mx-auto"
                 >
                   <div className="overflow-hidden items-center w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] mx-auto">
                     <Image
-                      // old objects are using strings so remove all the old products and add new products to map through them
+                      // old objects are using strings so remove all the old services and add new services to map through them
                       src={product.image[0]}
                       width={200}
                       height={200}
@@ -79,4 +79,4 @@ const Products = ({ products }) => {
   );
 };
 
-export default Products;
+export default Services;

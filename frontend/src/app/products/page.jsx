@@ -56,8 +56,8 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="mt-28">
-      <div className="relative flex flex-col items-center justify-center w-[400px] pr-2 mx-auto  transition-all duration-500 border border-gray-200 rounded-xl parent sm:flex-row gap-y-4 sm:justify-between sm:pr-1 sm:bg-white group ">
+    <div className="mt-40">
+      {/* <div className="relative flex flex-col items-center justify-center w-[400px] pr-2 mx-auto  transition-all duration-500 border border-gray-200 rounded-xl parent sm:flex-row gap-y-4 sm:justify-between sm:pr-1 sm:bg-white group ">
         <input
           type="text"
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -83,7 +83,7 @@ export default function ProductsPage() {
             setPriceRange({ ...priceRange, max: e.target.value })
           }
         />
-      </div>
+      </div> */}
       <Products products={filteredProducts} />
     </div>
   );

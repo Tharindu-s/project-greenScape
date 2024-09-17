@@ -42,6 +42,7 @@ function Navbar() {
                   width={80}
                   heigh={80}
                   className="px-3"
+                  alt="logo"
                 ></Image>
               </Link>
             </NavigationMenuItem>
@@ -80,7 +81,9 @@ function Navbar() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+              <NavigationMenuTrigger>
+                <Link href="/services">Services</Link>
+              </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                   {services.map((service) => (

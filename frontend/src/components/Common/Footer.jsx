@@ -17,17 +17,22 @@ const Footer = () => {
           />
           <ul className="flex flex-col items-center justify-center py-16 mb-10 text-lg transition-all duration-500 border-b border-gray-200 gap-7 md:flex-row md:gap-12">
             <li>
-              <a href="#" className="text-gray-800 hover:text-gray-900">
+              <a href="/" className="text-gray-800 hover:text-gray-900">
                 Home
               </a>
             </li>
             <li>
-              <a href="#" className="text-gray-800 hover:text-gray-900">
+              <a href="/products" className="text-gray-800 hover:text-gray-900">
                 Products
               </a>
             </li>
             <li>
-              <a href="#" className="text-gray-800 hover:text-gray-900">
+              <a href="/services" className="text-gray-800 hover:text-gray-900">
+                Services
+              </a>
+            </li>
+            <li>
+              <a href="/blogs" className="text-gray-800 hover:text-gray-900">
                 Blogs
               </a>
             </li>
