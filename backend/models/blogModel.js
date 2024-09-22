@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const productSchema = new Schema(
+const blogSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
     },
@@ -12,19 +12,7 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    description: {
-      type: String,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
-    quantity: {
-      type: Number,
-      required: true,
-    },
-    username: {
+    content: {
       type: String,
       required: true,
     },
@@ -32,26 +20,12 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    image: {
-      type: [String],
+    coverImg: {
+      type: String,
       required: true,
-    },
-    condition: {
-      sell: {
-        type: Boolean,
-        default: false,
-      },
-      exchange: {
-        type: Boolean,
-        default: false,
-      },
-    },
-    isProfessional: {
-      type: Boolean,
-      default: false,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model("Blog", blogSchema);

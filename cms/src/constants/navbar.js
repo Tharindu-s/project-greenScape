@@ -15,5 +15,4 @@ export const NavbarItems = [
   { title: "Services", icon: FiBell, href: "/services" },
   { title: "Inquiries", icon: FiMail, href: "/inquiries" },
   { title: "To ship", icon: FiSend, href: "/to-ship" },
-  { title: "Reviews", icon: FiStar, href: "/reviews" },
 ];

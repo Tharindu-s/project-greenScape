@@ -77,8 +77,8 @@ export default async function ReviewsList({ productId }) {
                   <div className="col-span-12 lg:col-span-10 ">
                     <div className="gap-6 sm:flex">
                       <img
-                        src="https://pagedone.io/asset/uploads/1704364560.png"
-                        alt="Robert image"
+                        src="https://placehold.it/100x100"
+                        alt="Username"
                         className="w-16 h-16 rounded-full"
                       />
                       <div className="text">

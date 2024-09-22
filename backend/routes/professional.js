@@ -17,7 +17,7 @@ router.post("/login", loginProfessional);
 router.post("/signup", signupProfessional);
 
 //GET a single product
-router.get("/:id", updateProfessional);
+router.get("/:id", getProfessional);
 
 // UPDATE a user
 router.patch("/:id", updateProfessional);

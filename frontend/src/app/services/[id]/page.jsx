@@ -23,42 +23,25 @@ import { BASE_URL } from "@/components/Constants/server";
 import InitializeConvo from "@/components/messenger/InitializeConvo";
 import AddtoCartButton from "@/components/Products/AddtoCartButton";
 
-async function getproductInfo(id) {
+async function getServiceInfo(id) {
   if (!id) {
-    throw new Error("Product ID is undefined");
+    throw new Error(" Service ID is undefined");
   }
 
-  const res = await fetch(`${BASE_URL}/api/products/${id}`, {
+  const res = await fetch(`${BASE_URL}/api/service/${id}`, {
     next: {
       revalidate: 2,
     },
   });
 
   if (!res.ok) {
-    throw new Error("Failed to fetch product");
+    throw new Error("Failed to fetch service");
   }
 
   return res.json();
 }
 
-async function getReviewCount(id) {
-  if (!id) {
-    throw new Error("Product ID is undefined");
-  }
-
-  const res = await fetch(`${BASE_URL}/api/reviews/count/${id}`, {
-    next: {
-      revalidate: 2,
-    },
-  });
-  if (!res.ok) {
-    throw new Error("Failed to fetch product");
-  }
-
-  return res.json();
-}
-
-export default async function ProductInfo({ params }) {
+export default async function ServiceInfo({ params }) {
   console.log("Received params:", params); // Log the params to debug
   const { id } = params;
 
@@ -67,8 +50,7 @@ export default async function ProductInfo({ params }) {
   }
 
   try {
-    const product = await getproductInfo(id);
-    const reviewsCount = await getReviewCount(id);
+    const service = await getServiceInfo(id);
     return (
       <div className="mt-32 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
         <div className="my-12">
@@ -79,11 +61,11 @@ export default async function ProductInfo({ params }) {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/products">Products</BreadcrumbLink>
+                <BreadcrumbLink href="/services">Services</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>{product.name}</BreadcrumbPage>
+                <BreadcrumbPage>{service.name}</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -95,7 +77,7 @@ export default async function ProductInfo({ params }) {
                 <div className="h-full img-box max-lg:mx-auto ">
                   <Carousel className="w-full ">
                     <CarouselContent>
-                      {product.image.map((img, index) => (
+                      {service.image.map((img, index) => (
                         <CarouselItem key={index}>
                           <img
                             src={img}
@@ -109,7 +91,7 @@ export default async function ProductInfo({ params }) {
                     <CarouselNext />
                   </Carousel>
                   {/* <img
-                    src={product.image[0]}
+                    src={service.image[0]}
                     alt="Yellow Tropical Printed Shirt image"
                     className="h-full max-lg:mx-auto lg:ml-auto rounded-xl"
                   /> */}
@@ -119,75 +101,32 @@ export default async function ProductInfo({ params }) {
                 <div className="w-full max-w-xl data">
                   <p className="mb-4 text-lg font-medium leading-8 text-indigo-600"></p>
                   <h2 className="mb-2 text-3xl font-bold leading-10 text-gray-900 capitalize font-manrope">
-                    {product.name}
+                    {service.name}
                   </h2>
                   <div className="flex flex-col mb-6 sm:flex-row sm:items-center">
                     <h6 className="pr-5 mr-5 text-2xl font-semibold leading-9 text-gray-900 border-gray-200 font-manrope sm:border-r">
-                      {product.price} LKR
+                      {service.price} LKR
                     </h6>
                     <div className="flex items-center gap-2">
                       <div className="flex items-center gap-1"></div>
-                      <span className="pl-2 text-sm font-normal leading-7 text-gray-500 ">
-                        {reviewsCount.reviewCount}{" "}
-                        {reviewsCount.reviewCount > 1 ? "Reviews" : "Review"}
-                      </span>
                     </div>
                   </div>
                   <p className="mb-5 text-base font-normal text-gray-500">
-                    {product.description}
+                    {service.description}
                   </p>
                   <div className="flex items-center gap-2 mt-12 text-accent">
                     <FiUser size={20} />
                     <p className="font-inter text-[16px] font-medium">
-                      <Link href={`/profile/${product.userId}`}>
-                        {product.username}
+                      <Link href={`/profile-professional/${service.userId}`}>
+                        {service.username}
                       </Link>
                     </p>
-                  </div>
-                  <div className="flex gap-4 my-8">
-                    {product.condition.sell && (
-                      <div className="flex gap-2">
-                        {" "}
-                        <Button className="px-4 py-2 rounded-md font-inter text-accent bg-background hover:bg-[#DADBDA]">
-                          Buy
-                        </Button>
-                        <AddtoCartButton
-                          productId={product._id}
-                          productName={product.name}
-                          available={product.quantity}
-                          price={product.price}
-                          imgurl={product.image[0]}
-                        />
-                      </div>
-                    )}
-                    {/* Conditional rendering for exchange button */}
-                    {product.condition.exchange && (
-                      <div>
-                        <BuyExchangeButtons
-                          productId={product._id}
-                          productName={product.name}
-                          recieverName={product.username}
-                          recieverId={product.userId}
-                        />
-                      </div>
-                    )}
-
-                    {/* send a message */}
-                    <InitializeConvo product={product} />
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
-        {/* show reviews */}
-        <div>
-          <ReviewsList productId={id} />
-        </div>
-        {/* add a review */}
-        <div>
-          <WriteReview productId={id} />
-        </div>
       </div>
     );
   } catch (error) {
