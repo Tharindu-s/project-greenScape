@@ -16,13 +16,18 @@ const Page = () => {
       fetch(`/api/cart/user/${userId}`)
         .then((res) => res.json())
         .then((data) => {
-          setProducts(data);
-          // Initialize quantities state for each product
-          const initialQuantities = data.reduce((acc, product) => {
-            acc[product.id] = product.quantity || 1; // Default to 1 if no quantity provided
-            return acc;
-          }, {});
-          setQuantities(initialQuantities);
+          console.log("Fetched data:", data);
+          if (Array.isArray(data)) {
+            setProducts(data);
+            const initialQuantities = {};
+            data.forEach((product) => {
+              initialQuantities[product.id] = product.quantity || 1;
+            });
+            setQuantities(initialQuantities);
+          } else {
+            console.error("Expected an array but got:", data);
+            setProducts([]);
+          }
         })
         .catch((error) => {
           console.error("Error fetching products data:", error);
@@ -43,7 +48,7 @@ const Page = () => {
   const decreaseQuantity = (productId) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
-      [productId]: Math.max((prevQuantities[productId] || 1) - 1, 1), // Ensure quantity is at least 1
+      [productId]: Math.max((prevQuantities[productId] || 1) - 1, 1),
     }));
   };
 
@@ -63,32 +68,11 @@ const Page = () => {
                   {products.length} Items
                 </h2>
               </div>
-              <div className="grid grid-cols-12 pb-6 mt-8 border-b border-gray-200 max-md:hidden">
-                <div className="col-span-12 md:col-span-7">
-                  <p className="text-sm font-normal leading-8 text-gray-400">
-                    Product Details
-                  </p>
-                </div>
-                <div className="col-span-12 md:col-span-5">
-                  <div className="grid grid-cols-5">
-                    <div className="col-span-3">
-                      <p className="text-sm font-normal leading-8 text-right text-gray-400">
-                        Quantity
-                      </p>
-                    </div>
-                    <div className="col-span-2">
-                      <p className="text-sm font-normal leading-8 text-right text-gray-400">
-                        Total
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
               {products.length > 0 ? (
                 <div>
                   {products.map((product) => (
                     <div
-                      key={product.id} // Ensure you have a unique key for each item
+                      key={product.id}
                       className="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6 border-b border-gray-200 group"
                     >
                       <div className="w-full md:max-w-[126px]">
@@ -106,42 +90,39 @@ const Page = () => {
                             <h6 className="text-base font-semibold leading-7 text-black">
                               {product.productName}
                             </h6>
-                            <h6 className="text-base font-normal leading-7 text-gray-500">
-                              Cacti
-                            </h6>
                             <h6 className="text-base font-medium leading-7 text-gray-600 transition-all duration-300 font-inter group-hover:text-accent">
-                              {product.unitPrice}
+                              {product.unitPrice} LKR
                             </h6>
                           </div>
                         </div>
                         <div className="flex items-center max-[500px]:justify-center h-full max-md:mt-3">
-                          <div className="flex items-center h-full">
-                            <div className="my-2">
-                              <Button
-                                variant="outline"
-                                className="px-4"
-                                type="button"
-                                onClick={() => decreaseQuantity(product.id)}
-                              >
-                                -
-                              </Button>
-                              <span className="mx-2 text-xl">
-                                {quantities[product.id] || 1}
-                              </span>
-                              <Button
-                                variant="outline"
-                                className="px-4"
-                                type="button"
-                                onClick={() => increaseQuantity(product.id)}
-                              >
-                                +
-                              </Button>
-                            </div>
+                          <div className="my-2">
+                            <Button
+                              variant="outline"
+                              className="px-4"
+                              type="button"
+                              onClick={() => decreaseQuantity(product.id)}
+                            >
+                              -
+                            </Button>
+                            <span className="mx-2 text-xl">
+                              {quantities[product.id] || 1}
+                            </span>
+                            <Button
+                              variant="outline"
+                              className="px-4"
+                              type="button"
+                              onClick={() => increaseQuantity(product.id)}
+                            >
+                              +
+                            </Button>
                           </div>
                         </div>
                         <div className="flex items-center max-[500px]:justify-center md:justify-end max-md:mt-3 h-full">
                           <p className="text-lg font-bold leading-8 text-center text-gray-600 transition-all duration-300 group-hover:text-accent">
-                            {product.unitPrice * (quantities[product.id] || 1)}{" "}
+                            {(
+                              product.unitPrice * (quantities[product.id] || 1)
+                            ).toFixed(2)}{" "}
                             LKR
                           </p>
                         </div>
@@ -150,7 +131,7 @@ const Page = () => {
                   ))}
                 </div>
               ) : (
-                <p>Loading...</p>
+                <p>Your cart is empty.</p>
               )}
             </div>
             <div className="w-full max-w-3xl col-span-12 py-24 mx-auto xl:col-span-4 bg-gray-50 max-xl:px-6 xl:max-w-lg rounded-2xl lg:pl-8">
@@ -163,11 +144,13 @@ const Page = () => {
                     {products.length} Items
                   </p>
                   <p className="text-sm font-medium leading-8 text-black">
-                    {products.reduce(
-                      (acc, product) =>
-                        acc + product.unitPrice * (quantities[product.id] || 1),
-                      0
-                    )}{" "}
+                    {products
+                      .map(
+                        (product) =>
+                          product.unitPrice * (quantities[product.id] || 1)
+                      )
+                      .reduce((acc, val) => acc + val, 0)
+                      .toFixed(2)}{" "}
                     LKR
                   </p>
                 </div>
@@ -180,12 +163,13 @@ const Page = () => {
                       {products.length} Items
                     </p>
                     <p className="text-lg font-semibold leading-8 text-accent">
-                      {products.reduce(
-                        (acc, product) =>
-                          acc +
-                          product.unitPrice * (quantities[product.id] || 1),
-                        0
-                      )}{" "}
+                      {products
+                        .map(
+                          (product) =>
+                            product.unitPrice * (quantities[product.id] || 1)
+                        )
+                        .reduce((acc, val) => acc + val, 0)
+                        .toFixed(2)}{" "}
                       LKR
                     </p>
                   </div>
