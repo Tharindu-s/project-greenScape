@@ -4,10 +4,9 @@ import { useAuthContext } from "@/hooks/useAuthContext";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "react-hot-toast"; // Import toast
 
 const WriteReview = ({ productId }) => {
-  const { toast } = useToast();
   const { user } = useAuthContext();
 
   const [title, setTitle] = useState("");
@@ -26,6 +25,7 @@ const WriteReview = ({ productId }) => {
 
     if (!user) {
       setError("You must be logged in to add a review");
+      toast.error("You must be logged in to add a review");
       return;
     }
 
@@ -36,25 +36,30 @@ const WriteReview = ({ productId }) => {
       productId,
     };
 
-    const response = await fetch("/api/reviews", {
-      method: "POST",
-      body: JSON.stringify(review),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    const json = await response.json();
+    try {
+      const response = await fetch("/api/reviews", {
+        method: "POST",
+        body: JSON.stringify(review),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const json = await response.json();
 
-    if (!response.ok) {
-      setError(json.error);
-    }
-
-    if (response.ok) {
-      setError(null);
-      setTitle("");
-      setContent("");
-      console.log("Review added:", json);
+      if (!response.ok) {
+        setError(json.error);
+        toast.error(json.error); // Show error toast
+      } else {
+        setError(null);
+        setTitle("");
+        setContent("");
+        console.log("Review added:", json);
+        toast.success("Review submitted successfully!"); // Show success toast
+      }
+    } catch (err) {
+      console.error("Failed to submit review", err);
+      toast.error("An error occurred while submitting your review."); // Handle network errors
     }
   };
 
@@ -95,7 +100,6 @@ const WriteReview = ({ productId }) => {
           type="text"
           value={username}
           disabled
-          onChange={(e) => setUsername(e.target.value)}
         />
         <Input
           className="hidden"
@@ -107,16 +111,9 @@ const WriteReview = ({ productId }) => {
         <Button
           type="submit"
           className="py-6 px-7 rounded-3xl bg-accent hover:bg-accentdark"
-          onClick={() => {
-            toast({
-              title: "Review posted succesfully",
-              description: `Thank you for your review!`,
-            });
-          }}
         >
           Submit review
         </Button>
-        {/* <button type="submit">Add product</button> */}
         {error && <div className="error">{error}</div>}
       </form>
     </div>

@@ -11,8 +11,8 @@ import {
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { toast } from "react-hot-toast";
 
 const BuyExchangeButtons = ({
   productId,
@@ -20,7 +20,6 @@ const BuyExchangeButtons = ({
   recieverName,
   recieverId,
 }) => {
-  const { toast } = useToast();
   const { user } = useAuthContext();
 
   const [description, setDescription] = useState("");
@@ -39,7 +38,8 @@ const BuyExchangeButtons = ({
     e.preventDefault();
 
     if (!user) {
-      setError("You must be logged in to add a exchange request");
+      setError("You must be logged in to add an exchange request");
+      toast.error("You must be logged in to add an exchange request");
       return;
     }
 
@@ -53,23 +53,30 @@ const BuyExchangeButtons = ({
       productName,
     };
 
-    const response = await fetch("/api/exchange", {
-      method: "POST",
-      body: JSON.stringify(exchangeRequest),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    try {
+      const response = await fetch("/api/exchange", {
+        method: "POST",
+        body: JSON.stringify(exchangeRequest),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
 
-    if (!response.ok) {
-      const json = await response.json();
-      setError(json.error);
-    } else {
-      const json = await response.json();
-      setError(null);
-      setDescription("");
-      console.log("Exchange request added:", json);
+      if (!response.ok) {
+        const json = await response.json();
+        setError(json.error);
+        toast.error(`Failed to send request: ${json.error}`);
+      } else {
+        const json = await response.json();
+        setError(null);
+        setDescription("");
+        console.log("Exchange request added:", json);
+        toast.success("Exchange request sent successfully!");
+      }
+    } catch (err) {
+      console.error("Failed to send request", err);
+      toast.error("An error occurred. Please try again.");
     }
   };
 
@@ -96,33 +103,28 @@ const BuyExchangeButtons = ({
                 id="description"
                 className="col-span-3 min-h-[300px] mt-4"
                 placeholder="Describe the product you want to exchange"
+                value={description} // Added controlled input value
                 onChange={(e) => setDescription(e.target.value)}
               />
               <div className="hidden my-3 ">
                 <p>sender id</p>
                 <input
                   type="text"
-                  defaultValue={user?.userId}
+                  value={senderId} // Use value instead of defaultValue
                   className=""
-                  onChange={(e) => setSenderId(e.target.value)}
+                  readOnly // Prevent changes
                 />
               </div>
             </div>
           </div>
           <Button
             type="submit"
-            cclassName="px-4 py-2 rounded-md font-inter text-accent bg-background hover:bg-[#DADBDA]"
-            onClick={() => {
-              toast({
-                title: "Request sent succesfully",
-                description: `Your request was sent successfully. Check request state on your profile!`,
-              });
-            }}
+            className="px-4 py-2 rounded-md font-inter text-accent bg-background hover:bg-[#DADBDA]"
           >
             Submit request
           </Button>
         </form>
-        {error && <div className="error">{error}</div>}
+        {error && <div className="mt-4 text-red-500 error">{error}</div>}
       </DialogContent>
     </Dialog>
   );

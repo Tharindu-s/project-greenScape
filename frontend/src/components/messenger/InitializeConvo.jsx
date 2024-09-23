@@ -12,6 +12,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { toast } from "react-hot-toast"; // Import the toast library
 
 const InitializeConvo = ({ product }) => {
   const { user } = useAuthContext();
@@ -30,7 +31,8 @@ const InitializeConvo = ({ product }) => {
     e.preventDefault();
 
     if (!user) {
-      setError("You must be logged in to add a exchange request");
+      setError("You must be logged in to add an exchange request");
+      toast.error("You must be logged in to send a message."); // Show toast for error
       return;
     }
 
@@ -78,9 +80,12 @@ const InitializeConvo = ({ product }) => {
       // Message sent successfully
       const messageData = await messageResponse.json();
       setError(null);
+      setMessage(""); // Clear the textarea after sending the message
+      toast.success("Message sent successfully!"); // Show success toast
       console.log("Message sent:", messageData);
     } catch (err) {
       setError(err.message);
+      toast.error(`Error: ${err.message}`); // Show error toast
     }
   };
 

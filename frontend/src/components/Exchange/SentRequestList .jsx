@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "@/hooks/useAuthContext";
-import { cn } from "@/lib/utils";
 import {
   Table,
   TableBody,
@@ -10,7 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import ProductsSkeleton from "../skeletons/skeleton-products";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,6 +21,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { exchangeState } from "../Constants/Exchange-state-data";
+import { toast } from "react-hot-toast"; // Import toast
 
 const SentRequestList = () => {
   const { user } = useAuthContext();
@@ -56,22 +55,28 @@ const SentRequestList = () => {
   };
 
   // Function to update exchange state via PATCH request
-  const updateExchangeState = () => {
+  const updateExchangeState = async () => {
     if (selectedState && selectedRequestId) {
-      fetch(`/api/exchange/${selectedRequestId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ senderState: selectedState }),
-      })
-        .then((res) => {
-          // Handle response as needed
-          console.log("State updated successfully");
-        })
-        .catch((error) => {
-          console.error("Error updating state:", error);
+      try {
+        const response = await fetch(`/api/exchange/${selectedRequestId}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ senderState: selectedState }),
         });
+
+        if (!response.ok) {
+          const json = await response.json();
+          toast.error(json.error || "Failed to update state."); // Show error toast
+        } else {
+          toast.success("State updated successfully!"); // Show success toast
+          console.log("State updated successfully");
+        }
+      } catch (error) {
+        console.error("Error updating state:", error);
+        toast.error("An error occurred while updating the state."); // Handle network errors
+      }
     }
   };
 
@@ -97,21 +102,19 @@ const SentRequestList = () => {
                   <TableCell>{request.recieverName}</TableCell>
                   <TableCell>{request.description}</TableCell>
                   <TableCell>
-                    {" "}
                     <AlertDialog>
                       <AlertDialogTrigger>
                         <p className="p-3 text-white bg-accent rounded-xl">
-                          {" "}
                           {request.senderState}
                         </p>
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
                           <AlertDialogTitle>
-                            Change the currunt state
+                            Change the current state
                           </AlertDialogTitle>
                           <AlertDialogDescription>
-                            Changes you make will be visible to the other party
+                            Changes you make will be visible to the other party.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <select
@@ -135,7 +138,6 @@ const SentRequestList = () => {
                       </AlertDialogContent>
                     </AlertDialog>
                   </TableCell>
-
                   <TableCell>{request.recieverState}</TableCell>
                   <TableCell className="text-right">
                     {request.createdAt.slice(0, 10)}
@@ -146,7 +148,6 @@ const SentRequestList = () => {
           </Table>
         </div>
       ) : (
-        // <ProductsSkeleton />
         <p>empty</p>
       )}
     </div>

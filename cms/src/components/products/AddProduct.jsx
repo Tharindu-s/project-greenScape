@@ -169,13 +169,13 @@ const AddProduct = () => {
 
   return (
     <Dialog>
-      <DialogTrigger className="gap-3 flex mb-6  items-center p-4  border border-gray-200 rounded-xl hover:bg-slate-100">
+      <DialogTrigger className="flex items-center gap-3 p-4 mb-6 border border-gray-200 rounded-xl hover:bg-slate-100">
         <FiPlus />
         Add a new product
       </DialogTrigger>
       <DialogContent className="w-full">
         <DialogHeader>
-          <DialogTitle className="text-center font-semibold">
+          <DialogTitle className="font-semibold text-center">
             Add a new product
           </DialogTitle>
           <DialogDescription className="text-center">
@@ -303,9 +303,9 @@ const AddProduct = () => {
               <label className="text-[14px] pl-1">Insert images</label>
               <label
                 for="dropzone-file"
-                className="flex flex-col items-center justify-center py-9 w-full border border-gray-300 border-dashed rounded-2xl cursor-pointer bg-gray-50 px-6"
+                className="flex flex-col items-center justify-center w-full px-6 border border-gray-300 border-dashed cursor-pointer py-9 rounded-2xl bg-gray-50"
               >
-                <div className="mb-3 flex items-center justify-center">
+                <div className="flex items-center justify-center mb-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="40"
@@ -324,10 +324,10 @@ const AddProduct = () => {
                     </g>
                   </svg>
                 </div>
-                <span className="text-center text-gray-400 text-xs font-normal leading-4 mb-1">
+                <span className="mb-1 text-xs font-normal leading-4 text-center text-gray-400">
                   Upload upto 4 images
                 </span>
-                <h6 className="text-center text-gray-900 text-sm font-medium leading-5">
+                <h6 className="text-sm font-medium leading-5 text-center text-gray-900">
                   Click here to upload
                 </h6>
                 <input
@@ -349,7 +349,7 @@ const AddProduct = () => {
 
             <Button
               type="submit"
-              className="bg-greenscape hover:bg-green-500 hover:text-white w-full"
+              className="w-full bg-greenscape hover:bg-green-500 hover:text-white"
             >
               Add product
             </Button>

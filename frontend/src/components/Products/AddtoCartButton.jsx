@@ -1,18 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { toast } from "react-hot-toast"; // Import the toast library
 
 const AddtoCartButton = ({
   productId,
@@ -21,7 +11,6 @@ const AddtoCartButton = ({
   productName,
   imgurl,
 }) => {
-  const { toast } = useToast();
   const { user } = useAuthContext();
 
   const [error, setError] = useState(null);
@@ -34,11 +23,13 @@ const AddtoCartButton = ({
 
     if (quantity > available) {
       setError("Not enough stock");
+      toast.error("Not enough stock available.");
       return;
     }
 
     if (!user) {
       setError("You must be logged in to add a exchange request");
+      toast.error("You must be logged in to add an exchange request.");
       return;
     }
 
@@ -51,22 +42,29 @@ const AddtoCartButton = ({
       imgurl,
     };
 
-    const response = await fetch("/api/cart", {
-      method: "POST",
-      body: JSON.stringify(exchangeRequest),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    try {
+      const response = await fetch("/api/cart", {
+        method: "POST",
+        body: JSON.stringify(exchangeRequest),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
 
-    if (!response.ok) {
       const json = await response.json();
-      setError(json.error);
-    } else {
-      const json = await response.json();
-      setError(null);
-      console.log("Added to cart:", json);
+
+      if (!response.ok) {
+        setError(json.error);
+        toast.error(`Error: ${json.error}`); // Show error toast
+      } else {
+        setError(null);
+        toast.success("Product added to cart successfully!"); // Show success toast
+        console.log("Added to cart:", json);
+      }
+    } catch (error) {
+      setError("An error occurred. Please try again.");
+      toast.error("An error occurred. Please try again.");
     }
   };
 
@@ -75,11 +73,6 @@ const AddtoCartButton = ({
       <Button
         type="submit"
         className="px-4 py-2 rounded-md font-inter text-accent bg-background hover:bg-[#DADBDA]"
-        onClick={() => {
-          toast({
-            title: "Added to cart",
-          });
-        }}
       >
         Add to cart
       </Button>

@@ -36,6 +36,8 @@ import {
 } from "firebase/storage";
 import { app } from "@/lib/firebase";
 import { Progress } from "../ui/progress";
+import { Toaster, toast } from "react-hot-toast";
+
 const storage = getStorage(app);
 
 const Form = () => {
@@ -141,32 +143,46 @@ const Form = () => {
       username,
       userId,
       condition,
-      image: media,
+      image: media, // Use your media/image value here
     };
 
-    const response = await fetch("/api/products", {
-      method: "POST",
-      body: JSON.stringify(product),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    const json = await response.json();
+    try {
+      const response = await fetch("/api/products", {
+        method: "POST",
+        body: JSON.stringify(product),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
 
-    if (!response.ok) {
-      setError(json.error);
-    }
+      const json = await response.json();
 
-    if (response.ok) {
-      setError(null);
-      setName("");
-      setDescription("");
-      setPrice("");
-      setQuantity("");
-      setImages([]);
-      setCondition({ sell: false, exchange: false });
-      console.log("new product added:", json);
+      if (!response.ok) {
+        if (json.error) {
+          toast.error(`Error: ${json.error}`);
+        } else {
+          toast.error("An error occurred while adding the product.");
+        }
+        setError(json.error);
+      } else {
+        setError(null);
+
+        setName("");
+        setCategory("");
+        setDescription("");
+        setPrice("");
+        setQuantity("");
+        setUsername("");
+        setUserId("");
+        setCondition({ sell: false, exchange: false });
+        setImages([]);
+        console.log("New product added:", json);
+        toast.success("Product added successfully!");
+      }
+    } catch (error) {
+      toast.error(`Network error: ${error.message}`);
+      setError("Network error. Please try again later.");
     }
   };
 

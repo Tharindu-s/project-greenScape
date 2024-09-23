@@ -85,47 +85,27 @@ const createProduct = async (req, res) => {
     image,
   } = req.body;
 
+  // Collect any missing fields in an array
   let emptyFields = [];
 
-  if (!name) {
-    emptyFields.push("name");
-    return res.json({ error: "Please fill the name" });
-  }
-  if (!category) {
-    emptyFields.push("category");
-    return res.json({ error: "Please fill the category" });
-  }
-  if (!description) {
-    emptyFields.push("description");
-    return res.json({ error: "Please fill the description" });
-  }
-  if (!price) {
-    emptyFields.push("price");
-    return res.json({ error: "Please fill the price" });
-  }
-  if (!quantity) {
-    emptyFields.push("quantity");
-    return res.json({ error: "Please fill the quantity" });
-  }
-  if (!username) {
-    emptyFields.push("username");
-    return res.json({ error: "Please fill the username" });
-  }
-  if (!userId) {
-    emptyFields.push("username");
-    return res.json({ error: "Please fill the userId" });
-  }
-  if (!image) {
-    emptyFields.push("image");
-    return res.json({ error: "Please fill the image" });
-  }
+  if (!name) emptyFields.push("name");
+  if (!category) emptyFields.push("category");
+  if (!description) emptyFields.push("description");
+  if (!price) emptyFields.push("price");
+  if (!quantity) emptyFields.push("quantity");
+  if (!username) emptyFields.push("username");
+  if (!userId) emptyFields.push("userId");
+  if (!image) emptyFields.push("image");
+
+  // If there are missing fields, return an error response
   if (emptyFields.length > 0) {
-    return res
-      .status(400)
-      .json({ error: "Please fill in all the fields", emptyFields });
+    return res.status(400).json({
+      error: "Please fill in all the fields",
+      emptyFields,
+    });
   }
 
-  // Add doc to db
+  // Add the product to the database
   try {
     const product = await Product.create({
       name,
@@ -139,9 +119,10 @@ const createProduct = async (req, res) => {
       isProfessional,
       image,
     });
-    res.status(200).json(product);
+
+    res.status(201).json(product);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
