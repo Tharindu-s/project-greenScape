@@ -86,7 +86,9 @@ const InitializeConvo = ({ product }) => {
 
   return (
     <Dialog>
-      <DialogTrigger>Message</DialogTrigger>
+      <DialogTrigger className="px-4 py-2 rounded-md font-inter text-accent bg-background hover:bg-[#DADBDA]">
+        Message
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Send a message</DialogTitle>

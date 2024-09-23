@@ -74,7 +74,7 @@ const AddtoCartButton = ({
     <form onSubmit={handleSubmit}>
       <Button
         type="submit"
-        className="py-6 rounded-lg px-7 bg-accent hover:bg-accentdark"
+        className="px-4 py-2 rounded-md font-inter text-accent bg-background hover:bg-[#DADBDA]"
         onClick={() => {
           toast({
             title: "Added to cart",

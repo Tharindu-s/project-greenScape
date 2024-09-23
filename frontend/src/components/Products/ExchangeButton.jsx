@@ -111,7 +111,7 @@ const BuyExchangeButtons = ({
           </div>
           <Button
             type="submit"
-            className="py-6 px-7 rounded-3xl bg-accent hover:bg-accentdark"
+            cclassName="px-4 py-2 rounded-md font-inter text-accent bg-background hover:bg-[#DADBDA]"
             onClick={() => {
               toast({
                 title: "Request sent succesfully",

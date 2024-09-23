@@ -23,8 +23,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex w-full bg-background text-textmain">
-      <div className="w-1/2 ">
+    <div className="flex mt-24 bg-background text-textmain">
+      <div className="w-1/2 mx-auto ">
         <div className="w-1/3 mx-auto ">
           <Link href="/">
             <Image
@@ -54,7 +54,7 @@ const Login = () => {
 
                 <div className="loginInput">
                   <input
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     name="input"
                     onChange={(e) => setPassword(e.target.value)}
@@ -82,9 +82,9 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <div className="w-1/2">
-        <Image src={loginIMage} className="w-full p-12" alt="logo"></Image>
-      </div>
+      {/* <div className="w-1/2">
+        <Image src={loginIMage} className="w-[75%] p-12" alt="logo"></Image>
+      </div> */}
     </div>
   );
 };

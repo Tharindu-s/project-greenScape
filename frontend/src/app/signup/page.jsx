@@ -18,12 +18,15 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signup(name, email, password, city, country);
+    const success = await signup(name, email, password, city, country);
+    if (success) {
+      window.location.href = "/";
+    }
   };
 
   return (
-    <div className="flex w-full bg-background text-textmain">
-      <div className="w-1/2 ">
+    <div className="flex w-full mt-24 bg-background text-textmain">
+      <div className="w-1/2 mx-auto">
         <div className="w-1/3 mx-auto ">
           <Link href="/">
             <Image
@@ -116,9 +119,9 @@ const Signup = () => {
           </p>
         </div>
       </div>
-      <div className="w-1/2">
+      {/* <div className="w-1/2">
         <Image src={loginIMage} className="w-full p-12" alt="logo"></Image>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -37,7 +37,7 @@ import {
 } from "firebase/storage";
 import { app } from "@/lib/firebase";
 import { FiPlus } from "react-icons/fi";
-import { categoryList } from "../../constants/Category-data";
+import { serviceList } from "../../constants/service-types";
 const storage = getStorage(app);
 
 const AddService = () => {
@@ -204,8 +204,8 @@ const AddService = () => {
                     className="w-[400px] justify-between mt-2"
                   >
                     {value
-                      ? categoryList.find(
-                          (categoryList) => categoryList.value === value
+                      ? serviceList.find(
+                          (serviceList) => serviceList.value === value
                         )?.label
                       : "Select a category..."}
                     <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
@@ -217,7 +217,7 @@ const AddService = () => {
                     <CommandEmpty>No categories found.</CommandEmpty>
                     <CommandGroup>
                       <CommandList>
-                        {categoryList.map((category) => (
+                        {serviceList.map((category) => (
                           <CommandItem
                             key={category.value}
                             value={category.value}
