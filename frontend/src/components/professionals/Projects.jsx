@@ -12,7 +12,10 @@ export function ProjectsList({ projects }) {
         inspired for your next green adventure with Green Oasis.
       </p>
       {projects.map((project) => (
-        <div className="border border-solid border-[#e6e6e6] rounded-[30px] p-9">
+        <div
+          className="border border-solid border-[#e6e6e6] rounded-[30px] p-9"
+          key={project._id}
+        >
           <h1 className="font-poppins text-[24px] font-semibold text-textmain pt-4">
             {project.projectName}
           </h1>
