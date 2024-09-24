@@ -63,6 +63,13 @@ const getUser = async (req, res) => {
   }
 };
 
+// get all users
+const getUsers = async (req, res) => {
+  const users = await User.find({}).sort({ createdAt: -1 });
+
+  res.status(200).json(users);
+};
+
 // update a user
 const updateUser = async (req, res) => {
   const { id } = req.params;
@@ -77,6 +84,24 @@ const updateUser = async (req, res) => {
       ...req.body,
     }
   );
+
+  if (!user) {
+    return res.status(400).json({ error: "No such user" });
+  }
+
+  res.status(200).json(user);
+};
+
+//delete an user
+
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such user" });
+  }
+
+  const user = await User.findOneAndDelete({ _id: id });
 
   if (!user) {
     return res.status(400).json({ error: "No such user" });
@@ -174,4 +199,6 @@ module.exports = {
   updateUser,
   forgotPassword,
   resetPasword,
+  getUsers,
+  deleteUser,
 };

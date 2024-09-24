@@ -9,6 +9,7 @@ const {
   getProductsByUser,
   getProductsByProfessional,
   searchProducts,
+  searchProductsById,
 } = require("../controllers/productController");
 const requireAuth = require("../middleware/requireAuth");
 
@@ -43,5 +44,8 @@ router.get("/professional/:userId", getProductsByProfessional);
 
 //search products
 router.get("/search/all", searchProducts);
+
+//search products by id
+router.get("/search/:id", searchProductsById);
 
 module.exports = router;

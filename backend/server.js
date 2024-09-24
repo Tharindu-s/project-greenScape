@@ -18,6 +18,7 @@ const inquiryRoutes = require("./routes/inquiry");
 const cartRoutes = require("./routes/cart");
 const serviceRoutes = require("./routes/service");
 const blogRoutes = require("./routes/blogs");
+const adminRoutes = require("./routes/admin");
 
 // express app
 const app = express();
@@ -45,6 +46,7 @@ app.use("/api/inquiry", inquiryRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/service", serviceRoutes);
 app.use("/api/blogs", blogRoutes);
+app.use("/api/admin", adminRoutes);
 
 // connect to db
 mongoose

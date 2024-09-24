@@ -4,51 +4,54 @@ const validator = require("validator");
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  city: {
-    type: String,
-    required: true,
-  },
-  country: {
-    type: String,
-    required: true,
-  },
-  bio: {
-    type: String,
-    required: false,
-  },
-  posts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
+const userSchema = new Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
     },
-  ],
-  savedPosts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "SavedPost",
+    password: {
+      type: String,
+      required: true,
     },
-  ],
-  chats: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Chat",
+    name: {
+      type: String,
+      required: true,
     },
-  ],
-});
+    city: {
+      type: String,
+      required: true,
+    },
+    country: {
+      type: String,
+      required: true,
+    },
+    bio: {
+      type: String,
+      required: false,
+    },
+    posts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
+    savedPosts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "SavedPost",
+      },
+    ],
+    chats: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Chat",
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
 // static signup method
 userSchema.statics.signup = async function (
