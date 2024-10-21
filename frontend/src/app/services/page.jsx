@@ -1,5 +1,5 @@
 "use client";
-import Services from "@/components/home/Service-common";
+import Services from "@/components/home/Services-common";
 import React, { useState, useEffect } from "react";
 
 async function getServices() {

@@ -1,13 +1,12 @@
-import React from "react";
-import logo from "@/assets/logo.png";
 import Image from "next/image";
 import Link from "next/link";
+import logo from "@/assets/logo.png";
 
-const Footer = () => {
+export default function Footer() {
   return (
-    <footer className="w-full py-14 bg-slate-100">
-      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto">
+    <footer className="bg-slate-50">
+      <div className="container flex flex-col items-center px-4 py-24 mx-auto">
+        <div className="mb-6">
           <Image
             src={logo}
             alt="logo"
@@ -15,36 +14,35 @@ const Footer = () => {
             height={75}
             className="mx-auto"
           />
-          <ul className="flex flex-col items-center justify-center py-16 mb-10 text-lg transition-all duration-500 border-b border-gray-200 gap-7 md:flex-row md:gap-12">
+        </div>
+        <nav className="mb-6">
+          <ul className="grid grid-cols-2 gap-4 text-center sm:grid-cols-4">
             <li>
-              <a href="/" className="text-gray-800 hover:text-gray-900">
+              <Link href="#" className="text-gray-600 hover:text-gray-900">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/products" className="text-gray-800 hover:text-gray-900">
-                Products
-              </a>
+              <Link href="#" className="text-gray-600 hover:text-gray-900">
+                About
+              </Link>
             </li>
             <li>
-              <a href="/services" className="text-gray-800 hover:text-gray-900">
+              <Link href="#" className="text-gray-600 hover:text-gray-900">
                 Services
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/blogs" className="text-gray-800 hover:text-gray-900">
-                Blogs
-              </a>
+              <Link href="#" className="text-gray-600 hover:text-gray-900">
+                Contact
+              </Link>
             </li>
           </ul>
-
-          <span className="block text-center text-gray-500 text-xm">
-            ©<Link href="/">pagedone</Link>2024, All rights reserved.
-          </span>
+        </nav>
+        <div className="text-sm text-center text-gray-500">
+          © {new Date().getFullYear()} Your Company Name. All rights reserved.
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

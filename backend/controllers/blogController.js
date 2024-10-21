@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 // Create new blog
 const createBlog = async (req, res) => {
-  const { title, category, content, userId, coverImg } = req.body;
+  const { title, category, content, userId, username, coverImg } = req.body;
 
   let emptyFields = [];
 
@@ -24,6 +24,10 @@ const createBlog = async (req, res) => {
     emptyFields.push("username");
     return res.json({ error: "Please fill the userId" });
   }
+  if (!username) {
+    emptyFields.push("username");
+    return res.json({ error: "Please fill the username" });
+  }
   if (!coverImg) {
     emptyFields.push("coverImg");
     return res.json({ error: "Please fill the coverImg" });
@@ -41,6 +45,7 @@ const createBlog = async (req, res) => {
       category,
       content,
       userId,
+      username,
       coverImg,
     });
     res.status(200).json(blog);
@@ -54,6 +59,23 @@ const getBlogs = async (req, res) => {
   const blogs = await Blog.find({}).sort({ createdAt: -1 });
 
   res.status(200).json(blogs);
+};
+
+// get a single product
+const getBlog = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such blog" });
+  }
+
+  const blog = await Blog.findById(id);
+
+  if (!blog) {
+    return res.status(404).json({ error: "No such blog" });
+  }
+
+  res.status(200).json(blog);
 };
 
 // get blogs by user
@@ -119,13 +141,13 @@ const searchBlogs = async (req, res) => {
     const search = req.query.search || "";
 
     const blogs = await Blog.find({
-      name: { $regex: search, $options: "i" },
+      title: { $regex: search, $options: "i" },
     })
       .limit(limit)
       .skip(limit * page);
 
     const total = await Blog.countDocuments({
-      name: { $regex: search, $options: "i" },
+      title: { $regex: search, $options: "i" },
     });
 
     // include all below things on the reposnse not only the blogs object
@@ -150,4 +172,5 @@ module.exports = {
   deleteBlog,
   updateBlog,
   searchBlogs,
+  getBlog,
 };

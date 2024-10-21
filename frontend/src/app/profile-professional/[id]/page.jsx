@@ -2,7 +2,7 @@ import userIcon from "../../../assets/Profile/userIcon.png";
 import { FaLocationDot } from "react-icons/fa6";
 import Image from "next/image";
 import Products from "../../../components/home/Products-common";
-import Services from "@/components/home/Service-common";
+import Services from "@/components/home/Services-common";
 import { ProjectsList } from "@/components/professionals/Projects";
 
 async function getProductInfo(id) {

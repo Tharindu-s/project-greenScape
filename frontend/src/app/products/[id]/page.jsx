@@ -22,6 +22,7 @@ import { FiUser } from "react-icons/fi";
 import { BASE_URL } from "@/components/Constants/server";
 import InitializeConvo from "@/components/messenger/InitializeConvo";
 import AddtoCartButton from "@/components/Products/AddtoCartButton";
+import ReportProduct from "@/components/Products/Report";
 
 async function getproductInfo(id) {
   if (!id) {
@@ -180,6 +181,8 @@ export default async function ProductInfo({ params }) {
             </div>
           </div>
         </section>
+
+        <ReportProduct productId={id} />
         {/* show reviews */}
         <div>
           <ReviewsList productId={id} />

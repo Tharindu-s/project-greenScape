@@ -52,14 +52,16 @@ const Services = ({ services }) => {
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
-
-                    <p className="font-inter text-[16px] font-normal text-textmain pb-1">
-                      {product.price} LKR
-                      <span className="text-[12px] font-normal text-textmain">
-                        per item
-                      </span>
+                    <p className="font-inter text-[14px] font-normal text-gray-800 pb-2">
+                      {product.price} LKR per item
                     </p>
-                    <p className="font-inter text-[16px] font-normal text-textmuted">
+
+                    <p className="font-inter text-[12px] font-normal text-gray-800 pb-2">
+                      {product.description.length > 50
+                        ? product.description.slice(0, 50) + "..."
+                        : product.description}
+                    </p>
+                    <p className="font-inter text-[12px] font-normal text-gray-800 pb-2">
                       Colombo
                     </p>
 

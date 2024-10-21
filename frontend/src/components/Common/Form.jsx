@@ -20,14 +20,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { categoryList } from "../Constants/Category-data";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   getStorage,
   ref,
@@ -36,7 +28,7 @@ import {
 } from "firebase/storage";
 import { app } from "@/lib/firebase";
 import { Progress } from "../ui/progress";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 const storage = getStorage(app);
 
@@ -52,7 +44,6 @@ const Form = () => {
   const [quantity, setQuantity] = useState("");
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState("");
-  // const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);
   const [condition, setCondition] = useState({ sell: false, exchange: false });
   const [media, setMedia] = useState([]);
@@ -129,8 +120,25 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Client-side validation
+    if (
+      !name ||
+      !category ||
+      !description ||
+      !price ||
+      !quantity ||
+      !username ||
+      !userId ||
+      !condition
+    ) {
+      setError("Please fill in all the required fields.");
+      toast.error("Please fill in all the required fields.");
+      return;
+    }
+
     if (!user) {
-      setError("You must be logged in to add a product");
+      setError("You must be logged in to add a blog.");
+      toast.error("You must be logged in to add a blog.");
       return;
     }
 
@@ -159,15 +167,14 @@ const Form = () => {
       const json = await response.json();
 
       if (!response.ok) {
-        if (json.error) {
-          toast.error(`Error: ${json.error}`);
-        } else {
-          toast.error("An error occurred while adding the product.");
-        }
-        setError(json.error);
+        // Handle server-side errors
+        const errorMsg =
+          json.error || "An error occurred while adding the blog.";
+        setError(errorMsg);
+        console.error("Server error:", json.error || json); // Log for debugging
+        toast.error(`Error: ${errorMsg}`);
       } else {
         setError(null);
-
         setName("");
         setCategory("");
         setDescription("");
@@ -181,8 +188,10 @@ const Form = () => {
         toast.success("Product added successfully!");
       }
     } catch (error) {
-      toast.error(`Network error: ${error.message}`);
+      // Handle network or unexpected errors
+      console.error("Network error:", error); // Log for debugging
       setError("Network error. Please try again later.");
+      toast.error(`Network error: ${error.message}`);
     }
   };
 
@@ -382,8 +391,9 @@ const Form = () => {
         <Button
           className="py-6 px-7 rounded-3xl bg-accent hover:bg-accentdark"
           type="submit"
+          disabled={!images || (progress > 0 && progress < 100)}
         >
-          Add product
+          Add Product
         </Button>
         {error && <div className="error">{error}</div>}
       </form>

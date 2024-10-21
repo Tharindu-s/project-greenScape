@@ -7,74 +7,68 @@ import {
 } from "../ui/tooltip";
 import Image from "next/image";
 import Link from "next/link";
-import { TbReportMoney } from "react-icons/tb";
-import { CgArrowsExchange } from "react-icons/cg";
 
 // components
 import ProductsSkeleton from "../skeletons/skeleton-products";
-import { Badge } from "../ui/badge";
+import { Badge } from "@/components/ui/badge";
 
-const Products = ({ products }) => {
+const Blogs = ({ blogs }) => {
   return (
     <div>
       <h1 className="font-poppins text-center text-[24px] font-semibold text-textmain mt-16 mb-10">
-        Latest listings
+        Latest Blogs
       </h1>
 
-      {products && products.length > 0 ? (
+      {blogs && blogs.length > 0 ? (
         // <div className="grid justify-between w-full grid-cols-1 px-4 mx-auto mb-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-5 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
         <div className="px-4 mx-auto max-w-[1500px] sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {/* Card container */}
-            {products.map((product) => (
-              <Link key={product._id} href={`/products/${product._id}`}>
+            {blogs.map((blog) => (
+              <Link key={blog._id} href={`/blog/${blog._id}`}>
                 <div
-                  key={product._id}
+                  key={blog._id}
                   className="p-1 sm:p-3 mb-0 sm:mb-8 border-[1px] rounded-xl w-[165px] sm:w-[230px] mx-auto"
                 >
                   <div className="relative overflow-hidden items-center w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] mx-auto">
-                    <div className="absolute flex">
-                      {product.condition.sell === true ? (
-                        <Badge className="top-0 left-0 px-3 py-1 m-2 font-normal bg-white rounded-xl">
-                          <CgArrowsExchange size={18} className="text-accent" />
-                        </Badge>
-                      ) : null}
-                      {product.condition.exchange === true ? (
-                        <Badge className="top-0 left-0 px-3 py-1 m-2 font-normal bg-white rounded-xl">
-                          <TbReportMoney size={18} className="text-accent" />
-                        </Badge>
-                      ) : null}
-                    </div>
+                    <Badge className="absolute top-0 left-0 px-3 py-1 m-2 font-normal rounded-xl bg-accent">
+                      {blog.category}
+                    </Badge>
                     <Image
-                      // old objects are using strings so remove all the old products and add new products to map through them
-                      src={product.image[0]}
+                      src={`${blog.coverImg}`}
                       width={200}
                       height={200}
-                      className="object-cover w-full h-full rounded-xl"
-                      alt="product image"
+                      className="object-cover w-full h-full rounded-md"
+                      alt="blog image"
                     ></Image>
                   </div>
+
                   <div>
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger className="text-left">
                           <h2 className="font-inter text-[16px] font-medium text-textmain py-4">
-                            {product.name}
+                            {blog.title.length > 20
+                              ? blog.title.slice(0, 20) + "..."
+                              : blog.title}
                           </h2>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>{product.category}</p>
+                          <p>{blog.title}</p>
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
-
                     <p className="font-inter text-[12px] font-normal text-gray-800 pb-2">
-                      {product.description.length > 50
-                        ? product.description.slice(0, 50) + "..."
-                        : product.description}
+                      {blog.content.length > 80
+                        ? blog.content.slice(0, 80) + "..."
+                        : blog.content}
+                    </p>
+
+                    <p className="font-inter text-[12px] font-normal text-textmuted">
+                      {blog.createdAt.slice(0, 10)}
                     </p>
                     <p className="font-inter text-[12px] font-normal text-textmuted">
-                      Colombo
+                      {blog.username}
                     </p>
 
                     <div className="flex sm:block xl:flex font-opensans font-bold text-[14px] md:text-[16px] text-textmainlow gap-2">
@@ -93,4 +87,4 @@ const Products = ({ products }) => {
   );
 };
 
-export default Products;
+export default Blogs;
