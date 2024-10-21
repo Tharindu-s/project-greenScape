@@ -16,7 +16,7 @@ import { Textarea } from "../ui/textarea";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { toast } from "react-hot-toast";
 
-export default function ReportProduct({ productId }) {
+export default function ReportBlog({ blogId }) {
   const user = useAuthContext();
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState("");
@@ -26,19 +26,19 @@ export default function ReportProduct({ productId }) {
     e.preventDefault();
 
     if (!user) {
-      setError("You must be logged in to report this product");
-      toast.error("You must be logged in to report this product");
+      setError("You must be logged in to report this Blog");
+      toast.error("You must be logged in to report this Blog");
       return;
     }
 
     const report = {
       title,
       content,
-      productId,
+      blogId,
     };
 
     try {
-      const response = await fetch("/api/reportproduct", {
+      const response = await fetch("/api/reportblog", {
         method: "POST",
         body: JSON.stringify(report),
         headers: {
@@ -55,8 +55,8 @@ export default function ReportProduct({ productId }) {
         setTitle("");
         setContent("");
         setIsOpen(false);
-        console.log("Product reported:", json);
-        toast.success("Product reported successfully!");
+        console.log("Blog reported:", json);
+        toast.success("Blog reported successfully!");
       }
     } catch (err) {
       console.error("Failed to submit review", err);
@@ -66,36 +66,30 @@ export default function ReportProduct({ productId }) {
 
   console.log(content);
   console.log(title);
-  console.log(productId);
+  console.log(blogId);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="link" className="gap-1 p-0 m-0 text-red-600">
+        <Button variant="link" className="gap-1 p-0 m-0 my-2 text-red-600">
           <MdOutlineReportGmailerrorred size={18} />
-          Report this product
+          Report this blog
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form action="">
           <DialogHeader>
-            <DialogTitle className="mb-2">Report this product</DialogTitle>
+            <DialogTitle className="mb-2">Report this blog</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <RadioGroup value={title} onValueChange={setTitle}>
               <div className="flex items-center my-2 space-x-2">
-                <RadioGroupItem
-                  value="Incorrect product information"
-                  id="option1"
-                />
-                <Label htmlFor="option1">Incorrect product information</Label>
+                <RadioGroupItem value="Inappropiate content" id="option1" />
+                <Label htmlFor="option1">Inappropiate content</Label>
               </div>
               <div className="flex items-center my-2 space-x-2">
-                <RadioGroupItem
-                  value="Suspicious seller activity"
-                  id="option2"
-                />
-                <Label htmlFor="option2">Suspicious seller activity</Label>
+                <RadioGroupItem value="Suspicious account" id="option2" />
+                <Label htmlFor="option2">Suspicious account</Label>
               </div>
               <div className="flex items-center my-2 space-x-2">
                 <RadioGroupItem value="Other issues" id="option3" />

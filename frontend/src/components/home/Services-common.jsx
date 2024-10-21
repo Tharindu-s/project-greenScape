@@ -35,7 +35,7 @@ const Services = ({ services }) => {
                       src={product.image[0]}
                       width={200}
                       height={200}
-                      className="object-cover w-full h-full rounded-xl"
+                      className="object-cover w-full h-full rounded-lg"
                       alt="product image"
                     ></Image>
                   </div>

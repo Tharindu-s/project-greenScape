@@ -6,6 +6,7 @@ import { FaSquareFacebook } from "react-icons/fa6";
 import { PiLinkFill } from "react-icons/pi";
 import { BASE_URL } from "@/components/Constants/server";
 import Link from "next/link";
+import ReportBlog from "@/components/blog/Report";
 
 async function getBlogContent(id) {
   const res = await fetch(`http://localhost:4000/api/blogs/${id}`, {
@@ -62,11 +63,13 @@ export default async function BlogContent({ params }) {
               <Badge className="px-3 py-1font-normal rounded-xl bg-accent">
                 {blog.category}
               </Badge>
+              <br />
+              <ReportBlog blogId={blog._id} />
             </div>
             <div className="md:w-3/4 md:pr-4">
               <div className="font-opensans text-[16px] pt-6 md:pt-0 text-textmain mx-auto leading-relaxed" />
               {blog.content}
-            </div>
+            </div>{" "}
           </div>
         </div>
       </div>

@@ -38,7 +38,7 @@ const Blogs = ({ blogs }) => {
                       src={`${blog.coverImg}`}
                       width={200}
                       height={200}
-                      className="object-cover w-full h-full rounded-md"
+                      className="object-cover w-full h-full rounded-lg"
                       alt="blog image"
                     ></Image>
                   </div>
@@ -65,10 +65,10 @@ const Blogs = ({ blogs }) => {
                     </p>
 
                     <p className="font-inter text-[12px] font-normal text-textmuted">
-                      {blog.createdAt.slice(0, 10)}
+                      {blog.username}
                     </p>
                     <p className="font-inter text-[12px] font-normal text-textmuted">
-                      {blog.username}
+                      {blog.createdAt.slice(0, 10)}
                     </p>
 
                     <div className="flex sm:block xl:flex font-opensans font-bold text-[14px] md:text-[16px] text-textmainlow gap-2">

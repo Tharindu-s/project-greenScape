@@ -19,7 +19,8 @@ const cartRoutes = require("./routes/cart");
 const serviceRoutes = require("./routes/service");
 const blogRoutes = require("./routes/blogs");
 const adminRoutes = require("./routes/admin");
-const reportRoutes = require("./routes/reportProduct");
+const reportProductsRoutes = require("./routes/reportProduct");
+const reportBlogsRoutes = require("./routes/reportBlog");
 
 // express app
 const app = express();
@@ -48,7 +49,8 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/service", serviceRoutes);
 app.use("/api/blogs", blogRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/reportproduct", reportRoutes);
+app.use("/api/reportproduct", reportProductsRoutes);
+app.use("/api/reportblog", reportBlogsRoutes);
 
 // connect to db
 mongoose
