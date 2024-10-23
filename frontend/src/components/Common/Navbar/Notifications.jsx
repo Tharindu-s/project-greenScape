@@ -33,7 +33,7 @@ const Notifications = () => {
           setNotifications(response.data);
         })
         .catch((error) => {
-          console.error("Error fetching notifications:");
+          console.error("Error fetching notifications:", error);
         });
     } else {
       console.log("User not found");
