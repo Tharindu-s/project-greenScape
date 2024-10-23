@@ -26,10 +26,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/projects/page.jsx",
+    "src/app/dashboard/projects/page.jsx",
     "src/components/projects/EditProject.jsx",
-    "src/app/portfolio/page.jsx",
-    "src/app/products/page.jsx",
+    "src/app/dashboard/portfolio/page.jsx",
+    "src/app/dashboard/products/page.jsx",
     "src/app/login/layout.jsx"
   ],
   "exclude": ["node_modules"]

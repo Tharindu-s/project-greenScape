@@ -1,11 +1,10 @@
 "use client";
 import "./messenger.css";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import Conversation from "@/components/messenger/conversations/Conversation";
 import Message from "@/components/messenger/message/Message";
 import { useAuthContext } from "@/hooks/useAuthContext";
-import { BASE_URL } from "@/components/Constants/server";
 
 export default function Messenger() {
   const [conversations, setConversations] = useState([]);
@@ -15,13 +14,13 @@ export default function Messenger() {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [userId, setUserId] = useState("");
   const socket = useRef();
-  const { user } = useAuthContext();
+  const { professional } = useAuthContext();
 
   useEffect(() => {
-    if (user?.userId) {
-      setUserId(user.userId);
+    if (professional?.professionalId) {
+      setUserId(professional.professionalId);
     }
-  }, [user]);
+  }, [professional]);
 
   const scrollRef = useRef();
 
@@ -43,14 +42,16 @@ export default function Messenger() {
   }, [arrivalMessage, currentChat]);
 
   useEffect(() => {
-    socket.current.emit("addUser", user?.userId);
-  }, [user]);
+    socket.current.emit("addUser", professional?.professionalId);
+  }, [professional]);
 
   useEffect(() => {
     const getConversations = async () => {
       if (userId) {
         try {
-          const res = await fetch(`${BASE_URL}/api/conversation/${userId}`);
+          const res = await fetch(
+            `http://localhost:4000/api/conversation/${userId}`
+          );
           const data = await res.json(); // Added .json() to parse response
           console.log(data);
           setConversations(data);
@@ -67,7 +68,7 @@ export default function Messenger() {
       if (currentChat?._id) {
         try {
           const res = await fetch(
-            `${BASE_URL}/api/messages/${currentChat._id}`
+            `http://localhost:4000/api/messages/${currentChat._id}`
           );
           const data = await res.json(); // Added .json() to parse response
           setMessages(data);
@@ -81,26 +82,26 @@ export default function Messenger() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!user?.userId || !currentChat?._id) return; // Added checks
+    if (!professional?.professionalId || !currentChat?._id) return; // Added checks
 
     const message = {
-      sender: user.userId,
+      sender: professional.professionalId,
       text: newMessage,
       conversationId: currentChat._id,
     };
 
     const receiverId = currentChat.members.find(
-      (member) => member !== user.userId
+      (member) => member !== professional.professionalId
     );
 
     socket.current.emit("sendMessage", {
-      senderId: user.userId,
+      senderId: professional.professionalId,
       receiverId,
       text: newMessage,
     });
 
     try {
-      const res = await fetch(`${BASE_URL}/api/messages`, {
+      const res = await fetch(`http://localhost:4000/api/messages`, {
         method: "POST", // Specify the HTTP method
         headers: {
           "Content-Type": "application/json",
@@ -130,7 +131,11 @@ export default function Messenger() {
                 onClick={() => setCurrentChat(conversation)}
                 key={conversation._id}
               >
-                <Conversation conversation={conversation} currentUser={user} loggedInUser={user.userId}/>
+                <Conversation
+                  conversation={conversation}
+                  currentUser={professional}
+                  loggedInUser={professional.professionalId}
+                />
               </div>
             ))}
           </div>
@@ -142,7 +147,10 @@ export default function Messenger() {
                 <div className="chatBoxTop">
                   {messages.map((m) => (
                     <div ref={scrollRef} key={m._id}>
-                      <Message message={m} own={m.sender === user?.userId} />
+                      <Message
+                        message={m}
+                        own={m.sender === professional?.professionalId}
+                      />
                     </div>
                   ))}
                 </div>

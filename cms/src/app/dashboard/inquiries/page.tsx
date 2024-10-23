@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
-import MyCourses from "../../components/Courses/MyCourses";
-import StudyPacks from "../../components/Courses/StudyPacks";
+import MyCourses from "../../../components/Courses/MyCourses";
+import StudyPacks from "../../../components/Courses/StudyPacks";
 import InquiryList from "@/components/inquiries/inquiyList";
 
 const inquiryList = [

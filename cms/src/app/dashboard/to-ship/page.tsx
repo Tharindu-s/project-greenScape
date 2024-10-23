@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
-import MyCourses from "../../components/Courses/MyCourses";
+import MyCourses from "../../../components/Courses/MyCourses";
 
 const page = () => {
   return (

@@ -25,7 +25,7 @@ const Login = () => {
 
   useEffect(() => {
     if (professional) {
-      router.push("/");
+      router.push("/dashboard");
     }
   }, [professional, router]);
 
