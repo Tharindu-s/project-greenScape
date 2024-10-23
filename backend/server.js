@@ -35,6 +35,12 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get("/", (req, res) => {
+  res.send(
+    "<h1>Welcome to GreenScape backend</h1><p>The server is runningup and running</p>"
+  );
+});
+
 // routes
 app.use("/api/user", userRoutes);
 app.use("/api/products", productRoutes);
