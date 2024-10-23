@@ -2,6 +2,9 @@ import userIcon from "../../../assets/Profile/userIcon.png";
 import { FaLocationDot } from "react-icons/fa6";
 import Image from "next/image";
 import Products from "../../../components/home/Products-common";
+import Blogs from "@/components/home/Blogs-common";
+import StarRating from "@/components/Common/StarRating";
+import RateSeller from "@/components/Common/RateSeller";
 
 async function getProductInfo(id) {
   if (!id) {
@@ -16,6 +19,24 @@ async function getProductInfo(id) {
 
   if (!res.ok) {
     throw new Error("Failed to fetch products");
+  }
+
+  return res.json();
+}
+
+async function getBlogInfo(id) {
+  if (!id) {
+    throw new Error("Blog ID is undefined");
+  }
+
+  const res = await fetch(`http://localhost:4000/api/blogs/user/${id}`, {
+    next: {
+      revalidate: 2,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch blogs");
   }
 
   return res.json();
@@ -39,6 +60,27 @@ async function getUserInfo(id) {
   return res.json();
 }
 
+async function getRating(id) {
+  if (!id) {
+    throw new Error("User ID is undefined");
+  }
+
+  const res = await fetch(
+    `http://localhost:4000/api/sellerrating/overall/${id}`,
+    {
+      next: {
+        revalidate: 2,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch rating");
+  }
+
+  return res.json();
+}
+
 export default async function UserInfo({ params }) {
   console.log("Received params:", params); // Log the params to debug
   const { id } = params;
@@ -50,6 +92,9 @@ export default async function UserInfo({ params }) {
   try {
     const user = await getUserInfo(id);
     const products = await getProductInfo(id);
+    const blogs = await getBlogInfo(id);
+    const rating = await getRating(id);
+
     return (
       <div>
         {/* hero */}
@@ -82,16 +127,21 @@ export default async function UserInfo({ params }) {
             </h1>
             <p>{user.bio}</p>
             <h1 className="font-poppins text-[24px] font-semibold text-textmain mb-6 mt-8 ">
-              Products interested in
+              Seller rating
             </h1>
 
-            <div className="relative w-fit mt-[-1.00px] font-inter font-semibold text-accent text-sm tracking-0 leading-normal bg-[#EDF0F8] py-2 px-4 rounded-3xl">
-              Home plants
-            </div>
+            <StarRating rating={rating.averageRating} />
+          </div>
+          <div className="w-full rounded-[30px] overflow-hidden border border-solid border-[#e6e6e6] p-9 mt-20">
+            <RateSeller sellerId={id} />
           </div>
         </div>
+
         <div>
           <Products products={products} />
+        </div>
+        <div>
+          <Blogs blogs={blogs} />
         </div>
       </div>
     );

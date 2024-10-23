@@ -35,7 +35,7 @@ export default function Home() {
           console.error("Expected an array but received:", data.products);
           setProducts([]);
         }
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         console.error("Error fetching products data:", error);
       } finally {
@@ -58,7 +58,7 @@ export default function Home() {
           console.error("Expected an array but received:", data.services);
           setServices([]);
         }
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         console.error("Error fetching services data:", error);
       } finally {
@@ -81,7 +81,7 @@ export default function Home() {
           console.error("Expected an array but received:", data.blogs);
           setBlogs([]);
         }
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         console.error("Error fetching blogs data:", error);
       } finally {
@@ -101,7 +101,7 @@ export default function Home() {
         <DockHome />
       </span>
       <Products products={products.products ? products.products : []} />
-      {console.log(products)}
+      {/* {console.log(products)} */}
       <Pagination
         page={productpage}
         total={products.total ? products.total : 0}
@@ -109,7 +109,7 @@ export default function Home() {
         setPage={setProductpage}
       />
       <Services services={services.products ? services.products : []} />
-      {console.log(services)}
+      {/* {console.log(services)} */}
       <Pagination
         page={servicepage}
         total={services.total ? services.total : 0}
@@ -117,7 +117,7 @@ export default function Home() {
         setPage={setServicepage}
       />
       <Blogs blogs={blogs.blogs ? blogs.blogs : []} />
-      {console.log("blogs", blogs.blogs)}
+      {/* {console.log("blogs", blogs.blogs)} */}
       <Pagination
         page={blogpage}
         total={blogs.total ? blogs.total : 0}

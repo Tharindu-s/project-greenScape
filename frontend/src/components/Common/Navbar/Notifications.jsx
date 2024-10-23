@@ -19,22 +19,21 @@ const Notifications = () => {
 
   useEffect(() => {
     if (user) {
-      setUsername(user?.userName); // Pre-fill username from context
+      setUsername(user?.userName);
       setUserId(user?.userId);
     }
   }, [user]);
 
   useEffect(() => {
     if (userId) {
-      // Fetch notifications based on user ID
       axios
         .get(`http://localhost:4000/api/exchange/user/recieved/${userId}`)
         .then((response) => {
-          console.log(response.data); // Log the full response for debugging
-          setNotifications(response.data); // Assuming response.data contains the notifications array
+          console.log(response.data);
+          setNotifications(response.data);
         })
         .catch((error) => {
-          console.error("Error fetching notifications:", error);
+          console.error("Error fetching notifications:");
         });
     } else {
       console.log("User not found");

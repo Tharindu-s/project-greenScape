@@ -21,6 +21,7 @@ const blogRoutes = require("./routes/blogs");
 const adminRoutes = require("./routes/admin");
 const reportProductsRoutes = require("./routes/reportProduct");
 const reportBlogsRoutes = require("./routes/reportBlog");
+const sellerRatingsRoutes = require("./routes/rateSellers");
 
 // express app
 const app = express();
@@ -51,6 +52,7 @@ app.use("/api/blogs", blogRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/reportproduct", reportProductsRoutes);
 app.use("/api/reportblog", reportBlogsRoutes);
+app.use("/api/sellerrating", sellerRatingsRoutes);
 
 // connect to db
 mongoose

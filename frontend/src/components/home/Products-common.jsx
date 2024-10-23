@@ -18,7 +18,7 @@ const Products = ({ products }) => {
   return (
     <div>
       <h1 className="font-poppins text-center text-[24px] font-semibold text-textmain mt-16 mb-10">
-        Latest listings
+        User's listings
       </h1>
 
       {products && products.length > 0 ? (

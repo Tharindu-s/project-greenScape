@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -31,10 +30,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { categoryList } from "../Constants/Category-data";
 import {
   Command,
   CommandEmpty,
@@ -43,6 +38,9 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Popover,
   PopoverContent,
@@ -51,100 +49,95 @@ import {
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "react-hot-toast";
+import { BlogCategories } from "../Constants/Blog-data";
 
-const handleDelete = async (productId) => {
-  try {
-    const response = await fetch(`/api/products/${productId}`, {
-      method: "DELETE",
-    });
-    if (response.ok) {
-      // Handle success, maybe update state or UI
-      console.log("Product deleted successfully");
-      toast.success("Product deleted successfully");
-    } else {
-      // Handle error
-      console.error("Failed to delete product");
-      toast.error("Failed to delete product");
-    }
-  } catch (error) {
-    console.error("Error deleting product:", error);
-    toast.error("Error deleting product");
-  }
-};
-
-const ProductsProfile = ({ products }) => {
-  const [value, setValue] = useState("");
-  const [category, setCategory] = useState("");
+const BlogsProfile = ({ blogs }) => {
+  const [currentBlog, setCurrentBlog] = useState(null);
   const [open, setOpen] = useState(false);
-  const [currentProduct, setCurrentProduct] = useState(null);
 
-  const handleEdit = (product) => {
-    setCurrentProduct(product);
-    setValue(product.category);
-    setCategory(product.category);
+  // Change state when the edit button is clicked
+  const handleEdit = (blog) => {
+    setCurrentBlog(blog);
   };
 
-  const handleSaveChanges = async () => {
-    if (!currentProduct) return;
+  // Handle input changes dynamically for all fields
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCurrentBlog((prev) => ({ ...prev, [name]: value }));
+  };
 
-    const updatedProduct = {
-      ...currentProduct,
-      category: value,
-    };
+  // Save edited blog to the db
+  const handleSaveChanges = async () => {
+    if (!currentBlog) return;
 
     try {
-      const response = await fetch(`/api/products/${currentProduct._id}`, {
+      // Construct the body with updated fields
+      const updatedBlog = {
+        title: currentBlog.title,
+        category: currentBlog.category,
+        content: currentBlog.content,
+      };
+
+      const response = await fetch(`/api/blogs/${currentBlog._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(updatedProduct),
+        body: JSON.stringify(updatedBlog), // Send updated fields
       });
 
       if (response.ok) {
-        // Handle success, maybe update state or UI
-        console.log("Product updated successfully");
-        toast.success("Product updated successfully");
+        toast.success("Blog updated successfully.");
+        // Optionally refetch the blogs list or update UI to reflect changes
       } else {
-        // Handle error
-        console.error("Failed to update product");
-        toast.error("Failed to update product");
+        toast.error("Failed to update blog.");
       }
     } catch (error) {
-      console.error("Error updating product:", error);
-      toast.error("Error updating product");
+      toast.error("Error updating blog.");
+    }
+  };
+
+  // Delete blog from the db
+  const handleDelete = async (blogId) => {
+    try {
+      const response = await fetch(`/api/blogs/${blogId}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        toast.success("Blog deleted successfully.");
+      } else {
+        toast.error("Failed to delete blog.");
+      }
+    } catch (error) {
+      toast.error("Failed to delete blog.");
     }
   };
 
   return (
     <div>
-      {products && products.length > 0 ? (
-        <div className="w-full ">
-          {/* Card container */}
-
+      {blogs && blogs.length > 0 ? (
+        <div className="w-full">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[100px]">Name</TableHead>
                 <TableHead>Category</TableHead>
                 <TableHead>Quantity</TableHead>
-                <TableHead>Price(LKR)</TableHead>
                 <TableHead className="text-right">Edit</TableHead>
               </TableRow>
             </TableHeader>
-            {products.map((product) => (
-              <TableBody key={product._id}>
+            {blogs.map((blog) => (
+              <TableBody key={blog._id}>
                 <TableRow>
                   <TableCell>
-                    <Link key={product._id} href={`/products/${product._id}`}>
-                      {product.name}
+                    <Link key={blog._id} href={`/blogs/${blog._id}`}>
+                      {blog.title}
                     </Link>
                   </TableCell>
-                  <TableCell>{product.category}</TableCell>
-                  <TableCell>{product.quantity}</TableCell>
-                  <TableCell>{product.price}</TableCell>
+                  <TableCell>{blog.category}</TableCell>
+                  <TableCell>{blog.content.slice(0, 100)}...</TableCell>
                   <TableCell className="text-right">
-                    {/* #############################  delete product  ############################# */}
+                    {/* Delete blog */}
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <span>
@@ -159,15 +152,15 @@ const ProductsProfile = ({ products }) => {
                             Are you absolutely sure?
                           </AlertDialogTitle>
                           <AlertDialogDescription>
-                            This action cannot be undone. This product will get
-                            permanently deleted if you click continue.
+                            This action cannot be undone. This blog will get
+                            permanently deleted.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction
                             className="bg-red-400 hover:bg-red-500"
-                            onClick={() => handleDelete(product._id)}
+                            onClick={() => handleDelete(blog._id)}
                           >
                             Continue
                           </AlertDialogAction>
@@ -175,13 +168,13 @@ const ProductsProfile = ({ products }) => {
                       </AlertDialogContent>
                     </AlertDialog>
 
-                    {/* #############################  edit product  ############################# */}
+                    {/* Edit blog */}
                     <Dialog>
                       <DialogTrigger asChild>
                         <span>
                           <Button
                             className="my-1 mr-3 bg-accent hover:bg-accentdark"
-                            onClick={() => handleEdit(product)}
+                            onClick={() => handleEdit(blog)}
                           >
                             <MdModeEdit size={20} />
                           </Button>
@@ -189,7 +182,7 @@ const ProductsProfile = ({ products }) => {
                       </DialogTrigger>
                       <DialogContent className="max-w-[600px]">
                         <DialogHeader>
-                          <DialogTitle>Edit product</DialogTitle>
+                          <DialogTitle>Edit blog</DialogTitle>
                           <DialogDescription>
                             Make changes to this product here. Click save when
                             you're done.
@@ -198,25 +191,21 @@ const ProductsProfile = ({ products }) => {
                         <div className="grid gap-4 py-4">
                           <div className="grid items-center grid-cols-4 gap-4">
                             <Label htmlFor="name" className="text-right">
-                              Name
+                              Title
                             </Label>
                             <Input
-                              id="name"
+                              id="title"
+                              name="title"
                               className="col-span-3"
-                              value={currentProduct?.name || ""}
-                              onChange={(e) =>
-                                setCurrentProduct((prev) => ({
-                                  ...prev,
-                                  name: e.target.value,
-                                }))
-                              }
+                              value={currentBlog?.title || ""}
+                              onChange={handleInputChange}
                             />
                           </div>
                           <div className="grid items-center grid-cols-4 gap-4">
                             <Label htmlFor="category" className="text-right">
                               Category
                             </Label>
-                            {/* #############################  get category data  ############################# */}
+                            {/* Category selector */}
                             <Popover open={open} onOpenChange={setOpen}>
                               <PopoverTrigger asChild>
                                 <Button
@@ -225,10 +214,11 @@ const ProductsProfile = ({ products }) => {
                                   aria-expanded={open}
                                   className="w-[200px] justify-between"
                                 >
-                                  {value
-                                    ? categoryList.find(
-                                        (categoryList) =>
-                                          categoryList.value === value
+                                  {currentBlog?.category
+                                    ? BlogCategories.find(
+                                        (category) =>
+                                          category.value ===
+                                          currentBlog.category
                                       )?.label
                                     : "Select a category..."}
                                   <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
@@ -242,27 +232,14 @@ const ProductsProfile = ({ products }) => {
                                   </CommandEmpty>
                                   <CommandGroup>
                                     <CommandList>
-                                      {categoryList.map((category) => (
+                                      {BlogCategories.map((category) => (
                                         <CommandItem
                                           key={category.value}
                                           value={category.value}
                                           onSelect={(currentValue) => {
-                                            setValue(
-                                              currentValue === value
-                                                ? ""
-                                                : currentValue
-                                            );
-                                            setCategory(
-                                              currentValue === value
-                                                ? ""
-                                                : currentValue
-                                            );
-                                            setCurrentProduct((prev) => ({
+                                            setCurrentBlog((prev) => ({
                                               ...prev,
-                                              category:
-                                                currentValue === value
-                                                  ? ""
-                                                  : currentValue,
+                                              category: currentValue,
                                             }));
                                             setOpen(false);
                                           }}
@@ -270,7 +247,8 @@ const ProductsProfile = ({ products }) => {
                                           <Check
                                             className={cn(
                                               "mr-2 h-4 w-4",
-                                              value === category.value
+                                              currentBlog?.category ===
+                                                category.value
                                                 ? "opacity-100"
                                                 : "opacity-0"
                                             )}
@@ -286,59 +264,19 @@ const ProductsProfile = ({ products }) => {
                           </div>
                           <div className="grid items-center grid-cols-4 gap-4">
                             <Label htmlFor="description" className="text-right">
-                              Description
+                              Content
                             </Label>
                             <Textarea
-                              id="description"
+                              id="content"
+                              name="content"
                               className="col-span-3 min-h-[300px]"
-                              value={currentProduct?.description || ""}
-                              onChange={(e) =>
-                                setCurrentProduct((prev) => ({
-                                  ...prev,
-                                  description: e.target.value,
-                                }))
-                              }
-                            />
-                          </div>
-                          <div className="grid items-center grid-cols-4 gap-4">
-                            <Label htmlFor="price" className="text-right">
-                              Price
-                            </Label>
-                            <Input
-                              id="price"
-                              className="col-span-3"
-                              value={currentProduct?.price || ""}
-                              onChange={(e) =>
-                                setCurrentProduct((prev) => ({
-                                  ...prev,
-                                  price: e.target.value,
-                                }))
-                              }
-                            />
-                          </div>
-                          <div className="grid items-center grid-cols-4 gap-4">
-                            <Label htmlFor="quantity" className="text-right">
-                              Quantity
-                            </Label>
-                            <Input
-                              id="quantity"
-                              className="col-span-3"
-                              value={currentProduct?.quantity || ""}
-                              onChange={(e) =>
-                                setCurrentProduct((prev) => ({
-                                  ...prev,
-                                  quantity: e.target.value,
-                                }))
-                              }
+                              value={currentBlog?.content || ""}
+                              onChange={handleInputChange}
                             />
                           </div>
                         </div>
                         <DialogFooter>
-                          <Button
-                            type="button"
-                            className="bg-accent hover:bg-accentdark"
-                            onClick={handleSaveChanges}
-                          >
+                          <Button onClick={handleSaveChanges}>
                             Save changes
                           </Button>
                         </DialogFooter>
@@ -351,20 +289,10 @@ const ProductsProfile = ({ products }) => {
           </Table>
         </div>
       ) : (
-        // <ProductsSkeleton />
-        <p className="px-4 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
-          You haven't added any products yet.{" "}
-          <Link
-            href="/add"
-            className="underline text-accent hover:text-accentdark"
-          >
-            Click here
-          </Link>{" "}
-          to add a new product
-        </p>
+        <p>No blogs available.</p>
       )}
     </div>
   );
 };
 
-export default ProductsProfile;
+export default BlogsProfile;

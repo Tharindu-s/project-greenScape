@@ -16,11 +16,12 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
 import ProductsProfile from "@/components/profile/Products-profile";
 import ProfileSkeleton from "@/components/skeletons/skeleton-profile-hero";
+import BlogsProfile from "@/components/profile/Blogs-profile";
+import { toast } from "react-hot-toast";
 
 export function SkeletonDemo() {
   return (
@@ -35,11 +36,11 @@ export function SkeletonDemo() {
 }
 
 const Profile = () => {
-  const { toast } = useToast();
   const { user } = useAuthContext();
   const userId = user?.userId;
   const [userdata, setUserdata] = useState(null);
   const [products, setProducts] = useState(null);
+  const [blogs, setBlogs] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [editUserdata, setEditUserdata] = useState({
     name: "",
@@ -84,6 +85,22 @@ const Profile = () => {
     }
   }, [userId]);
 
+  useEffect(() => {
+    if (userId) {
+      fetch(`/api/blogs/user/${userId}`)
+        .then((res) => res.json())
+        .then((blogs) => {
+          setBlogs(blogs);
+        })
+        .catch((error) => {
+          console.error("Error fetching blogs data:", error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [userId]);
+
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setEditUserdata((prevState) => ({
@@ -103,18 +120,11 @@ const Profile = () => {
       .then((res) => res.json())
       .then((updatedUser) => {
         setUserdata(updatedUser);
-        toast({
-          title: "Changes saved",
-          description: "Your profile has been successfully updated.",
-        });
+        toast.success("Profile updated successfully.");
       })
       .catch((error) => {
         console.error("Error updating user data:", error);
-        toast({
-          title: "Error",
-          description: "There was a problem updating your user data.",
-          status: "error",
-        });
+        toast.error("Error updating user data.");
       });
   };
 
@@ -126,7 +136,7 @@ const Profile = () => {
       {userdata ? (
         <div>
           {/* hero */}
-          <div className="px-4 mt-32 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
+          <div className="px-4 my-32 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
             <div className="relative w-full mt-16 mb-10 h-80 rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-500">
               <div className="absolute -bottom-20 left-4">
                 <Image
@@ -221,13 +231,18 @@ const Profile = () => {
                 Home plants
               </div>
             </div>
-          </div>
-
-          <div>
-            <h1 className="font-poppins text-[24px] font-semibold text-textmain mt-16 mb-10 px-4 md:px-10 lg:px-12 xl:px-24 2xl:px-64">
-              Your listings
-            </h1>
-            <ProductsProfile products={products} />
+            <div className="w-full rounded-[30px] overflow-hidden border border-solid border-[#e6e6e6] p-9 mt-20">
+              <h1 className="font-poppins text-[24px] font-semibold text-textmain mb-6">
+                Your Listings
+              </h1>
+              <ProductsProfile products={products} />
+            </div>
+            <div className="w-full rounded-[30px] overflow-hidden border border-solid border-[#e6e6e6] p-9 mt-20">
+              <h1 className="font-poppins text-[24px] font-semibold text-textmain mb-6">
+                Your Blogs
+              </h1>
+              <BlogsProfile blogs={blogs} />
+            </div>
           </div>
         </div>
       ) : (
