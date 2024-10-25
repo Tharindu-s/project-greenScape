@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 
 // Create new product
 const createInquiry = async (req, res) => {
-  const { senderId, senderName, recieverId, inquiryDescription } = req.body;
+  const { senderId, senderName, recieverId, inquiryDescription, phone } =
+    req.body;
 
   let emptyFields = [];
 
@@ -17,14 +18,17 @@ const createInquiry = async (req, res) => {
     return res.json({ error: "Please fill the senderName" });
   }
   if (!recieverId) {
-    emptyFields.push("reciverId");
-    return res.json({ error: "Please fill the reciverId" });
+    emptyFields.push("recieverId");
+    return res.json({ error: "Please fill the receiverId" });
   }
   if (!inquiryDescription) {
-    emptyFields.push("inquiry");
+    emptyFields.push("inquiryDescription");
     return res.json({ error: "Please fill the inquiry" });
   }
-
+  if (!phone) {
+    emptyFields.push("phone");
+    return res.json({ error: "Please fill the phone" });
+  }
   if (emptyFields.length > 0) {
     return res
       .status(400)
@@ -38,6 +42,7 @@ const createInquiry = async (req, res) => {
       senderName,
       recieverId,
       inquiryDescription,
+      phone,
     });
     res.status(200).json(inquiry);
   } catch (error) {
@@ -50,7 +55,7 @@ const getInquiry = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "No such product" });
+    return res.status(404).json({ error: "No such user" });
   }
 
   const inquiry = await Inquiry.findById(id);
@@ -75,28 +80,6 @@ const getInquiriesByUser = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-};
-
-// update a product
-const updateProduct = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "No such product" });
-  }
-
-  const product = await Product.findOneAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
-    }
-  );
-
-  if (!product) {
-    return res.status(400).json({ error: "No such product" });
-  }
-
-  res.status(200).json(product);
 };
 
 module.exports = {

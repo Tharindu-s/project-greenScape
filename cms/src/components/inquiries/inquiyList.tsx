@@ -7,18 +7,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useAuthContext } from "@/hooks/useAuthContext";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 interface Inquiry {
   _id: string;
-  title: string;
-  description: string;
+  senderName: string;
+  inquiryDescription: string;
   phone: string;
 }
 
 const InquiryList = ({ inquiryList }: { inquiryList: Inquiry[] }) => {
   return (
-    <div className="rounded-xl border border-dashed shadow-sm p-6 w-full">
+    <div className="w-full p-6 border border-dashed shadow-sm rounded-xl">
       {inquiryList && inquiryList.length > 0 ? (
         <div>
           <Table>
@@ -35,8 +39,21 @@ const InquiryList = ({ inquiryList }: { inquiryList: Inquiry[] }) => {
                   key={index}
                   className="hover:bg-gray-200 border-b transition-colors hover:bg-slate-100/50 data-[state=selected]:bg-slate-100 dark:hover:bg-slate-800/50 dark:data-[state=selected]:bg-slate-800"
                 >
-                  <TableCell className="font-medium">{inquiry.title}</TableCell>
-                  <TableCell>{inquiry.description}</TableCell>
+                  <TableCell className="font-medium">
+                    {inquiry.senderName}
+                  </TableCell>
+                  <TableCell>
+                    <HoverCard>
+                      <HoverCardTrigger>
+                        {inquiry.inquiryDescription.length > 50
+                          ? inquiry.inquiryDescription.substring(0, 50) + "..."
+                          : inquiry.inquiryDescription}
+                      </HoverCardTrigger>
+                      <HoverCardContent>
+                        {inquiry.inquiryDescription}
+                      </HoverCardContent>
+                    </HoverCard>
+                  </TableCell>
                   <TableCell>{inquiry.phone}</TableCell>
                 </TableRow>
               ))}

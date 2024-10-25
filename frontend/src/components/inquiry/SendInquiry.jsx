@@ -1,10 +1,10 @@
 "use client";
-
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -12,57 +12,119 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { toast } from "react-hot-toast";
+import { useState } from "react";
 
-export default function SendInquiry() {
-  const [open, setOpen] = useState(false);
-  const [inquiry, setInquiry] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+export function SendInquiry({ sellerInfo }) {
+  const { user } = useAuthContext();
 
-  const handleSubmit = (e) => {
+  const senderId = user?.userId;
+  const senderName = user?.userName;
+  const recieverId = sellerInfo._id;
+  const [inquiryDescription, setInquiryDescription] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend
-    console.log("Inquiry:", inquiry);
-    console.log("Phone Number:", phoneNumber);
-    // Clear the form and close the dialog
-    setInquiry("");
-    setPhoneNumber("");
-    setOpen(false);
+
+    if (!user) {
+      toast.error("You must be logged in to report this product");
+      return;
+    }
+
+    const inquiryData = {
+      senderId,
+      senderName,
+      recieverId,
+      inquiryDescription,
+      phone,
+    };
+
+    try {
+      const response = await fetch("/api/inquiry", {
+        method: "POST",
+        body: JSON.stringify(inquiryData),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const json = await response.json();
+
+      if (!response.ok) {
+        toast.error(json.error);
+      }
+      if (response.ok) {
+        setInquiryDescription("");
+        setPhone("");
+        console.log("Inquiry sent", json);
+        toast.success("Inquiry sent successfully!");
+      }
+    } catch (err) {
+      console.error("Failed send the inquiry", err);
+      toast.error("An error occurred while sending the inquiry.");
+    }
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Open Inquiry Form</Button>
+        <Button
+          variant="outline"
+          className="text-white bg-accent hover:bg-accentdark hover:text-white"
+        >
+          Inquiry
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Submit an Inquiry</DialogTitle>
+          <DialogTitle>Send and inquiry</DialogTitle>
+          <DialogDescription>
+            Send an inquiry to {sellerInfo.name} to learn more about their
+            services.
+          </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="inquiry">Your Inquiry</Label>
-            <Textarea
-              id="inquiry"
-              placeholder="Type your inquiry here..."
-              value={inquiry}
-              onChange={(e) => setInquiry(e.target.value)}
-              required
-            />
+        <form onSubmit={handleSubmit}>
+          <div className="grid gap-4 py-4">
+            <div className="grid items-center grid-cols-4 gap-4">
+              <Label htmlFor="name" className="text-right">
+                Name
+              </Label>
+              <Input
+                id="name"
+                defaultValue={user?.userName}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid items-center grid-cols-4 gap-4">
+              <Label htmlFor="telephone" className="text-right">
+                Phone
+              </Label>
+              <Input
+                id="name"
+                placeholder="Enter your phone number"
+                className="col-span-3"
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
+            <div className="grid items-center grid-cols-4 gap-4">
+              <Label htmlFor="inquiry" className="text-right">
+                Inquiry
+              </Label>
+
+              <Textarea
+                placeholder="Type your message here."
+                className="h-48 col-span-3"
+                onChange={(e) => setInquiryDescription(e.target.value)}
+              />
+            </div>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="phone">Phone Number</Label>
-            <Input
-              id="phone"
-              type="tel"
-              placeholder="Enter your phone number"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              required
-            />
+          <div className="text-right">
+            <Button type="submit" className="bg-accent hover:bg-accentdark">
+              Save changes
+            </Button>
           </div>
-          <Button type="submit" className="w-full">
-            Send
-          </Button>
         </form>
       </DialogContent>
     </Dialog>

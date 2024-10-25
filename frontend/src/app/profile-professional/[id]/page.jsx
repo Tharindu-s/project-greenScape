@@ -5,6 +5,9 @@ import Products from "../../../components/home/Products-common";
 import Services from "@/components/home/Services-common";
 import { ProjectsList } from "@/components/professionals/Projects";
 import { SendInquiry } from "@/components/inquiry/SendInquiry";
+import RateSeller from "@/components/Common/RateSeller";
+import RateProfessional from "@/components/Common/RateProfessional";
+import StarRating from "@/components/Common/StarRating";
 
 async function getProductInfo(id) {
   if (!id) {
@@ -86,6 +89,27 @@ async function getProjectInfo(id) {
   return res.json();
 }
 
+async function getRating(id) {
+  if (!id) {
+    throw new Error("User ID is undefined");
+  }
+
+  const res = await fetch(
+    `http://localhost:4000/api/professionalrating/overall/${id}`,
+    {
+      next: {
+        revalidate: 2,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch rating");
+  }
+
+  return res.json();
+}
+
 export default async function UserInfo({ params }) {
   console.log("Received params:", params); // Log the params to debug
   const { id } = params;
@@ -99,6 +123,8 @@ export default async function UserInfo({ params }) {
     const products = await getProductInfo(id);
     const services = await getServiceInfo(id);
     const projects = await getProjectInfo(id);
+    const rating = await getRating(id);
+
     return (
       <div>
         {/* hero */}
@@ -114,25 +140,34 @@ export default async function UserInfo({ params }) {
             </div>
           </div>
           <div className="mt-24 ml-12">
-            <div className="flex items-center gap-4">
+            <div className="flex justify-between gap-4">
               <h1 className="font-poppins font-semibold text-[36px]">
                 {user.name}
               </h1>
+              <SendInquiry sellerInfo={user} />
             </div>
             <div className="flex items-center gap-1 font-poppins text-[16px] text-accent">
               <FaLocationDot size={16} />
               <p>{user.city}</p>
             </div>
           </div>
+
           {/* bio */}
           <div className="w-full rounded-[30px] overflow-hidden border border-solid border-[#e6e6e6] p-9 mt-20">
             <h1 className="font-poppins text-[24px] font-semibold text-textmain mb-6">
               Bio
             </h1>
             <p>{user.bio}</p>
+            <h1 className="font-poppins text-[24px] font-semibold text-textmain mb-6 mt-8 ">
+              Professional rating
+            </h1>
+
+            <StarRating rating={rating.averageRating} />
+          </div>
+          <div className="w-full rounded-[30px] overflow-hidden border border-solid border-[#e6e6e6] p-9 mt-20">
+            <RateProfessional professionalId={id} />
           </div>
         </div>
-        <SendInquiry />
 
         <div>
           <ProjectsList projects={projects} />

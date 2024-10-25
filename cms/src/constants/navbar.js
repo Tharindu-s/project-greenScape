@@ -7,6 +7,7 @@ import {
   FiSend,
   FiStar,
   FiMessageSquare,
+  FiPenTool,
 } from "react-icons/fi";
 
 export const NavbarItems = [
@@ -17,4 +18,5 @@ export const NavbarItems = [
   { title: "Inquiries", icon: FiMail, href: "/dashboard/inquiries" },
   { title: "To ship", icon: FiSend, href: "/dashboard/to-ship" },
   { title: "Chat", icon: FiMessageSquare, href: "/dashboard/chat" },
+  { title: "Blog", icon: FiPenTool, href: "/dashboard/blogs" },
 ];

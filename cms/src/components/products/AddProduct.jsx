@@ -301,10 +301,7 @@ const AddProduct = () => {
             />
             <div className="w-full flex-col justify-start items-start gap-2.5 flex my-4">
               <label className="text-[14px] pl-1">Insert images</label>
-              <label
-                for="dropzone-file"
-                className="flex flex-col items-center justify-center w-full px-6 border border-gray-300 border-dashed cursor-pointer py-9 rounded-2xl bg-gray-50"
-              >
+              <label className="flex flex-col items-center justify-center w-full px-6 border border-gray-300 border-dashed cursor-pointer py-9 rounded-2xl bg-gray-50">
                 <div className="flex items-center justify-center mb-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -318,8 +315,8 @@ const AddProduct = () => {
                         id="icon"
                         d="M16.296 25.3935L19.9997 21.6667L23.7034 25.3935M19.9997 35V21.759M10.7404 27.3611H9.855C6.253 27.3611 3.33301 24.4411 3.33301 20.8391C3.33301 17.2371 6.253 14.3171 9.855 14.3171V14.3171C10.344 14.3171 10.736 13.9195 10.7816 13.4326C11.2243 8.70174 15.1824 5 19.9997 5C25.1134 5 29.2589 9.1714 29.2589 14.3171H30.1444C33.7463 14.3171 36.6663 17.2371 36.6663 20.8391C36.6663 24.4411 33.7463 27.3611 30.1444 27.3611H29.2589"
                         stroke="green"
-                        stroke-width="1.6"
-                        stroke-linecap="round"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
                       />
                     </g>
                   </svg>
