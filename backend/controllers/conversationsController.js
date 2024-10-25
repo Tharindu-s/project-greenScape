@@ -6,6 +6,7 @@ const Conversation = require("../models/conversationModel");
 const newConversaion = async (req, res) => {
   const newConversation = new Conversation({
     members: [req.body.senderId, req.body.receiverId],
+    item: req.body.item,
   });
 
   try {

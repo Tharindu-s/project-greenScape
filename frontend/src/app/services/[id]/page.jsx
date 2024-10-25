@@ -22,6 +22,7 @@ import { FiUser } from "react-icons/fi";
 import { BASE_URL } from "@/components/Constants/server";
 import InitializeConvo from "@/components/messenger/InitializeConvo";
 import AddtoCartButton from "@/components/Products/AddtoCartButton";
+import SendInquiry from "@/components/inquiry/SendInquiry";
 
 async function getServiceInfo(id) {
   if (!id) {
@@ -114,7 +115,7 @@ export default async function ServiceInfo({ params }) {
                   <p className="mb-5 text-base font-normal text-gray-500">
                     {service.description}
                   </p>
-                  <div className="flex items-center gap-2 mt-12 text-accent">
+                  <div className="flex items-center gap-2 mt-12 mb-4 text-accent">
                     <FiUser size={20} />
                     <p className="font-inter text-[16px] font-medium">
                       <Link href={`/profile-professional/${service.userId}`}>
@@ -122,6 +123,7 @@ export default async function ServiceInfo({ params }) {
                       </Link>
                     </p>
                   </div>
+                  <InitializeConvo product={service} itemId={service._id} />
                 </div>
               </div>
             </div>

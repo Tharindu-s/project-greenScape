@@ -4,6 +4,7 @@ import Image from "next/image";
 import Products from "../../../components/home/Products-common";
 import Services from "@/components/home/Services-common";
 import { ProjectsList } from "@/components/professionals/Projects";
+import { SendInquiry } from "@/components/inquiry/SendInquiry";
 
 async function getProductInfo(id) {
   if (!id) {
@@ -131,6 +132,8 @@ export default async function UserInfo({ params }) {
             <p>{user.bio}</p>
           </div>
         </div>
+        <SendInquiry />
+
         <div>
           <ProjectsList projects={projects} />
         </div>

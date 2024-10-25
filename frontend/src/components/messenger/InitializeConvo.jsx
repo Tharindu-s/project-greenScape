@@ -4,7 +4,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -14,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { toast } from "react-hot-toast"; // Import the toast library
 
-const InitializeConvo = ({ product }) => {
+const InitializeConvo = ({ product, itemId }) => {
   const { user } = useAuthContext();
   const [senderId, setSenderId] = useState("");
   const [message, setMessage] = useState("");
@@ -60,7 +59,8 @@ const InitializeConvo = ({ product }) => {
       const messagePayload = {
         conversationId,
         sender: senderId,
-        text: message, // Use the message from the Textarea
+        text: message,
+        item: itemId,
       };
 
       const messageResponse = await fetch("/api/messages", {
