@@ -23,7 +23,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex mt-24 bg-background text-textmain">
+    <div className="flex my-24 text-textmain ">
       <div className="w-1/2 mx-auto ">
         <div className="w-1/3 mx-auto ">
           <Link href="/">
@@ -36,7 +36,7 @@ const Login = () => {
             ></Image>
           </Link>
           <h1 className="text-[14px] tracking-normal font-inter text-center">
-            Sign up to enjoy all the features.
+            Log in to enjoy all the features.
           </h1>
           <div>
             <div className="relative mb-3" data-twe-input-wrapper-init>
@@ -45,7 +45,7 @@ const Login = () => {
                   <label className="relative text">Email</label>
                   <input
                     type="text"
-                    placeholder="sunil@gmail.com"
+                    placeholder="greescape@gmail.com"
                     name="input"
                     onChange={(e) => setEmail(e.target.value)}
                     className="block w-full px-3 py-2 bg-white border rounded-md shadow-sm input fmt-1 border-slate-300 placeholder-slate-400 focus:outline-none focus:border-accent focus:ring-accent sm:text-sm focus:ring-1 placeholder:text-[14px]"
@@ -55,12 +55,17 @@ const Login = () => {
                 <div className="loginInput">
                   <input
                     type="password"
-                    placeholder="Password"
+                    placeholder="Type your password"
                     name="input"
                     onChange={(e) => setPassword(e.target.value)}
                     className="block w-full px-3 py-2 bg-white border rounded-md shadow-sm input fmt-1 border-slate-300 placeholder-slate-400 focus:outline-none focus:border-accent focus:ring-accent sm:text-sm focus:ring-1 placeholder:text-[14px] mt-[20px]"
                   />
-                  <Link href="/forgot-password">Forgot password?</Link>
+                  <Link
+                    href="/forgot-password"
+                    className="text-center text-accent"
+                  >
+                    <p className="mt-2 text-sm underline">Forgot password?</p>
+                  </Link>
                 </div>
 
                 <Button

@@ -1,7 +1,7 @@
-"use client"; // This directive is for client-side rendering
+"use client";
 
 import { Suspense } from "react";
-import SearchResults from "@/components/common/SearchResults"; // Adjust the path as necessary
+import SearchResults from "@/components/common/SearchResults";
 
 export default function SearchPage() {
   return (

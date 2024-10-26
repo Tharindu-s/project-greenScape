@@ -9,14 +9,13 @@ const SearchBar = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      // Redirect to the search results page with the search query
-      router.push(`/search?id=${searchTerm}`);
+      router.push(`/dashboard/search?id=${searchTerm}`);
       console.log("Search query:", searchTerm);
     }
   };
 
   return (
-    <form onSubmit={handleSearch} className="mb-12">
+    <form onSubmit={handleSearch} className="mb-4">
       <div className="relative flex flex-col items-center justify-center w-[400px] pr-2 mx-auto  transition-all duration-500 border border-transparent rounded-full parent sm:flex-row gap-y-4 sm:justify-between sm:pr-1 sm:bg-white group ">
         <input
           type="text"

@@ -8,14 +8,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import DeleteProduct from "./DeleteProduct";
+import Link from "next/link";
 
 interface Product {
   _id: string;
-  name: string;
-  category: string;
-  description: string;
-  price: number;
-  quantity: number;
+  title: string;
+  content: string;
+  productId: string;
   createdAt: string;
 }
 
@@ -28,10 +27,8 @@ const ProductsList = ({ productsList }: { productsList: Product[] }) => {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[100px]">ID</TableHead>
-                <TableHead>Name</TableHead>
+                <TableHead>Reason</TableHead>
                 <TableHead>Description</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Quantity</TableHead>
                 <TableHead>Date</TableHead>
                 <TableHead className="text-right">Change</TableHead>
               </TableRow>
@@ -42,11 +39,14 @@ const ProductsList = ({ productsList }: { productsList: Product[] }) => {
                   key={index}
                   className="hover:bg-gray-200 border-b transition-colors hover:bg-slate-100/50 data-[state=selected]:bg-slate-100 dark:hover:bg-slate-800/50 dark:data-[state=selected]:bg-slate-800"
                 >
-                  <TableCell className="font-medium">{product._id}</TableCell>
-                  <TableCell>{product.name}</TableCell>
-                  <TableCell>{product.description}</TableCell>
-                  <TableCell>{product.price}</TableCell>
-                  <TableCell>{product.quantity}</TableCell>
+                  <TableCell className="font-medium">
+                    <Link href={`/dashboard/products/${product.productId}`}>
+                      {product.productId}
+                    </Link>
+                  </TableCell>
+                  <TableCell>{product.title}</TableCell>
+                  <TableCell>{product.content}</TableCell>
+
                   <TableCell>{product.createdAt.slice(0, 10)}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end">

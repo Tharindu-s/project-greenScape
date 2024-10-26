@@ -9,14 +9,14 @@ import ProductsList from "@/components/products/ProductsList";
 
 import SearchBar from "@/components/common/SearchBar";
 
-const page = () => {
+const ReportedProducts = () => {
   const { admin } = useAuthContext();
   const [products, setProducts] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const id = admin?.adminId;
 
   useEffect(() => {
-    fetch(`/api/products`)
+    fetch(`/api/reportproduct`)
       .then((res) => res.json())
       .then((products) => {
         console.log(products);
@@ -36,9 +36,10 @@ const page = () => {
   return (
     <main className="p-4 lg:p-6">
       <SearchBar />
+      <h1 className="py-8 text-2xl font-semibold">Reported Products</h1>
       <ProductsList productsList={products} />
     </main>
   );
 };
 
-export default page;
+export default ReportedProducts;
