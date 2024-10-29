@@ -61,7 +61,7 @@ const InquiryList = ({ inquiryList }: { inquiryList: Inquiry[] }) => {
           </Table>
         </div>
       ) : (
-        <p>No product found</p>
+        <p>No inquiries yet</p>
       )}
     </div>
   );

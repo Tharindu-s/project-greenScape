@@ -21,13 +21,13 @@ interface Project {
 
 const ProjectsList = ({ projectsList }: { projectsList: Project[] }) => {
   return (
-    <div className="rounded-xl border border-dashed shadow-sm p-6">
+    <div className="p-6 border border-dashed shadow-sm rounded-xl">
       {projectsList && projectsList.length > 0 ? (
         <div>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">Name</TableHead>
+                <TableHead className="w-[200px]">Name</TableHead>
                 <TableHead>Category</TableHead>
                 <TableHead>Location</TableHead>
                 <TableHead>Date</TableHead>

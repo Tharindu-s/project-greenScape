@@ -32,8 +32,8 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="flex w-full bg-background text-textmain">
-      <div className="w-1/3 mx-auto ">
+    <div className="flex w-full my-24 text-textmain">
+      <div className="w-1/4 mx-auto ">
         <Link href="/">
           <Image
             src={logo}

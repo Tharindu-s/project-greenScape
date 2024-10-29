@@ -4,23 +4,6 @@ import InquiryList from "@/components/inquiries/inquiyList";
 import { useState, useEffect } from "react";
 import { useAuthContext } from "@/hooks/useAuthContext";
 
-const inquiryList = [
-  {
-    _id: "1",
-    title: "Appointment for a consultation",
-    description:
-      "I need to do some adjustments to my garden, I would like to make an appointment for a consultation.",
-    phone: "+94 77 123 4567",
-  },
-  {
-    _id: "2",
-    title: "Need to get a quotation for a new project",
-    description:
-      "I need to get a quotation for a new project, Can you contact me through whatsapp?.",
-    phone: "+94 77 123 4567",
-  },
-];
-
 const Inquiry = () => {
   const { professional } = useAuthContext();
 

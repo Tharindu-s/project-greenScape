@@ -16,19 +16,12 @@ export const metadata = {
 
 export default function RootLayout({ children, setSearch }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <AuthContextProvider>
-          <SearchProvider>
-            <ProductsContextProvider>
-              {children}
-              {/* <Toaster /> */}
-              <Toaster position="top-right" reverseOrder={false} />
-              <Footer />
-            </ProductsContextProvider>
-          </SearchProvider>
-        </AuthContextProvider>
-      </body>
-    </html>
+    <div>
+      {" "}
+      <Navbar setSearch={setSearch} />
+      {children}
+      {/* <Toaster /> */}
+      <Toaster position="top-right" reverseOrder={false} />
+    </div>
   );
 }

@@ -11,7 +11,7 @@ import ReportBlog from "@/components/blog/Report";
 async function getBlogContent(id) {
   const res = await fetch(`http://localhost:4000/api/blogs/${id}`, {
     next: {
-      revalidate: 0, // use 0 to opt out of using cache
+      revalidate: 0,
     },
   });
 

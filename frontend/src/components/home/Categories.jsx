@@ -14,7 +14,10 @@ const Categories = () => {
         {/* <Link key={blog.id} href={`/Blogs/all/${blog.id}`}> */}
         {categoryList &&
           categoryList.map((category) => (
-            <Link key={category.id} href={`/categories/${category.value}`}>
+            <Link
+              key={category.id}
+              href={`/greenscape/categories/${category.value}`}
+            >
               <Button variant="outline" className="m-2">
                 {category.label}
               </Button>

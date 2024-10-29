@@ -1,7 +1,7 @@
-import userIcon from "../../../assets/Profile/userIcon.png";
+import userIcon from "../../../../assets/Profile/userIcon.png";
 import { FaLocationDot } from "react-icons/fa6";
 import Image from "next/image";
-import Products from "../../../components/home/Products-common";
+import Products from "../../../../components/home/Products-common";
 import Blogs from "@/components/home/Blogs-common";
 import StarRating from "@/components/Common/StarRating";
 import RateSeller from "@/components/Common/RateSeller";

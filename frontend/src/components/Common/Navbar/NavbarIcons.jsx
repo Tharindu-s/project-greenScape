@@ -8,13 +8,13 @@ import Link from "next/link";
 const NavbarIcons = () => {
   return (
     <div className="flex items-center gap-8">
-      <Link href="/exchange">
+      <Link href="/greenscape/exchange">
         <TbArrowsExchange size={24} />
       </Link>
-      <Link href="/chat">
+      <Link href="/greenscape/chat">
         <BiMessageSquare size={24} />
       </Link>
-      <Link href="/cart">
+      <Link href="/greenscape/cart">
         <FiShoppingCart size={24} />
       </Link>
       <Notifications size={24} />

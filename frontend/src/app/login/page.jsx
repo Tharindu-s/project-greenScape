@@ -18,7 +18,7 @@ const Login = () => {
     e.preventDefault();
     const success = await login(email, password);
     if (success) {
-      window.location.href = "/";
+      window.location.href = "/greenscape";
     }
   };
 
@@ -45,7 +45,7 @@ const Login = () => {
                   <label className="relative text">Email</label>
                   <input
                     type="text"
-                    placeholder="greescape@gmail.com"
+                    placeholder="greenscape@gmail.com"
                     name="input"
                     onChange={(e) => setEmail(e.target.value)}
                     className="block w-full px-3 py-2 bg-white border rounded-md shadow-sm input fmt-1 border-slate-300 placeholder-slate-400 focus:outline-none focus:border-accent focus:ring-accent sm:text-sm focus:ring-1 placeholder:text-[14px]"

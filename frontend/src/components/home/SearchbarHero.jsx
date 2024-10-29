@@ -11,7 +11,7 @@ const SearchBarHero = () => {
     e.preventDefault();
     if (searchTerm.trim()) {
       // Redirect to the search results page with the search query
-      router.push(`/search?query=${searchTerm}`);
+      router.push(`greenscape/search?query=${searchTerm}`);
     }
   };
 
@@ -22,7 +22,7 @@ const SearchBarHero = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="block w-full px-6 py-3.5 text-base max-sm:text-center font-normal shadow-xl max-sm:bg-white text-gray-900 bg-transparent rounded-full placeholder-gray-400 leading-normal focus:ring-0 focus:outline-none"
-        placeholder="Search for seeds, plants, tools, etc."
+        placeholder="Search for seeds, plants, etc."
         required=""
       />
       <BorderBeam size={250} duration={12} delay={9} />

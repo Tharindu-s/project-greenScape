@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Products from "../../components/home/Products-common";
+import Products from "../../../components/home/Products-common";
 
 async function getProducts() {
   const res = await fetch("http://localhost:4000/api/products", {

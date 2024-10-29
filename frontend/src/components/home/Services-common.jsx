@@ -24,7 +24,10 @@ const Services = ({ services }) => {
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {/* Card container */}
             {services.map((product) => (
-              <Link key={product._id} href={`/services/${product._id}`}>
+              <Link
+                key={product._id}
+                href={`/greenscape/services/${product._id}`}
+              >
                 <div
                   key={product._id}
                   className="p-1 sm:p-3 mb-0 sm:mb-8 border-[1px] rounded-xl w-[165px] sm:w-[230px] mx-auto"

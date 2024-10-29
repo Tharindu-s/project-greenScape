@@ -23,18 +23,17 @@ interface Product {
 
 const ProductsList = ({ productsList }: { productsList: Product[] }) => {
   return (
-    <div className="rounded-xl border border-dashed shadow-sm p-6">
+    <div className="p-6 border border-dashed shadow-sm rounded-xl">
       {productsList && productsList.length > 0 ? (
         <div>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">Name</TableHead>
+                <TableHead className="w-[200px]">Name</TableHead>
                 <TableHead>Category</TableHead>
                 <TableHead>Description</TableHead>
                 <TableHead>Price</TableHead>
                 <TableHead>Quantity</TableHead>
-                <TableHead>Date</TableHead>
                 <TableHead className="text-right">Change</TableHead>
               </TableRow>
             </TableHeader>
@@ -46,10 +45,13 @@ const ProductsList = ({ productsList }: { productsList: Product[] }) => {
                 >
                   <TableCell className="font-medium">{product.name}</TableCell>
                   <TableCell>{product.category}</TableCell>
-                  <TableCell>{product.description}</TableCell>
+                  <TableCell>
+                    {product.description.length > 75
+                      ? product.description.slice(0, 75) + "..."
+                      : product.description}
+                  </TableCell>
                   <TableCell>{product.price}</TableCell>
                   <TableCell>{product.quantity}</TableCell>
-                  <TableCell>{product.createdAt.slice(0, 10)}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end">
                       <DeleteProduct productId={product._id} />

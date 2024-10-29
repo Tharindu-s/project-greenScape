@@ -58,11 +58,13 @@ export default async function ServiceInfo({ params }) {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                <BreadcrumbLink href="/greenscape">Home</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/services">Services</BreadcrumbLink>
+                <BreadcrumbLink href="/greenscape/services">
+                  Services
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
@@ -118,7 +120,9 @@ export default async function ServiceInfo({ params }) {
                   <div className="flex items-center gap-2 mt-12 mb-4 text-accent">
                     <FiUser size={20} />
                     <p className="font-inter text-[16px] font-medium">
-                      <Link href={`/profile-professional/${service.userId}`}>
+                      <Link
+                        href={`/greenscape/profile-professional/${service.userId}`}
+                      >
                         {service.username}
                       </Link>
                     </p>

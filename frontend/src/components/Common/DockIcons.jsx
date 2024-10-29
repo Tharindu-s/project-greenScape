@@ -65,8 +65,8 @@ const Icons = {
 
 const DATA = {
   navbar: [
-    { href: "/add", icon: CirclePlus, label: "Add a product" },
-    { href: "/add-blog", icon: PencilIcon, label: "Write a blog" },
+    { href: "/greenscape/add", icon: CirclePlus, label: "Add a product" },
+    { href: "/greenscape/add-blog", icon: PencilIcon, label: "Write a blog" },
   ],
 };
 

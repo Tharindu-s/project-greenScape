@@ -27,9 +27,9 @@ const ServicesList = ({ services }: { services: Service[] }) => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">Name</TableHead>
+                <TableHead className="w-[200px]">Name</TableHead>
                 <TableHead>Category</TableHead>
-                <TableHead>Location</TableHead>
+                <TableHead>Description</TableHead>
                 <TableHead>Date</TableHead>
                 <TableHead className="text-right">Change</TableHead>
               </TableRow>
@@ -42,7 +42,11 @@ const ServicesList = ({ services }: { services: Service[] }) => {
                 >
                   <TableCell className="font-medium">{service.name}</TableCell>
                   <TableCell>{service.category}</TableCell>
-                  <TableCell>{service.description}</TableCell>
+                  <TableCell>
+                    {service.description.length > 75
+                      ? service.description.slice(0, 75) + "..."
+                      : service.description}
+                  </TableCell>
                   <TableCell>{service.createdAt.slice(0, 10)}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end">
@@ -57,7 +61,7 @@ const ServicesList = ({ services }: { services: Service[] }) => {
           </Table>
         </div>
       ) : (
-        <p>No projects found</p>
+        <p>No services found</p>
       )}
     </div>
   );

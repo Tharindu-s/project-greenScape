@@ -181,7 +181,10 @@ const WriteBlog = () => {
   };
 
   return (
-    <div className="mt-48 w-[400px]">
+    <div className=" w-[400px]">
+      <h1 className="font-poppins  text-[24px] font-semibold text-textmain mt-32 mb-6 ">
+        Write a new blog
+      </h1>
       <form onSubmit={handleSubmit}>
         <h1 className="pt-5 pb-2">Title</h1>
         <Input

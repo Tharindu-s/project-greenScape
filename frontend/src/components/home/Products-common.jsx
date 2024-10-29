@@ -18,7 +18,7 @@ const Products = ({ products }) => {
   return (
     <div>
       <h1 className="font-poppins text-center text-[24px] font-semibold text-textmain mt-16 mb-10">
-        User's listings
+        Latest listings
       </h1>
 
       {products && products.length > 0 ? (
@@ -27,7 +27,10 @@ const Products = ({ products }) => {
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {/* Card container */}
             {products.map((product) => (
-              <Link key={product._id} href={`/products/${product._id}`}>
+              <Link
+                key={product._id}
+                href={`/greenscape/products/${product._id}`}
+              >
                 <div
                   key={product._id}
                   className="p-1 sm:p-3 mb-0 sm:mb-8 border-[1px] rounded-xl w-[165px] sm:w-[230px] mx-auto"
@@ -58,7 +61,9 @@ const Products = ({ products }) => {
                       <Tooltip>
                         <TooltipTrigger className="text-left">
                           <h2 className="font-inter text-[16px] font-medium text-textmain py-4">
-                            {product.name}
+                            {product.name.length > 20
+                              ? product.name.slice(0, 20) + "..."
+                              : product.name}
                           </h2>
                         </TooltipTrigger>
                         <TooltipContent>

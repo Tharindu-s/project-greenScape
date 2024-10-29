@@ -69,7 +69,7 @@ export default async function ReviewsList({ productId }) {
         ) : (
           reviews.map((review) => (
             <div
-              className="w-full max-w-full px-4 py-12 mx-auto md:px-5 lg-6"
+              className="w-full max-w-full px-4 py-4 mx-auto md:px-5 lg-6"
               key={review.id}
             >
               <div className="">
@@ -110,7 +110,7 @@ export default async function ReviewsList({ productId }) {
                               </DialogContent>
                             </Dialog>
                           </div>
-                          <p className="text-sm font-medium leading-7 text-gray-400 lg:hidden lg:text-center whitespace-nowrap">
+                          <p className="text-sm leading-7 text-gray-400 lg:hidden lg:text-center whitespace-nowrap">
                             {timeAgo(review.createdAt)}
                           </p>
                         </div>
@@ -118,7 +118,7 @@ export default async function ReviewsList({ productId }) {
                     </div>
                   </div>
                   <div className="flex flex-row col-span-12 pt-12 lg:col-span-2 max-lg:hidden lg:flex-col max-lg:pt-6 ">
-                    <p className="text-lg font-medium leading-8 text-gray-400 lg:text-center whitespace-nowrap">
+                    <p className="text-sm leading-8 text-gray-400 lg:text-center whitespace-nowrap">
                       {timeAgo(review.createdAt)}
                     </p>
                   </div>

@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { exchangeState } from "../Constants/Exchange-state-data";
 import { toast } from "react-hot-toast"; // Import toast
+import Link from "next/link";
 
 const SentRequestList = () => {
   const { user } = useAuthContext();
@@ -98,8 +99,16 @@ const SentRequestList = () => {
             {exchange.map((request) => (
               <TableBody key={request._id}>
                 <TableRow>
-                  <TableCell>{request.productName}</TableCell>
-                  <TableCell>{request.recieverName}</TableCell>
+                  <TableCell>
+                    <Link href={`/greenscape/products/${request.productId}`}>
+                      {request.productName}{" "}
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link href={`/greenscape/profile/${request.recieverId}`}>
+                      {request.recieverName}
+                    </Link>
+                  </TableCell>
                   <TableCell>{request.description}</TableCell>
                   <TableCell>
                     <AlertDialog>

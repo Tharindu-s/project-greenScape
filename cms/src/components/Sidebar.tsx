@@ -10,7 +10,7 @@ const Sidebar = () => {
 
   const pathname = usePathname();
   return (
-    <aside className="hidden h-screen border-r bg-muted/40 md:block">
+    <aside className="hidden h-full border-r bg-muted/40 md:block">
       <div className="fixed flex flex-col h-screen gap-2">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <Link href="/" className="flex items-center gap-2 font-semibold">

@@ -180,7 +180,7 @@ const ProductsProfile = ({ products }) => {
                       <DialogTrigger asChild>
                         <span>
                           <Button
-                            className="my-1 mr-3 bg-accent hover:bg-accentdark"
+                            className="my-1 bg-accent hover:bg-accentdark"
                             onClick={() => handleEdit(product)}
                           >
                             <MdModeEdit size={20} />

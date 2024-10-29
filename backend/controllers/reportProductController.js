@@ -9,7 +9,7 @@ const getReports = async (req, res) => {
   res.status(200).json(products);
 };
 
-// Create new product
+// Create new report
 const createReport = async (req, res) => {
   const { title, content, productId } = req.body;
 
@@ -27,7 +27,7 @@ const createReport = async (req, res) => {
     });
   }
 
-  // Add the product to the database
+  // Add the report to the database
   try {
     const report = await ReportProduct.create({
       title,
@@ -41,7 +41,7 @@ const createReport = async (req, res) => {
   }
 };
 
-// delete a product
+// delete a report
 const deleteReport = async (req, res) => {
   const { id } = req.params;
 

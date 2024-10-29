@@ -1,9 +1,13 @@
-import { Dashboard } from "@/components/Dashboard";
+"use client";
+import { useEffect } from "react";
 
 export default async function Home() {
+  useEffect(() => {
+    window.location.href = "/dashboard/portfolio";
+  }, []);
+
   return (
     <main>
-      {/* <Dashboard /> */}
       <h1>sdasd</h1>
     </main>
   );

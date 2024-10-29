@@ -254,7 +254,7 @@ const AddProduct = () => {
             <div className="my-4">
               <label className="text-[14px] pl-1">Description</label>
               <Textarea
-                placeholder="project description"
+                placeholder="Description"
                 className="mt-2"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -266,7 +266,7 @@ const AddProduct = () => {
               <Input
                 type="text"
                 className="mt-2"
-                placeholder="Horana"
+                placeholder="1000"
                 name="price"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { FaLocationDot } from "react-icons/fa6";
-import userIcon from "../../assets/Profile/userIcon.png";
+import userIcon from "../../../assets/Profile/userIcon.png";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {

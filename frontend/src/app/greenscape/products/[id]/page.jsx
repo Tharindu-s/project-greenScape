@@ -109,11 +109,6 @@ export default async function ProductInfo({ params }) {
                     <CarouselPrevious />
                     <CarouselNext />
                   </Carousel>
-                  {/* <img
-                    src={product.image[0]}
-                    alt="Yellow Tropical Printed Shirt image"
-                    className="h-full max-lg:mx-auto lg:ml-auto rounded-xl"
-                  /> */}
                 </div>
               </div>
               <div className="flex w-full pr-0 my-0 data lg:pr-8 xl:justify-start max-lg:pb-10 xl:my-2 lg:my-5">
@@ -140,7 +135,7 @@ export default async function ProductInfo({ params }) {
                   <div className="flex items-center gap-2 mt-12 text-accent">
                     <FiUser size={20} />
                     <p className="font-inter text-[16px] font-medium">
-                      <Link href={`/profile/${product.userId}`}>
+                      <Link href={`/greenscape/profile/${product.userId}`}>
                         {product.username}
                       </Link>
                     </p>

@@ -31,7 +31,7 @@ const UserProfileMenu = () => {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mt-6">
-        <Link href="/my-profile">
+        <Link href="/greenscape/my-profile">
           <DropdownMenuLabel>My profile</DropdownMenuLabel>
         </Link>
         <DropdownMenuSeparator />

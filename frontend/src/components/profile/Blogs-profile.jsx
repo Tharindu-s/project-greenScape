@@ -120,9 +120,9 @@ const BlogsProfile = ({ blogs }) => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">Name</TableHead>
+                <TableHead className="w-[300px]">Title</TableHead>
                 <TableHead>Category</TableHead>
-                <TableHead>Quantity</TableHead>
+                <TableHead>Content</TableHead>
                 <TableHead className="text-right">Edit</TableHead>
               </TableRow>
             </TableHeader>
@@ -130,7 +130,7 @@ const BlogsProfile = ({ blogs }) => {
               <TableBody key={blog._id}>
                 <TableRow>
                   <TableCell>
-                    <Link key={blog._id} href={`/blogs/${blog._id}`}>
+                    <Link key={blog._id} href={`/greenscape/blog/${blog._id}`}>
                       {blog.title}
                     </Link>
                   </TableCell>
@@ -173,7 +173,7 @@ const BlogsProfile = ({ blogs }) => {
                       <DialogTrigger asChild>
                         <span>
                           <Button
-                            className="my-1 mr-3 bg-accent hover:bg-accentdark"
+                            className="my-1 bg-accent hover:bg-accentdark"
                             onClick={() => handleEdit(blog)}
                           >
                             <MdModeEdit size={20} />
