@@ -39,6 +39,7 @@ import { app } from "@/lib/firebase";
 import { FiPlus } from "react-icons/fi";
 import { serviceList } from "../../constants/service-types";
 const storage = getStorage(app);
+import { toast } from "react-hot-toast";
 
 const AddService = () => {
   const [open, setOpen] = useState(false);
@@ -150,6 +151,7 @@ const AddService = () => {
 
     if (!response.ok) {
       setError(json.error);
+      toast.error("Error adding service");
     }
 
     if (response.ok) {
@@ -161,6 +163,7 @@ const AddService = () => {
       setImages([]);
       setUsername;
       console.log("new service added:", json);
+      toast.success("Product added succesfully");
     }
   };
 

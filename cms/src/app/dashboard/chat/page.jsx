@@ -162,7 +162,7 @@ export default function Messenger() {
                     value={newMessage}
                   ></input>
                   <button
-                    className="px-6 py-3 text-white bg-accent rounded-xl"
+                    className="px-6 py-3 text-white bg-green-700 rounded-xl"
                     onClick={handleSubmit}
                   >
                     Send

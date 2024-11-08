@@ -69,3 +69,26 @@
     @apply bg-background text-foreground;
   }
 }
+
+.loginInput label.text {
+  font-size: 0.75rem;
+  color: #9a9a9a;
+  position: relative;
+  top: 0.5rem;
+  margin: 0 0 0 7px;
+  padding: 0 3px;
+  background: #fbfcfb;
+  width: fit-content;
+  font-family: Inter;
+}
+
+.loginInput input[type="text"].input {
+  padding: 11px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  background: #fbfcfb;
+}
+
+.loginInput input[type="text"].input:focus {
+  outline: none;
+}

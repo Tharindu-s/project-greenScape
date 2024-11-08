@@ -212,7 +212,7 @@ const BlogsProfile = ({ blogs }) => {
                                   variant="outline"
                                   role="combobox"
                                   aria-expanded={open}
-                                  className="w-[200px] justify-between"
+                                  className="justify-between w-full"
                                 >
                                   {currentBlog?.category
                                     ? BlogCategories.find(
@@ -224,7 +224,7 @@ const BlogsProfile = ({ blogs }) => {
                                   <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
                                 </Button>
                               </PopoverTrigger>
-                              <PopoverContent className="w-[200px] p-0">
+                              <PopoverContent className="w-full p-0">
                                 <Command>
                                   <CommandInput placeholder="Search category..." />
                                   <CommandEmpty>
@@ -276,7 +276,10 @@ const BlogsProfile = ({ blogs }) => {
                           </div>
                         </div>
                         <DialogFooter>
-                          <Button onClick={handleSaveChanges}>
+                          <Button
+                            onClick={handleSaveChanges}
+                            className="bg-accent"
+                          >
                             Save changes
                           </Button>
                         </DialogFooter>

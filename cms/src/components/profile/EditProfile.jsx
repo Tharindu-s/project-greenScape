@@ -12,13 +12,12 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useAuthContext } from "@/hooks/useAuthContext";
-import { useToast } from "@/components/ui/use-toast";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Edit2Icon } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 const EditProfile = ({ userdata }) => {
-  const { toast } = useToast();
   const { professional } = useAuthContext();
   const professionalId = professional?.professionalId;
   const [editUserdata, setEdituserdata] = useState({
@@ -60,14 +59,14 @@ const EditProfile = ({ userdata }) => {
       });
       if (response.ok) {
         console.log("Succesfully updated update profile");
-        toast({ description: "profile updated successfully" });
+        toast.success("profile updated successfully");
       } else {
         console.error("Failed to update profile");
-        toast({ description: "Failed to update profile", status: "error" });
+        toast.error("Failed to update profile");
       }
     } catch (error) {
       console.error("Error updating profile:", error);
-      toast({ description: "Error updating profile", status: "error" });
+      toast.error("Error updating profile");
     }
   };
 

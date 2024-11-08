@@ -20,7 +20,7 @@ const Signup = () => {
     e.preventDefault();
     const success = await signup(name, email, password, city, country);
     if (success) {
-      window.location.href = "/greenscape";
+      window.location.href = "/dashboard/portfolio";
     }
   };
 

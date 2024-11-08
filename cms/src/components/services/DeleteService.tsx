@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { MdDeleteForever } from "react-icons/md";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { toast } from "react-hot-toast";
 
 const DeleteService = ({ serviceId }: { serviceId: string }) => {
   const { professional } = useAuthContext();
@@ -24,15 +25,15 @@ const DeleteService = ({ serviceId }: { serviceId: string }) => {
         headers: { Authorization: `Bearer ${professional.token}` },
       });
       if (response.ok) {
-        console.log("project deleted successfully");
-        // Handle UI update or state change if needed
+        console.log("Service deleted successfully");
+        toast.success("Service deleted successfully");
       } else {
-        console.error("Failed to delete project");
-        // Handle error state or display error message
+        console.error("Failed to delete Service");
+        toast.error("Failed to delete Service");
       }
     } catch (error) {
-      console.error("Error deleting project:", error);
-      // Handle network errors or other exceptions
+      console.error("Error deleting Service:", error);
+      toast.error("Error deleting Service");
     }
   };
 

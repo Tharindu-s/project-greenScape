@@ -21,8 +21,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { exchangeState } from "../Constants/Exchange-state-data";
-import { toast } from "react-hot-toast"; // Import toast
+import { toast } from "react-hot-toast";
 import Link from "next/link";
+import { waveform } from "ldrs";
+
+waveform.register();
 
 const SentRequestList = () => {
   const { user } = useAuthContext();
@@ -44,7 +47,10 @@ const SentRequestList = () => {
           console.error("Error fetching exchange data:", error);
         })
         .finally(() => {
-          setLoading(false);
+          // setLoading(false);
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
         });
     }
   }, [recieverId]);
@@ -83,7 +89,16 @@ const SentRequestList = () => {
 
   return (
     <div>
-      {exchange && exchange.length > 0 ? (
+      {loading ? (
+        <div className="flex justify-center mx-auto text-center">
+          <l-waveform
+            size="35"
+            stroke="3.5"
+            speed="1"
+            color="black"
+          ></l-waveform>
+        </div>
+      ) : exchange && exchange.length > 0 ? (
         <div className="w-full md:px-10 lg:px-12 xl:px-24 2xl:px-64">
           <Table>
             <TableHeader>
@@ -157,7 +172,7 @@ const SentRequestList = () => {
           </Table>
         </div>
       ) : (
-        <p>empty</p>
+        <p className="text-center">No requests yet</p>
       )}
     </div>
   );

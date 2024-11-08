@@ -1,21 +1,30 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { NavbarItems } from "../constants/navbar";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { useLogout } from "@/hooks/useLogout";
+import { FiLogOut } from "react-icons/fi";
 
 const Sidebar = () => {
   const { admin } = useAuthContext();
+  const { logout } = useLogout();
+  const router = useRouter();
+
+  const handleClick = () => {
+    logout();
+    router.push("/login");
+  };
 
   const pathname = usePathname();
   return (
-    <aside className="hidden h-screen border-r bg-muted/40 md:block">
+    <aside className="hidden h-full border-r bg-muted/40 md:block">
       <div className="fixed flex flex-col h-screen gap-2">
-        <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+        <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6 ">
           <Link href="/" className="flex items-center gap-2 font-semibold">
             {/* <FiPackage className="w-6 h-6" /> */}
-            <span className="">{admin?.adminName}</span>
+            <span className="xl:w-56">{admin?.adminName}</span>
           </Link>
         </div>
         <div className="flex-1">
@@ -37,20 +46,10 @@ const Sidebar = () => {
           </nav>
         </div>
         <div className="p-4 mt-auto">
-          {/* <Card x-chunk="dashboard-02-chunk-0">
-            <CardHeader className="p-2 pt-0 md:p-4">
-              <CardTitle>Upgrade to Pro</CardTitle>
-              <CardDescription>
-                Unlock all features and get unlimited access to our support
-                team.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
-              <Button size="sm" className="w-full">
-                Upgrade
-              </Button>
-            </CardContent>
-          </Card> */}
+          <div className="flex items-center gap-3 px-3 py-3 transition-all rounded-lg text-muted-foreground hover:text-primary">
+            <FiLogOut className="w-5 h-5" />
+            <button onClick={handleClick}>Logout</button>
+          </div>
         </div>
       </div>
     </aside>

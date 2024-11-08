@@ -1,5 +1,6 @@
 const { useState } = require("react");
 const { useAuthContext } = require("./useAuthContext");
+import { toast } from "react-hot-toast";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
@@ -20,8 +21,10 @@ export const useLogin = () => {
     if (!response.ok) {
       setError(json.error);
       setIsLoading(false);
+      toast.error(json.error);
       return false; // Return false on failure
     } else {
+      toast.success("Login successful");
       // Save the admin to local storage
       localStorage.setItem(
         "admin",

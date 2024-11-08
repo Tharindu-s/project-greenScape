@@ -7,21 +7,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import DeleteProduct from "./DeleteProduct";
 import Link from "next/link";
+import DeleteBlog from "./DeleteBlogs";
 
-interface Product {
+interface Blog {
   _id: string;
   title: string;
   content: string;
-  productId: string;
+  blogId: string;
   createdAt: string;
 }
 
-const ProductsList = ({ productsList }: { productsList: Product[] }) => {
+const BlogsList = ({ blogsList }: { blogsList: Blog[] }) => {
   return (
     <div className="p-6 border border-dashed shadow-sm rounded-xl">
-      {productsList && productsList.length > 0 ? (
+      {blogsList && blogsList.length > 0 ? (
         <div>
           <Table>
             <TableHeader>
@@ -34,26 +34,23 @@ const ProductsList = ({ productsList }: { productsList: Product[] }) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {productsList.map((product: Product, index: number) => (
+              {blogsList.map((blog: Blog, index: number) => (
                 <TableRow
                   key={index}
                   className="hover:bg-gray-200 border-b transition-colors hover:bg-slate-100/50 data-[state=selected]:bg-slate-100 dark:hover:bg-slate-800/50 dark:data-[state=selected]:bg-slate-800"
                 >
                   <TableCell className="font-medium">
-                    <Link href={`/dashboard/products/${product.productId}`}>
-                      {product.productId}
+                    <Link href={`/dashboard/blogs/${blog.blogId}`}>
+                      {blog.blogId}
                     </Link>
                   </TableCell>
-                  <TableCell>{product.title}</TableCell>
-                  <TableCell>{product.content}</TableCell>
+                  <TableCell>{blog.title}</TableCell>
+                  <TableCell>{blog.content}</TableCell>
 
-                  <TableCell>{product.createdAt.slice(0, 10)}</TableCell>
+                  <TableCell>{blog.createdAt.slice(0, 10)}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end">
-                      <DeleteProduct
-                        productId={product.productId}
-                        reportId={product._id}
-                      />
+                      <DeleteBlog blogId={blog.blogId} reportId={blog._id} />
                     </div>
                   </TableCell>
                 </TableRow>
@@ -68,4 +65,4 @@ const ProductsList = ({ productsList }: { productsList: Product[] }) => {
   );
 };
 
-export default ProductsList;
+export default BlogsList;

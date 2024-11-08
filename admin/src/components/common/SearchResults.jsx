@@ -32,7 +32,7 @@ const SearchResults = () => {
     <div>
       <h1 className="my-8">Search Results for: {searchQuery}</h1>
       {product ? (
-        <Link key={product._id} href={`/products/${product._id}`}>
+        <Link key={product._id} href={`/dashboard/products/${product._id}`}>
           <div className="p-1 sm:p-3 mb-0 sm:mb-8 border-[1px] rounded-xl w-[165px] sm:w-[230px]">
             <div className="overflow-hidden items-center w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] mx-auto">
               {product.image && product.image.length > 0 ? (

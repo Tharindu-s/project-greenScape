@@ -130,7 +130,11 @@ export default function Messenger() {
                 onClick={() => setCurrentChat(conversation)}
                 key={conversation._id}
               >
-                <Conversation conversation={conversation} currentUser={user} loggedInUser={user.userId}/>
+                <Conversation
+                  conversation={conversation}
+                  currentUser={user}
+                  loggedInUser={user.userId}
+                />
               </div>
             ))}
           </div>

@@ -9,7 +9,7 @@ import AddService from "@/components/services/AddService";
 
 import ServicesList from "@/components/services/ServicesList";
 
-const page = () => {
+const Page = () => {
   const { professional } = useAuthContext();
   const [services, setServices] = useState(null);
 
@@ -47,4 +47,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

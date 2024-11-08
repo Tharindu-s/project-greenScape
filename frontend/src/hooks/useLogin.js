@@ -1,5 +1,6 @@
 const { useState } = require("react");
 const { useAuthContext } = require("./useAuthContext");
+import { toast } from "react-hot-toast";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
@@ -20,6 +21,7 @@ export const useLogin = () => {
     if (!response.ok) {
       setError(json.error);
       setIsLoading(false);
+      toast.error(json.error);
       return false; // Return false on failure
     } else {
       // Save the user to local storage
@@ -32,6 +34,7 @@ export const useLogin = () => {
           userName: json.name,
         })
       );
+      toast.success("Login successful");
 
       // Update the auth context
       dispatch({ type: "LOGIN", payload: json });

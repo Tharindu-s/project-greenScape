@@ -1,13 +1,11 @@
 "use client";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import loginIMage from "../../assets/login-image.png";
 import logo from "../../assets/logo.png";
 import Image from "next/image";
 import { Button } from "../../components/ui/button";
 import Link from "next/link";
 import { useLogin } from "@/hooks/useLogin";
-import { useRouter } from "next/navigation";
-import { AuthContext } from "@/context/authContext";
 
 // components
 
@@ -15,23 +13,18 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, error, isLoading } = useLogin();
-  const router = useRouter();
-  const { professional } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password);
+    const success = await login(email, password);
+    if (success) {
+      window.location.href = "/dashboard/portfolio";
+    }
   };
 
-  useEffect(() => {
-    if (professional) {
-      router.push("/dashboard");
-    }
-  }, [professional, router]);
-
   return (
-    <div className="flex w-full bg-background text-textmain">
-      <div className="w-1/2 ">
+    <div className="flex my-24 text-textmain ">
+      <div className="w-1/2 mx-auto ">
         <div className="w-1/3 mx-auto ">
           <Link href="/">
             <Image
@@ -43,7 +36,7 @@ const Login = () => {
             ></Image>
           </Link>
           <h1 className="text-[14px] tracking-normal font-inter text-center">
-            Sign up to enjoy all the features.
+            Log in to enjoy all the features.
           </h1>
           <div>
             <div className="relative mb-3" data-twe-input-wrapper-init>
@@ -52,26 +45,32 @@ const Login = () => {
                   <label className="relative text">Email</label>
                   <input
                     type="text"
-                    placeholder="sunil@gmail.com"
+                    placeholder="greenscape@gmail.com"
                     name="input"
                     onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full px-3 py-2 bg-white border rounded-md shadow-sm input fmt-1 border-slate-300 placeholder-slate-400 focus:outline-none focus:border-accent focus:ring-accent sm:text-sm focus:ring-1 placeholder:text-[14px]"
+                    className="block w-full px-3 py-2 bg-white border rounded-md shadow-sm input fmt-1 border-slate-300 placeholder-slate-400 focus:outline-none focus:border-greenscape focus:ring-greenscape sm:text-sm focus:ring-1 placeholder:text-[14px]"
                   />
                 </div>
 
                 <div className="loginInput">
                   <input
-                    type="text"
-                    placeholder="Password"
+                    type="password"
+                    placeholder="Type your password"
                     name="input"
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full px-3 py-2 bg-white border rounded-md shadow-sm input fmt-1 border-slate-300 placeholder-slate-400 focus:outline-none focus:border-accent focus:ring-accent sm:text-sm focus:ring-1 placeholder:text-[14px] mt-[20px]"
+                    className="block w-full px-3 py-2 bg-white border rounded-md shadow-sm input fmt-1 border-slate-300 placeholder-slate-400 focus:outline-none focus:border-greenscape focus:ring-greenscape sm:text-sm focus:ring-1 placeholder:text-[14px] mt-[20px]"
                   />
+                  <Link
+                    href="/forgot-password"
+                    className="text-center text-greenscape"
+                  >
+                    <p className="mt-2 text-sm underline">Forgot password?</p>
+                  </Link>
                 </div>
 
                 <Button
                   disabled={isLoading}
-                  className="w-full bg-accent hover:bg-accentdark mt-[20px]"
+                  className="w-full bg-greenscape hover:bg-greenscapedark mt-[20px]"
                 >
                   Log in
                 </Button>
@@ -81,16 +80,16 @@ const Login = () => {
           </div>
           <p className="text-textmain text-[14px] text-center py-4">
             Don't have an account??
-            <span className="underline text-accent">
+            <span className="underline text-greenscape">
               {" "}
               <Link href="/signup">Sign up</Link>
             </span>
           </p>
         </div>
       </div>
-      <div className="w-1/2">
-        <Image src={loginIMage} className="w-full p-12" alt="logo"></Image>
-      </div>
+      {/* <div className="w-1/2">
+        <Image src={loginIMage} className="w-[75%] p-12" alt="logo"></Image>
+      </div> */}
     </div>
   );
 };

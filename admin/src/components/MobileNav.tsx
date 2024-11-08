@@ -2,22 +2,8 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  FiBell,
-  FiPackage,
-  FiUser,
-  FiBook,
-  FiFile,
-  FiMenu,
-} from "react-icons/fi";
+import { FiPackage, FiMenu } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import { NavbarItems } from "../constants/navbar";
 
@@ -28,7 +14,7 @@ const MobileNav = () => {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline" size="icon" className="shrink-0 md:hidden">
-          <FiMenu className="h-5 w-5" />
+          <FiMenu className="w-5 h-5" />
           <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
@@ -36,9 +22,9 @@ const MobileNav = () => {
         <nav className="grid gap-2 text-lg font-medium">
           <Link
             href="/"
-            className="flex items-center gap-2 text-lg font-semibold mb-8"
+            className="flex items-center gap-2 mb-8 text-lg font-semibold"
           >
-            <FiPackage className="h-6 w-6" />
+            <FiPackage className="w-6 h-6" />
             <span className="">LMS</span>
           </Link>
 
@@ -50,7 +36,7 @@ const MobileNav = () => {
                 pathname === item.href ? "text-white bg-greenscape" : ""
               }`}
             >
-              <item.icon className="h-5 w-5" />
+              <item.icon className="w-5 h-5" />
               {item.title}
             </Link>
           ))}

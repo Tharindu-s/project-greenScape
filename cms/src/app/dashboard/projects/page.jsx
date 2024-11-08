@@ -9,7 +9,7 @@ import AddProject from "@/components/projects/AddProject";
 
 import ProjectsList from "@/components/projects/ProjectsList";
 
-const page = () => {
+const Page = () => {
   const { professional } = useAuthContext();
   const [projects, setProjects] = useState(null);
 
@@ -47,4 +47,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

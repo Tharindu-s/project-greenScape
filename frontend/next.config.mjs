@@ -7,7 +7,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://localhost:4000/api/:path*", // Replace this with your API endpoint URL
+        destination: "http://localhost:4000/api/:path*",
       },
     ];
   },

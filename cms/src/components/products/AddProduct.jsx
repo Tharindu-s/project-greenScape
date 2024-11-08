@@ -39,6 +39,7 @@ import { app } from "@/lib/firebase";
 import { FiPlus } from "react-icons/fi";
 import { categoryList } from "../../constants/Category-data";
 const storage = getStorage(app);
+import { toast } from "react-hot-toast";
 
 const AddProduct = () => {
   const [open, setOpen] = useState(false);
@@ -153,6 +154,7 @@ const AddProduct = () => {
 
     if (!response.ok) {
       setError(json.error);
+      toast.error("An error adding product");
     }
 
     if (response.ok) {
@@ -164,6 +166,7 @@ const AddProduct = () => {
       setImages([]);
       setCondition({ sell: false, exchange: false });
       console.log("new product added:", json);
+      toast.success("Product added succesfully");
     }
   };
 

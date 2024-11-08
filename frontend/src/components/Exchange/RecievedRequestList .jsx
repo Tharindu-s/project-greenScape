@@ -25,6 +25,9 @@ import { exchangeState } from "../Constants/Exchange-state-data";
 import ProductsSkeleton from "../skeletons/skeleton-products";
 import { Button } from "../ui/button";
 import { toast } from "react-hot-toast"; // Import toast
+import { waveform } from "ldrs";
+
+waveform.register();
 
 const RecievedRequestsList = () => {
   const { user } = useAuthContext();
@@ -46,7 +49,10 @@ const RecievedRequestsList = () => {
           console.error("Error fetching exchange data:", error);
         })
         .finally(() => {
-          setLoading(false);
+          // setLoading(false);
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
         });
     }
   }, [recieverId]);
@@ -71,21 +77,30 @@ const RecievedRequestsList = () => {
 
         if (!response.ok) {
           const json = await response.json();
-          toast.error(json.error || "Failed to update state."); // Show error toast
+          toast.error(json.error || "Failed to update state.");
         } else {
-          toast.success("State updated successfully!"); // Show success toast
+          toast.success("State updated successfully!");
           console.log("State updated successfully");
         }
       } catch (error) {
         console.error("Error updating state:", error);
-        toast.error("An error occurred while updating the state."); // Handle network errors
+        toast.error("An error occurred while updating the state.");
       }
     }
   };
 
   return (
     <div>
-      {exchange && exchange.length > 0 ? (
+      {loading ? (
+        <div className="flex justify-center mx-auto text-center">
+          <l-waveform
+            size="35"
+            stroke="3.5"
+            speed="1"
+            color="black"
+          ></l-waveform>
+        </div>
+      ) : exchange && exchange.length > 0 ? (
         <div className="w-full md:px-10 lg:px-12 xl:px-24 2xl:px-64">
           <Table>
             <TableHeader>
@@ -151,7 +166,7 @@ const RecievedRequestsList = () => {
           </Table>
         </div>
       ) : (
-        <p>empty</p>
+        <p className="text-center">No requests yet</p>
       )}
     </div>
   );
