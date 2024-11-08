@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import DeleteProduct from "./DeleteProduct";
 import Link from "next/link";
+import KeepProduct from "./KeepProduct";
 
 interface Product {
   _id: string;
@@ -54,6 +55,10 @@ const ProductsList = ({ productsList }: { productsList: Product[] }) => {
                         productId={product.productId}
                         reportId={product._id}
                       />
+                      <KeepProduct
+                        productId={product.productId}
+                        reportId={product._id}
+                      />
                     </div>
                   </TableCell>
                 </TableRow>
@@ -62,7 +67,7 @@ const ProductsList = ({ productsList }: { productsList: Product[] }) => {
           </Table>
         </div>
       ) : (
-        <p>No product found</p>
+        <p>No products yet</p>
       )}
     </div>
   );

@@ -10,10 +10,13 @@ import { Separator } from "@/components/ui/separator";
 import TestNotification from "./TestNotification";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import axios from "axios";
+import SystemNotifications from "./SystemNotifications";
+import Link from "next/link";
 
 const Notifications = () => {
   const { user } = useAuthContext();
   const [notifications, setNotifications] = useState([]);
+  const [systemNotifications, setSystemNotifications] = useState([]);
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState("");
 
@@ -33,10 +36,26 @@ const Notifications = () => {
           setNotifications(response.data);
         })
         .catch((error) => {
-          // console.error("Error fetching notifications:", error);
+          console.error("Error fetching notifications:", error);
         });
     } else {
-      // console.log("User not found");
+      console.log("User not found");
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    if (userId) {
+      axios
+        .get(`http://localhost:4000/api/notifications`)
+        .then((response) => {
+          console.log(response.data);
+          setSystemNotifications(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching notifications:", error);
+        });
+    } else {
+      console.log("User not found");
     }
   }, [userId]);
 
@@ -51,17 +70,31 @@ const Notifications = () => {
             Notifications
           </h1>
           <ScrollArea className="h-[600px]">
+            {systemNotifications.length > 0 ? (
+              systemNotifications.map((notification, index) => (
+                <div key={index}>
+                  <SystemNotifications notification={notification} />
+                  {index < systemNotifications.length - 1 && (
+                    <Separator className="bg-gray-100" />
+                  )}
+                </div>
+              ))
+            ) : (
+              <p>No system notifications</p>
+            )}
             {notifications.length > 0 ? (
               notifications.map((notification, index) => (
                 <div key={index}>
-                  <TestNotification notification={notification} />
+                  <Link href="/greenscape/exchange">
+                    <TestNotification notification={notification} />
+                  </Link>
                   {index < notifications.length - 1 && (
                     <Separator className="bg-gray-100" />
                   )}
                 </div>
               ))
             ) : (
-              <p>No notifications available</p>
+              <p>No other notifications</p>
             )}
           </ScrollArea>
         </div>

@@ -3,14 +3,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const TestNotification = ({ notification }) => {
   return (
-    <div className={`flex my-4 p-4 rounded-lg ${notification.read ? "" : ""}`}>
+    <div className={`flex rounded-lg ${notification.read ? "" : ""}`}>
       <Avatar className="w-16 h-16 mr-4">
         <AvatarImage src="#" alt="" />
-        <AvatarFallback>
-          {" "}
+        <AvatarFallback className="text-2xl">
           {notification.senderName
             .split(" ")
-            .slice(0, 2)
+            .slice(0, 1)
             .map((part) => part.charAt(0))
             .join("")}
         </AvatarFallback>

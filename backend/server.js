@@ -23,6 +23,7 @@ const reportProductsRoutes = require("./routes/reportProduct");
 const reportBlogsRoutes = require("./routes/reportBlog");
 const sellerRatingsRoutes = require("./routes/rateSellers");
 const professionalRtingsRoutes = require("./routes/rateProfessionals");
+const notificationRoutes = require("./routes/notification");
 
 // express app
 const app = express();
@@ -59,6 +60,7 @@ app.use("/api/reportproduct", reportProductsRoutes);
 app.use("/api/reportblog", reportBlogsRoutes);
 app.use("/api/sellerrating", sellerRatingsRoutes);
 app.use("/api/professionalrating", professionalRtingsRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 // connect to db
 mongoose

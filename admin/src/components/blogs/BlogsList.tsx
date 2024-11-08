@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 import DeleteBlog from "./DeleteBlogs";
+import KeepBlog from "./KeepBlog";
 
 interface Blog {
   _id: string;
@@ -51,6 +52,7 @@ const BlogsList = ({ blogsList }: { blogsList: Blog[] }) => {
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end">
                       <DeleteBlog blogId={blog.blogId} reportId={blog._id} />
+                      <KeepBlog blogId={blog.blogId} reportId={blog._id} />
                     </div>
                   </TableCell>
                 </TableRow>

@@ -12,38 +12,28 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { MdDeleteForever } from "react-icons/md";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import toast from "react-hot-toast";
+import { MdVerifiedUser } from "react-icons/md";
 
-const DeleteBlog = ({
-  blogId,
-  reportId,
-}: {
-  blogId: string;
-  reportId: string;
-}) => {
+const KeepProduct = ({ reportId }: { productId: string; reportId: string }) => {
   const { admin } = useAuthContext();
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`/api/blogs/${blogId}`, {
+      const response = await fetch(`/api/reportproduct/${reportId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${admin.token}` },
       });
       if (response.ok) {
-        toast.success("Blog deleted successfully!");
-        await fetch(`/api/reportblog/${reportId}`, {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${admin.token}` },
-        });
+        toast.success("The product will be kept.");
       } else {
-        toast.error("Failed to delete blog.");
-        console.error("Failed to delete blog");
+        toast.error("Request failed.");
+        console.error("Request failed");
       }
     } catch (error) {
-      toast.error("An error occurred while deleting the blog.");
-      console.error("Error deleting blog:", error);
+      toast.error("An error occurred while keeping the product.");
+      console.error("Error deleting product:", error);
     }
   };
 
@@ -51,8 +41,8 @@ const DeleteBlog = ({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <span>
-          <Button className="my-1 mr-3 bg-red-400 hover:bg-red-500">
-            <MdDeleteForever size={20} />
+          <Button className="my-1 mr-3 bg-greenscape hover:bg-greenscapeDark">
+            <MdVerifiedUser size={20} />
           </Button>
         </span>
       </AlertDialogTrigger>
@@ -60,14 +50,14 @@ const DeleteBlog = ({
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This blog will get permanently deleted
-            if you click continue.
+            This action cannot be undone. The report will be deleted and the
+            product will be kept.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            className="bg-red-400 hover:bg-red-500"
+            className="bg-greenscape hover:bg-greenscapeDark"
             onClick={handleDelete}
           >
             Continue
@@ -78,4 +68,4 @@ const DeleteBlog = ({
   );
 };
 
-export default DeleteBlog;
+export default KeepProduct;

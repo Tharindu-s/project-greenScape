@@ -21,6 +21,7 @@ const config = {
     extend: {
       colors: {
         greenscape: "#3A7612",
+        greenscapeDark: "#2E5F0D",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
